@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <title>欣星尚-后台管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <head th:replace="include/style :: acestyle" />
+</head>
+<body>
+<div class="navbar navbar-default" id="navbar"  th:include="include/header :: header">
+    <script type="text/javascript">
+        try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+    </script>
+</div>
+
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+    </script>
+
+    <div class="main-container-inner">
+        <a class="menu-toggler" id="menu-toggler" href="#">
+            <span class="menu-text"></span>
+        </a>
+
+        <div class="sidebar" id="sidebar"  th:include="include/sidebar">
+
+        </div>
+
+        <div class="main-content">
+            <div class="breadcrumbs" id="breadcrumbs">
+
+
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="icon-home home-icon"></i>
+                        <a href="#">系统管理</a>
+                    </li>
+
+                    <li>
+                        <a href="#">用户管理</a>
+                    </li>
+                    <li class="active">用户列表</li>
+                </ul>
+
+
+            </div>
+
+            <div class="page-content">
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="alert alert-info">
+                            <i class='icon-save'></i> <a href='javascript:void(0)' onclick="openAddDiag();">新增</a> |
+                            <i class='icon-trash'> </i> <a href='javascript:void(0)' onclick="deletes();">删除</a> |
+                            <i class='icon-refresh'> </i> <a href='javascript:void(0)' onclick="refresh();" >刷新</a>
+                        </div>
+                        <div class="nav-search" id="nav-search">
+                            <form class="form-search">
+                                <span class="input-icon">
+                                    <input type="text" placeholder="用户名" class="nav-search-input" id="userName" autocomplete="off" />
+                                    <i class="icon-search nav-search-icon" onclick="selText();"></i>
+                                </span>
+                            </form>
+                        </div>
+                        <table id="grid-table"></table>
+                        <div id="grid-pager" ></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="open" th:value="${pid}">
+<input type="hidden" id="active" th:value="${id}">
+<div th:include="include/script"></div>
+
+<script type="text/javascript">
+    setTimeout(function(){
+        $("#"+$("#open").val()).addClass("active open");
+        $("#"+$("#active").val()).addClass("active");
+    },100);
+</script>
+
+<!-- page specific plugin scripts -->
+<script th:src="@{/assets/js/date-time/bootstrap-datepicker.min.js}"></script>
+<script th:src="@{/assets/js/date-time/bootstrap-datepicker.min.js}"></script>
+<script th:src="@{/assets/js/jqGrid/jquery.jqGrid.min.js}"></script>
+<script th:src="@{/assets/js/jqGrid/i18n/grid.locale-en.js}"></script>
+<!-- inline scripts related to this page -->
+<script th:src="@{/htmljs/authority/user.js}"></script>
+</body>
+</html>

@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.litte.mapper.jurisdiction.TDeptMapper" >
+  <resultMap id="BaseResultMap" type="com.litte.entity.jurisdiction.TDept" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="dept_name" property="deptName" jdbcType="VARCHAR" />
+    <result column="group_id" property="groupId" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="longitude" property="longitude" jdbcType="VARCHAR" />
+    <result column="latitude" property="latitude" jdbcType="VARCHAR" />
+    <result column="introduction" property="introduction" jdbcType="VARCHAR" />
+    <result column="portrait" property="portrait" jdbcType="VARCHAR" />
+    <result column="site" property="site" jdbcType="VARCHAR" />
+    <result column="pName" property="pName" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="VARCHAR" />
+    <result column="end_time" property="endTime" jdbcType="VARCHAR" />
+    <result column="period" property="period" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, dept_name, group_id, remark, pid,area,longitude,latitude,introduction,portrait,site,start_time,end_time,period
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.litte.entity.jurisdiction.TDept" >
+    select
+    d.id, d.dept_name, d.group_id, d.remark, d.pid,
+    d.area,d.longitude,d.latitude,d.introduction,d.portrait,
+    d.start_time,d.end_time,d.period,
+    d.site ,t.dept_name as pName
+    from t_dept d left join t_dept t on d.pid = t.id
+    <where>
+      <if test="deptName != null">
+        and d.dept_name like concat('%',#{deptName,jdbcType=VARCHAR},'%' )
+      </if>
+      and d.id in
+      <foreach collection="ids" item="id" separator="," open="(" close=")">
+        '${id}'
+      </foreach>
+    </where>
+  </select>
+  <select id="selectByExampleByPort" resultMap="BaseResultMap" parameterType="com.litte.entity.jurisdiction.TDept" >
+    select
+  <include refid="Base_Column_List"/>
+    from t_dept
+    <where>
+      <choose>
+        <when test="area != null and area !=''">
+          and area = #{area,jdbcType=VARCHAR}
+        </when>
+        <otherwise>
+          and area = (select id from (select id from t_territory order by sort limit 1) as trr)
+        </otherwise>
+      </choose>
+    </where>
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+   select
+    d.id, d.dept_name, d.group_id, d.remark, d.pid,
+    d.area,d.longitude,d.latitude,d.introduction,d.portrait,
+    d.start_time,d.end_time,d.period,d.site ,t.dept_name as pName
+    from t_dept d left join t_dept t on d.pid = t.id
+    where d.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectBySmsKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+   select
+    <include refid="Base_Column_List" />
+    where d.id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getMaxGroupId" resultType="java.lang.String" parameterType="java.lang.String" >
+    select
+    max(group_id) as group_id
+    from t_dept
+    where pid = #{pId,jdbcType=VARCHAR}
+  </select>
+
+
+  <select id="getGroupListIds" resultType="java.lang.String" parameterType="java.lang.String" >
+    select
+      id
+    from t_dept
+    where  group_id like concat((select group_id from t_dept where id=#{id,jdbcType=VARCHAR}) ,'%')
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_dept
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByList" parameterType="java.util.List" >
+    delete from t_dept
+    where id in
+    <foreach collection="list" item="ids" separator="," open="(" close=")" >
+      '${ids}'
+    </foreach>
+  </delete>
+  <insert id="insert" parameterType="com.litte.entity.jurisdiction.TDept" >
+    insert into t_dept (id, dept_name, group_id, 
+      remark,pid)
+    values (#{id,jdbcType=VARCHAR}, #{deptName,jdbcType=VARCHAR}, #{groupId,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR},
+      #{pid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.litte.entity.jurisdiction.TDept" >
+    insert into t_dept
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="deptName != null" >
+        dept_name,
+      </if>
+      <if test="groupId != null" >
+        group_id,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="longitude != null" >
+        longitude,
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
+      <if test="introduction != null" >
+        introduction,
+      </if>
+      <if test="portrait != null" >
+        portrait,
+      </if>
+      <if test="site != null" >
+        site,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="period != null" >
+        period,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null" >
+        #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null" >
+        #{groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null" >
+        #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="portrait != null" >
+        #{portrait,jdbcType=VARCHAR},
+      </if>
+      <if test="site != null" >
+        #{site,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="period != null" >
+        #{period,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.litte.entity.jurisdiction.TDept" >
+    update t_dept
+    <set >
+      <if test="deptName != null" >
+        dept_name = #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null" >
+        group_id = #{groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null" >
+        introduction = #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="portrait != null" >
+        portrait = #{portrait,jdbcType=VARCHAR},
+      </if>
+      <if test="site != null" >
+        site = #{site,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="period != null" >
+        period = #{period,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.litte.entity.jurisdiction.TDept" >
+    update t_dept
+    set dept_name = #{deptName,jdbcType=VARCHAR},
+      group_id = #{groupId,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

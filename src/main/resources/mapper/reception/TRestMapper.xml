@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.litte.mapper.reception.TRestMapper" >
+  <resultMap id="BaseResultMap" type="com.litte.entity.reception.TRest" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="staff_id" property="staffId" jdbcType="VARCHAR" />
+    <result column="time_start" property="timeStart" jdbcType="TIMESTAMP" />
+    <result column="time_end" property="timeEnd" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="dept_id" property="deptId" jdbcType="VARCHAR" />
+    <result column="userName" property="userName" jdbcType="VARCHAR" />
+    <result column="is_reserve" property="isReserve" jdbcType="VARCHAR" />
+    <result column="is_date" property="isDate" jdbcType="VARCHAR" />
+    <result column="is_hour" property="isHour" jdbcType="VARCHAR" />
+    <result column="is_rest" property="isRest" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, staff_id, time_start, time_end, remark,dept_id,is_reserve,is_date,is_hour,is_rest
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.litte.entity.reception.TRest" >
+    select
+    r.id, r.staff_id, r.time_start, r.time_end, r.remark,
+    r.dept_id,r.is_reserve,r.is_date,r.is_hour,r.is_rest,
+    u.user_name as userName
+    from t_rest r left join t_user u on r.staff_id=u.user_id
+  </select>
+  <select id="seleDateStaffRort" resultMap="BaseResultMap" parameterType="com.litte.entity.reception.TRest" >
+     select
+      r.id,      r.staff_id, r.time_start, r.time_end, r.remark,
+      r.dept_id ,r.is_date,  r.is_hour,    r.is_rest,
+      case
+      when r.is_rest = 1 then 0
+      when
+      concat(r.is_date ,' ' , r.is_hour) &lt; date_format(now(), '%y-%m-%d %h:%i')  then 0
+      when
+      i.is_time = concat(r.is_date ,' ' , r.is_hour) and i.i_condition !='7' then 0
+      else 1
+      end as is_reserve
+      from t_rest r left join t_indent i on r.staff_id=i.hair_id
+     where r.staff_id=#{staffId,jdbcType=VARCHAR} and r.is_date=#{isDate,jdbcType=VARCHAR}
+     group by r.id
+
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_rest
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.util.List" >
+    delete from t_rest
+    where id in
+    <foreach collection="list" item="ids" open="(" close=")" separator="," >
+      '${ids}'
+    </foreach>
+  </delete>
+  <delete id="deleteByPrimary" parameterType="com.litte.entity.reception.TRest" >
+    delete from t_rest
+    where staff_id = #{staffId,jdbcType=VARCHAR} and is_date =#{isDate,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.litte.entity.reception.TRest" >
+    insert into t_rest ( id, staff_id, remark,dept_id,is_reserve,is_date,is_hour,is_rest)
+    values
+    <foreach collection="listHour" item="hour"  separator=",">
+      (replace(uuid(),'-',''),#{staffId,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{deptId,jdbcType=VARCHAR},
+      #{isReserve,jdbcType=VARCHAR},#{isDate,jdbcType=VARCHAR},'${hour}',#{isRest,jdbcType=VARCHAR})
+    </foreach>
+
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.litte.entity.reception.TRest" >
+    insert into t_rest
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="staffId != null" >
+        staff_id,
+      </if>
+      <if test="timeStart != null" >
+        time_start,
+      </if>
+      <if test="timeEnd != null" >
+        time_end,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="deptId != null" >
+        dept_id,
+      </if>
+      <if test="isReserve != null" >
+        is_reserve,
+      </if>
+      <if test="isDate != null" >
+        is_date,
+      </if>
+      <if test="isHour != null" >
+        is_hour,
+      </if>
+      <if test="isRest != null" >
+        is_rest,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="staffId != null" >
+        #{staffId,jdbcType=VARCHAR},
+      </if>
+      <if test="timeStart != null" >
+        #{timeStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="timeEnd != null" >
+        #{timeEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="isReserve != null" >
+        #{isReserve,jdbcType=VARCHAR},
+      </if>
+      <if test="isDate != null" >
+        #{isDate,jdbcType=VARCHAR},
+      </if>
+      <if test="isHour != null" >
+        #{isHour,jdbcType=VARCHAR},
+      </if>
+      <if test="isRest != null" >
+        #{isRest,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.litte.entity.reception.TRest" >
+    update t_rest
+    <set >
+      <if test="staffId != null" >
+        staff_id = #{staffId,jdbcType=VARCHAR},
+      </if>
+      <if test="timeStart != null" >
+        time_start = #{timeStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="timeEnd != null" >
+        time_end = #{timeEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        dept_id = #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="isReserve != null" >
+        is_reserve = #{isReserve,jdbcType=VARCHAR},
+      </if>
+      <if test="isDate != null" >
+        is_date = #{isDate,jdbcType=VARCHAR},
+      </if>
+      <if test="isHour != null" >
+        is_hour = #{isHour,jdbcType=VARCHAR},
+      </if>
+      <if test="isRest != null" >
+        is_rest = #{isRest,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.litte.entity.reception.TRest" >
+    update t_rest
+    set staff_id = #{staffId,jdbcType=VARCHAR},
+      time_start = #{timeStart,jdbcType=TIMESTAMP},
+      time_end = #{timeEnd,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

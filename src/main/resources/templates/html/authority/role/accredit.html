@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <head th:replace="include/style :: acestyle" />
+    <div th:include="include/script"></div>
+    <script th:src="@{/htmljs/authority/accredit.js}"></script>
+    <script th:src="@{/htmljs/authority/role.js}"></script>
+</head>
+<body>
+
+<br>
+<form class="form-horizontal" id="roleAddMenu">
+    <ul id="tree" class="ztree" ></ul>
+    <input type="hidden" id="roleId" name="roleId" th:value="${id}">
+    <input type="hidden" id="menuId" name="menuId">
+</form>
+</body>
+</html>

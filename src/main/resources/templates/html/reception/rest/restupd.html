@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <head th:replace="include/style :: acestyle" />
+    <div th:include="include/script"></div>
+    <script th:src="@{/htmljs/rest/restlist.js}"></script>
+
+</head>
+<body>
+
+<br>
+<form class="form-horizontal" id="aouRest">
+
+    <div class="form-group">
+        <label for="timeStart" class="control-label col-xs-12 col-sm-3 no-padding-right">休息开始时间</label>
+        <div class="input-group date form_datetime col-md-5" id="timeStart" data-link-field="dtp_input1">
+            <input class="form-control" name="id" th:value="${rest.id}" type="hidden"  readonly>
+            <input class="form-control" name="timeStart" size="16" th:value="${#dates.format(rest.timeStart, 'yyyy-MM-dd hh:mm')}" data-date-format="dd-mm-yyyy" type="text" value="" readonly>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+        </div>
+    </div>
+    <div class="form-group" >
+        <label for="timeEnd" class="control-label col-xs-12 col-sm-3 no-padding-right" >休息结束时间</label>
+        <div class="input-group date form_datetime col-md-5" id="timeEnd"   data-link-field="dtp_input1">
+            <input class="form-control" name="timeEnd" size="16" type="text"  th:value="${#dates.format(rest.timeEnd, 'yyyy-MM-dd hh:mm')}" readonly>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="remark">备注:</label>
+        <div class="col-xs-12 col-sm-5" >
+            <span class="block input-icon input-icon-right">
+                <input type="text" id="remark"  name="remark"  class="width-100" />
+            </span>
+        </div>
+    </div>
+
+</form>
+</body>
+<script type="text/javascript">
+
+    function add(m){return m<10?'0'+m:m };
+
+    var date = new Date();
+    var newDate = date.setDate(date.getDate() + 5);
+
+    $('.form_datetime').datetimepicker({
+        format: "yyyy-mm-dd hh:ii",
+        autoclose: true,
+        todayBtn: true,
+        language:'zh-CN',
+        startDate: new Date(),
+        endDate: new Date(newDate),
+        pickerPosition:"bottom-left"
+    });
+
+</script>
+</html>

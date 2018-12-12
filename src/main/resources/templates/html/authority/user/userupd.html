@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <head th:replace="include/style :: acestyle" />
+    <div th:include="include/script"></div>
+    <script th:src="@{/htmljs/authority/user.js}"></script>
+    <script th:src="@{/htmljs/authority/deptZtree.js}"></script>
+
+</head>
+<body>
+
+<br>
+<form class="form-horizontal" id="updateMenu">
+    <div class="form-group">
+        <label for="userName" class="col-xs-12 col-sm-3 control-label no-padding-right">用户名:</label>
+        <div class="col-xs-12 col-sm-5">
+            <span class="block input-icon input-icon-right">
+                <input type="hidden" id="userId" name="userId" th:value="${user.userId}" class="width-100" />
+                <input type="text" id="userName" name="userName" th:value="${user.userName}"  class="width-100" />
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-3 no-padding-right"   for="deptId">所属部门:</label>
+        <div class="col-xs-12 col-sm-5" >
+            <span class="block input-icon input-icon-right">
+                <input type="hidden" name="deptId" id="deptId" th:value="${user.deptId}">
+                <input type="text" id="deptName"  name="deptName" th:value="${user.deptName}" class="width-100" readonly="readonly" onmouseenter="treeClick()"/>
+                <ul id="tree" class="ztree" hidden="hidden" onmouseleave="outTree()" ></ul>
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="loginName">登录名:</label>
+        <div class="col-xs-12 col-sm-5">
+            <span class="block input-icon input-icon-right">
+                <input type="text" id="loginName" name="loginName" th:value="${user.loginName}" class="width-100" />
+            </span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="phone">电话:</label>
+        <div class="col-xs-12 col-sm-5">
+            <span class="block input-icon input-icon-right">
+                <input type="text" id="phone" name="phone" th:value="${user.phone}" class="width-100" />
+            </span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="duration">理发时长(分钟):</label>
+        <div class="col-xs-12 col-sm-5">
+           <span class="block input-icon input-icon-right">
+                <input type="text" id="duration" name="duration" th:value="${user.duration}"  class="width-100" />
+            </span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="headPortrait">头像:</label>
+        <div class="col-xs-12 col-sm-5">
+            <span class="block input-icon input-icon-right">
+                <input type="hidden" id="headPortrait" name="headPortrait"  th:value="${user.headPortrait}" class="width-100" />
+                <input type="file" id="uploadClick" name="file"  class="width-100" />
+                <img id="previewImg" th:src="${user.url}"
+                     style="width:200px;height:auto;margin-left: 15px;margin-top: 15px;margin-bottom: 20px;"/>
+            </span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="password">密码:</label>
+        <div class="col-xs-12 col-sm-5">
+            <span class="block input-icon input-icon-right">
+                <input type="password" id="password" name="password" placeholder="无需修改请至空" class="width-100" />
+            </span>
+        </div>
+    </div>
+
+</form>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.litte.mapper.reception.TCouponMapper" >
+  <resultMap id="BaseResultMap" type="com.litte.entity.reception.TCoupon" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="c_code" property="cCode" jdbcType="VARCHAR" />
+    <result column="c_money" property="cMoney" jdbcType="VARCHAR" />
+    <result column="c_money_receipts" property="cMoneyReceipts" jdbcType="VARCHAR" />
+    <result column="is_status" property="isStatus" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, c_code, c_money, c_money_receipts, is_status, remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.litte.entity.reception.TCoupon" >
+    select
+    <include refid="Base_Column_List" />
+    from t_coupon
+
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_coupon
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.util.List" >
+    delete from t_coupon
+    where id in
+    <foreach collection="list" item="ids" separator="," open="(" close=")">
+      '${ids}'
+    </foreach>
+  </delete>
+  <insert id="insert" parameterType="com.litte.entity.reception.TCoupon" >
+    insert into t_coupon (id, c_code, c_money, 
+      c_money_receipts, is_status, remark
+      )
+    values (#{id,jdbcType=VARCHAR}, #{cCode,jdbcType=VARCHAR}, #{cMoney,jdbcType=VARCHAR}, 
+      #{cMoneyReceipts,jdbcType=VARCHAR}, #{isStatus,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.litte.entity.reception.TCoupon" >
+    insert into t_coupon
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cCode != null" >
+        c_code,
+      </if>
+      <if test="cMoney != null" >
+        c_money,
+      </if>
+      <if test="cMoneyReceipts != null" >
+        c_money_receipts,
+      </if>
+      <if test="isStatus != null" >
+        is_status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="cCode != null" >
+        #{cCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cMoney != null" >
+        #{cMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="cMoneyReceipts != null" >
+        #{cMoneyReceipts,jdbcType=VARCHAR},
+      </if>
+      <if test="isStatus != null" >
+        #{isStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.litte.entity.reception.TCoupon" >
+    update t_coupon
+    <set >
+      <if test="cCode != null" >
+        c_code = #{cCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cMoney != null" >
+        c_money = #{cMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="cMoneyReceipts != null" >
+        c_money_receipts = #{cMoneyReceipts,jdbcType=VARCHAR},
+      </if>
+      <if test="isStatus != null" >
+        is_status = #{isStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.litte.entity.reception.TCoupon" >
+    update t_coupon
+    set c_code = #{cCode,jdbcType=VARCHAR},
+      c_money = #{cMoney,jdbcType=VARCHAR},
+      c_money_receipts = #{cMoneyReceipts,jdbcType=VARCHAR},
+      is_status = #{isStatus,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

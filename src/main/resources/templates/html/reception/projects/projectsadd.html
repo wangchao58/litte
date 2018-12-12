@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <head th:replace="include/style :: acestyle" />
+    <div th:include="include/script"></div>
+    <script th:src="@{/htmljs/projects/projectslist.js}"></script>
+
+</head>
+<body>
+
+<br>
+<form class="form-horizontal" id="aouPrice">
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="pName">服务名:</label>
+        <div class="col-xs-12 col-sm-5">
+            <span class="block input-icon input-icon-right">
+                <input type="text" id="pName" name="pName" class="width-100" />
+            </span>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="pCode">价格:</label>
+        <div class="col-xs-12 col-sm-5">
+            <span class="block input-icon input-icon-right">
+                <input type="text" id="pCode" name="pCode" class="width-100">
+            </span>
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="remark">备注:</label>
+        <div class="col-xs-12 col-sm-5" >
+            <span class="block input-icon input-icon-right">
+                <input type="text" id="remark"  name="remark" class="width-100" />
+            </span>
+        </div>
+    </div>
+</form>
+</body>
+
+<script type="text/javascript">
+
+    $.ajax({
+        url : "/user/listUserSele",
+        async : false,
+        type : "POST",
+        success : function(response) {
+            var htmlsres="";
+            $(response).each(function (index, data){
+                if($("#userIds").val() == data.userId) {
+                    htmlsres+="<option value='"+data.userId+"' selected='selected'>"+data.userName+"</option>";
+                } else {
+                    htmlsres+="<option value='"+data.userId+"'>"+data.userName+"</option>"
+                }
+
+            });
+            $("#userId").html(htmlsres);
+        }
+    });
+</script>
+</html>

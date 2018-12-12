@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <head th:replace="include/style :: acestyle" />
+    <div th:include="include/script"></div>
+    <script th:src="@{/htmljs/projects/projectslist.js}"></script>
+
+</head>
+<body>
+
+<br>
+<form class="form-horizontal" id="aouPrice">
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="id">服务名:</label>
+        <div class="col-xs-12 col-sm-5">
+            <span class="block input-icon input-icon-right">
+                <input type="hidden" id="id" name="id" th:value="${projects.id}" class="width-100" />
+                <input type="text" id="pName" name="pName" th:value="${projects.pName}"  class="width-100" />
+            </span>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="pCode">价格:</label>
+        <div class="col-xs-12 col-sm-5">
+            <span class="block input-icon input-icon-right">
+                <input type="text" id="pCode" name="pCode" th:value="${projects.pCode}" class="width-100">
+            </span>
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="remark">备注:</label>
+        <div class="col-xs-12 col-sm-5" >
+            <span class="block input-icon input-icon-right">
+                <input type="text" id="remark"  name="remark" th:value="${projects.remark}" class="width-100" />
+            </span>
+        </div>
+    </div>
+</form>
+</body>
+
+</html>

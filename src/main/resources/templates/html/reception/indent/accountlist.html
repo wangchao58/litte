@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <head th:replace="include/style :: acestyle" />
+</head>
+<body>
+
+<div class="main-container" id="main-container">
+
+
+    <div class="main-container-inner">
+
+
+
+        <div class="main-content">
+
+
+            <div class="page-content">
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="alert alert-info">
+                            <!--<i class='icon-save'></i> <a href='javascript:void(0)' onclick="openAddDiag();">新增</a> |-->
+                            <i class='icon-shopping-cart'> </i> <a href='javascript:void(0)' onclick="openAddDiag();">对账</a> |
+                            <i class='icon-refresh'> </i> <a href='javascript:void(0)' onclick="refresh();" >刷新</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="open" th:value="${pid}">
+<input type="hidden" id="active" th:value="${id}">
+<div th:include="include/script"></div>
+
+<script type="text/javascript">
+    setTimeout(function(){
+        $("#"+$("#open").val()).addClass("active open");
+        $("#"+$("#active").val()).addClass("active");
+    },100);
+</script>
+
+<!-- page specific plugin scripts -->
+<script th:src="@{/assets/js/date-time/bootstrap-datepicker.min.js}"></script>
+<script th:src="@{/assets/js/date-time/bootstrap-datepicker.min.js}"></script>
+<script th:src="@{/assets/js/jqGrid/jquery.jqGrid.min.js}"></script>
+<script th:src="@{/assets/js/jqGrid/i18n/grid.locale-en.js}"></script>
+<!-- inline scripts related to this page -->
+<script th:src="@{/htmljs/indent/indentlist.js}"></script>
+</body>
+</html>

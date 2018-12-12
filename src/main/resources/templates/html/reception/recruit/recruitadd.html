@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <head th:replace="include/style :: acestyle" />
+    <div th:include="include/script"></div>
+    <script th:src="@{/htmljs/recruit/recruitlist.js}"></script>
+</head>
+<body>
+
+<br>
+<form class="form-horizontal" id="anuRecruit">
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="job">职位:</label>
+        <div class="col-xs-12 col-sm-5">
+            <span class="block input-icon input-icon-right">
+                <input type="text" id="job" name="job" class="width-100" />
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="sear">地址:</label>
+        <div class="col-xs-12 col-sm-5">
+            <span class="block input-icon input-icon-right">
+                <input type="text" id="sear" name="sear" class="width-100">
+            </span>
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="salary">薪资:</label>
+
+        <div class="col-xs-12 col-sm-5">
+            <input type="text" id="salary" name="salary" class="width-100">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="createTime" class="control-label col-xs-12 col-sm-3 no-padding-right">时间:</label>
+        <div class="input-group date form_datetime col-md-5" id="createTime" data-link-field="dtp_input1">
+            <input class="form-control" name="createTime" size="16" type="text" value="" readonly>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="rMessage">详情:</label>
+        <div class="col-xs-12 col-sm-5">
+            <div class="clearfix">
+                <textarea class="input-xlarge" name="rMessage" id="rMessage"></textarea>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+<script type="text/javascript">
+
+    $('.form_datetime').datetimepicker({
+        minView: "month",//设置只显示到月份
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        todayBtn: true,
+        language:'zh-CN',
+        pickerPosition:"bottom-left"
+    });
+
+</script>
+</html>

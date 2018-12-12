@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="litte">
+    <output-path>$PROJECT_DIR$/out/artifacts/litte</output-path>
+    <root id="archive" name="litte.war" />
+  </artifact>
+</component>

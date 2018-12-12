@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <head th:replace="include/style :: acestyle" />
+    <div th:include="include/script"></div>
+    <script th:src="@{/htmljs/price/pricelist.js}"></script>
+
+</head>
+<body>
+
+<br>
+<form class="form-horizontal" id="aouPrice">
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="id">服务名:</label>
+        <input type="hidden" id="id" name="id" th:value="${price.id}" class="width-100" />
+        <input type="hidden" id="projectH" th:value="${price.project}">
+
+        <div class="col-xs-12 col-sm-9">
+            <select id="project" name="project" class="select2" data-placeholder="Click to Choose...">
+
+            </select>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="cMoney">价格:</label>
+        <div class="col-xs-12 col-sm-5">
+            <span class="block input-icon input-icon-right">
+                <input type="text" id="cMoney" name="price" th:value="${price.price}" class="width-100">
+            </span>
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="userId">店员:</label>
+        <div class="col-xs-12 col-sm-9">
+            <input type="hidden" id="userIds" th:value="${price.userId}">
+            <select id="userId" name="userId" class="select2" data-placeholder="Click to Choose...">
+
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="remark">备注:</label>
+        <div class="col-xs-12 col-sm-5" >
+            <span class="block input-icon input-icon-right">
+                <input type="text" id="remark"  name="remark" th:value="${price.remark}" class="width-100" />
+            </span>
+        </div>
+    </div>
+</form>
+</body>
+
+<script type="text/javascript">
+
+    $.ajax({
+        url : "/user/listUserSele",
+        async : false,
+        type : "POST",
+        success : function(response) {
+            var htmlsres="";
+            $(response).each(function (index, data){
+                if($("#userIds").val() == data.userId) {
+                    htmlsres+="<option value='"+data.userId+"' selected='selected'>"+data.userName+"</option>";
+                } else {
+                    htmlsres+="<option value='"+data.userId+"'>"+data.userName+"</option>"
+                }
+
+            });
+            $("#userId").html(htmlsres);
+        }
+    });
+
+    $.ajax({
+        url : "/projects/listProjectsByPort",
+        async : false,
+        type : "POST",
+        success : function(response) {
+            var htmlsres="";
+            $(response).each(function (index, data){
+                if($("#projectH").val() == data.id) {
+                    htmlsres+="<option value='"+data.id+"' selected='selected'>"+data.pName+"</option>"
+                } else {
+                    htmlsres+="<option value='"+data.id+"'>"+data.pName+"</option>"
+                }
+
+            });
+            $("#project").html(htmlsres);
+        }
+    });
+
+</script>
+</html>

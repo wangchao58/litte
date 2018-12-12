@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.litte.mapper.reception.TRecruitMapper" >
+  <resultMap id="BaseResultMap" type="com.litte.entity.reception.TRecruit" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="r_message" property="rMessage" jdbcType="VARCHAR" />
+    <result column="job" property="job" jdbcType="VARCHAR" />
+    <result column="sear" property="sear" jdbcType="VARCHAR" />
+    <result column="salary" property="salary" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, r_message, job, sear, salary, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.litte.entity.reception.TRecruit" >
+    select
+    <include refid="Base_Column_List" />
+    from t_recruit
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_recruit
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.util.List" >
+    delete from t_recruit
+    where id in
+    <foreach collection="list" item="ids" separator="," open="(" close=")">
+      '${ids}'
+    </foreach>
+  </delete>
+  <insert id="insert" parameterType="com.litte.entity.reception.TRecruit" >
+    insert into t_recruit (id, r_message, job, 
+      sear, salary, create_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{rMessage,jdbcType=VARCHAR}, #{job,jdbcType=VARCHAR}, 
+      #{sear,jdbcType=VARCHAR}, #{salary,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.litte.entity.reception.TRecruit" >
+    insert into t_recruit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="rMessage != null" >
+        r_message,
+      </if>
+      <if test="job != null" >
+        job,
+      </if>
+      <if test="sear != null" >
+        sear,
+      </if>
+      <if test="salary != null" >
+        salary,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="rMessage != null" >
+        #{rMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="job != null" >
+        #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="sear != null" >
+        #{sear,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null" >
+        #{salary,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.litte.entity.reception.TRecruit" >
+    update t_recruit
+    <set >
+      <if test="rMessage != null" >
+        r_message = #{rMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="job != null" >
+        job = #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="sear != null" >
+        sear = #{sear,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null" >
+        salary = #{salary,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.litte.entity.reception.TRecruit" >
+    update t_recruit
+    set r_message = #{rMessage,jdbcType=VARCHAR},
+      job = #{job,jdbcType=VARCHAR},
+      sear = #{sear,jdbcType=VARCHAR},
+      salary = #{salary,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

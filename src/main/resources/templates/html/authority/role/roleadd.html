@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <head th:replace="include/style :: acestyle" />
+    <div th:include="include/script"></div>
+    <script th:src="@{/htmljs/authority/role.js}"></script>
+    <script th:src="@{/htmljs/authority/deptZtree.js}"></script>
+
+</head>
+<body>
+
+<br>
+<form class="form-horizontal" id="aouRole">
+    <div class="form-group">
+        <label for="roleName" class="col-xs-12 col-sm-3 control-label no-padding-right">角色名:</label>
+        <div class="col-xs-12 col-sm-5">
+            <span class="block input-icon input-icon-right">
+                <input type="text" id="roleName" name="roleName"  class="width-100" />
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-3 no-padding-right"   for="remark">备注:</label>
+        <div class="col-xs-12 col-sm-5" >
+            <span class="block input-icon input-icon-right">
+                <input type="text" id="remark"  name="remark" class="width-100"/>
+            </span>
+        </div>
+    </div>
+
+
+</form>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <title>欣星尚-后台管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <head th:replace="include/style :: acestyle" />
+</head>
+<body>
+<div class="navbar navbar-default" id="navbar"  th:include="include/header :: header">
+    <script type="text/javascript">
+        try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+    </script>
+</div>
+
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+    </script>
+
+    <div class="main-container-inner">
+        <a class="menu-toggler" id="menu-toggler" href="#">
+            <span class="menu-text"></span>
+        </a>
+
+        <div class="sidebar" id="sidebar"  th:include="include/sidebar">
+
+        </div>
+
+        <div class="main-content">
+            <div class="breadcrumbs" id="breadcrumbs">
+
+
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="icon-home home-icon"></i>
+                        <a href="#">系统管理</a>
+                    </li>
+                    <li>
+                        <a href="#">订单管理</a>
+                    </li>
+                    <li class="active">订单列表</li>
+                </ul>
+
+
+            </div>
+
+            <div class="page-content">
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="alert alert-info">
+                            开始时间:<input class="span2 form_datetime" id="startTime" size="16" type="text"  >
+                            <span class="add-on"><i class="icon-th"></i></span>
+                            结束时间:<input class="span2 form_datetime" id="entTime" size="16" type="text"  >
+                            <span class="add-on"><i class="icon-th"></i></span>
+                            <i class='icon-shopping-cart'> </i> <a href='javascript:void(0)' onclick="openEditDiag();" >对账</a>
+
+                        </div>
+
+                        <div class="alert alert-info">
+
+                            微信收入:<span id="weixin">0</span>
+                            卡券收入:<span id="kaquan">0</span>
+
+                        </div>
+
+                        <table id="grid-table"></table>
+                        <div id="grid-pager" ></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="open" th:value="${pid}">
+<input type="hidden" id="active" th:value="${id}">
+<div th:include="include/script"></div>
+
+<script type="text/javascript">
+    setTimeout(function(){
+        $("#"+$("#open").val()).addClass("active open");
+        $("#"+$("#active").val()).addClass("active");
+    },100);
+
+    $('.form_datetime').datetimepicker({
+        minView: "month",//设置只显示到月份
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        todayBtn: true,
+        language:'zh-CN',
+        pickerPosition:"bottom-left"
+    });
+</script>
+
+<!-- page specific plugin scripts -->
+<script th:src="@{/assets/js/date-time/bootstrap-datepicker.min.js}"></script>
+<script th:src="@{/assets/js/date-time/bootstrap-datepicker.min.js}"></script>
+<script th:src="@{/assets/js/jqGrid/jquery.jqGrid.min.js}"></script>
+<script th:src="@{/assets/js/jqGrid/i18n/grid.locale-en.js}"></script>
+<!-- inline scripts related to this page -->
+<script th:src="@{/htmljs/indent/indentlist.js}"></script>
+</body>
+</html>

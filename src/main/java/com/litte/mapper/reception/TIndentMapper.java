@@ -1,0 +1,26 @@
+package com.litte.mapper.reception;
+
+import com.litte.entity.reception.TIndent;
+import com.litte.entity.reception.TIndentExample;
+import java.util.List;
+import java.util.Map;
+
+public interface TIndentMapper {
+    int deleteByPrimaryKey(List<String> ids);
+
+    int insert(TIndent record);
+
+    int insertSelective(TIndent record);
+
+    List<TIndent> selectByExample(TIndent record);
+
+    TIndent selectByPrimaryKey(String id);
+
+    TIndent selectJob();
+
+    int updateByPrimaryKeySelective(TIndent record);
+
+    int updateByPrimaryKey(TIndent record);
+
+    String accountByList(Map<String, Object> map);
+}

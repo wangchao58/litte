@@ -1,0 +1,35 @@
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<div th:include="include/script"></div>
+<script th:src="@{/htmljs/authority/user.js}"></script>
+<form class="form-horizontal hide" id="accreditRoleAdd" method="post">
+    <input type="hidden" th:value="${userId}" id="userId" name="userId">
+    <div class="form-group">
+
+    </div>
+</form>
+<script type="text/javascript">
+    //alert($("#userId").val());
+    $.ajax({
+        url: '/user/accreditRole',
+        type: "POST",
+        data: {"checked":$("#userId").val()},
+        success: function (data) {
+            var htmls ="";
+            $.each(data.roleList,function (idx,obj) {
+                htmls += "<div class='col-xs-12 col-sm-4 col-sm-offset-3'><label>" ;
+                if(obj.checked=="true") {
+                    htmls +="<input name='roleId' id='agree' type='checkbox' checked value='"+obj.roleId+"' class='ace' />" ;
+                } else {
+                    htmls +="<input name='roleId' id='agree' type='checkbox' value='"+obj.roleId+"' class='ace' />" ;
+                }
+
+                    htmls +=  "<span class='lbl'>"+obj.roleName+"</span>"+
+                    "</label></div>";
+            });
+            $(".form-group").html(htmls);
+        }
+    });
+
+</script>

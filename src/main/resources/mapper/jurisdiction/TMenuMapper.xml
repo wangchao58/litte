@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.litte.mapper.jurisdiction.TMenuMapper">
+
+    <resultMap id="BaseResultMap" type="com.litte.entity.jurisdiction.TMenu">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="text" property="text" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="pid" property="pid" jdbcType="VARCHAR"/>
+        <result column="icon_cls" property="iconCls" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Example_Where_Clause">
+        <where>
+            <if test="userId != null and userId != ''">
+                and pid = #{pid}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List">
+        id, text, url, pid, icon_cls, state
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from t_menu
+        where id in (
+        select
+        menu_id
+        from
+        t_menu_role where role_id in (
+        select role_id from
+        t_user_role where user_id=#{userId,jdbcType=VARCHAR}))
+    </select>
+
+    <select id="selectByLisAll" resultMap="BaseResultMap" parameterType="com.litte.entity.jurisdiction.TMenu">
+        select
+        <include refid="Base_Column_List"/>
+        from t_menu
+        <where>
+            <if test="text != null and text != ''" >
+                and text like concat ('%',#{text,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        p.id, p.text, p.url, p.pid, p.icon_cls, p.state, p.text AS pName
+        from t_menu m left join t_menu p on m.id = p.id
+        where p.id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from t_menu
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteByList" parameterType="java.util.List" >
+        delete from t_menu
+        where id in
+        <foreach collection="list" item="ids" separator="," open="(" close=")" >
+            '${ids}'
+        </foreach>
+
+    </delete>
+
+    <insert id="insert" parameterType="com.litte.entity.jurisdiction.TMenu">
+        insert into t_menu (id, text, url,
+          pid, icon_cls, state
+          )
+        values (#{id,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+          #{pid,jdbcType=VARCHAR}, #{iconCls,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}
+          )
+    </insert>
+    <insert id="insertSelective" parameterType="com.litte.entity.jurisdiction.TMenu">
+        insert into t_menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="text != null">
+                text,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="pid != null">
+                pid,
+            </if>
+            <if test="iconCls != null">
+                icon_cls,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="text != null">
+                #{text,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="pid != null">
+                #{pid,jdbcType=VARCHAR},
+            </if>
+            <if test="iconCls != null">
+                #{iconCls,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.litte.entity.jurisdiction.TMenu">
+        update t_menu
+        <set>
+            <if test="text != null">
+                text = #{text,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="pid != null">
+                pid = #{pid,jdbcType=VARCHAR},
+            </if>
+            <if test="iconCls != null">
+                icon_cls = #{iconCls,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.litte.entity.jurisdiction.TMenu">
+        update t_menu
+        set text = #{text,jdbcType=VARCHAR},
+            url = #{url,jdbcType=VARCHAR},
+            pid = #{pid,jdbcType=VARCHAR},
+            icon_cls = #{iconCls,jdbcType=VARCHAR},
+            state = #{state,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

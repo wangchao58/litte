@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.litte.mapper.reception.TIndentMapper" >
+  <resultMap id="BaseResultMap" type="com.litte.entity.reception.TIndent" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="i_code" property="iCode" jdbcType="VARCHAR" />
+    <result column="openid" property="openid" jdbcType="VARCHAR" />
+    <result column="i_price" property="iPrice" jdbcType="VARCHAR" />
+    <result column="i_phone" property="iPhone" jdbcType="VARCHAR" />
+    <result column="i_type" property="iType" jdbcType="VARCHAR" />
+    <result column="i_time" property="iTime" jdbcType="TIMESTAMP" />
+    <result column="is_time" property="isTime" jdbcType="TIMESTAMP" />
+    <result column="hair_id" property="hairId" jdbcType="VARCHAR" />
+    <result column="changing_time" property="changingTime" jdbcType="TIMESTAMP" />
+    <result column="i_mode" property="iMode" jdbcType="VARCHAR" />
+    <result column="i_refund" property="iRefund" jdbcType="VARCHAR" />
+    <result column="i_refund_model" property="iRefundModel" jdbcType="VARCHAR" />
+    <result column="i_refund_money" property="iRefundMoney" jdbcType="VARCHAR" />
+    <result column="i_condition" property="iCondition" jdbcType="VARCHAR" />
+    <result column="dept_id" property="deptId" jdbcType="VARCHAR" />
+    <result column="userName" property="userName" jdbcType="VARCHAR" />
+    <result column="realName" property="realName" jdbcType="VARCHAR" />
+    <result column="projects_id" property="projectsId" jdbcType="VARCHAR" />
+    <result column="is_sms" property="isSms" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, i_code, openid, i_price, i_phone, i_type, i_time, is_time, hair_id, changing_time,
+    i_mode, i_refund, i_refund_model, i_refund_money, i_condition,dept_id,projects_id,is_sms
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.litte.entity.reception.TIndent" >
+    select
+        i.id,     i.i_code,   i.openid,         i.i_price,        i.i_phone,
+        i.i_type, i.i_time,   i.is_time,        i.hair_id,        i.changing_time,
+        i.i_mode, i.i_refund, i.i_refund_model, i.i_refund_money, i.i_condition,
+        i.dept_id,u.user_name as userName ,p.real_name as realName,s.p_name as projects_id
+    from
+        t_indent i
+    left join
+        t_user u on i.hair_id=u.openid
+    left join
+        t_personage p on i.openid=p.id
+    left join
+        t_projects s on i.projects_id=s.id
+
+    <where>
+      <if test="deptIds != null" >
+        and i.dept_id in
+        <foreach collection="deptIds" item="deptid" separator="," open="(" close=")">
+          '${deptid}'
+        </foreach>
+      </if>
+    </where>
+
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_indent
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectJob" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_indent
+    where date_format(adddate(i_time, interval 30 minute),'%y-%m-%d %h:%i:%s') &lt;= now() and i_condition='1' and is_sms = '0'
+    limit 1
+  </select>
+
+  <select id="accountByList" resultType="java.lang.String" parameterType="java.util.Map" >
+    select
+    sum(i_price) as price
+    from t_indent
+    <where>
+      <if test="startTime != null and startTime !=''" >
+        and i_time &gt;= #{startTime,jdbcType=VARCHAR}
+      </if>
+      <if test="entTime != null and entTime !=''" >
+        and i_time &lt;= #{entTime,jdbcType=VARCHAR}
+      </if>
+      <if test="mode != null and mode !=''" >
+        and i_mode= #{mode,jdbcType=VARCHAR}
+      </if>
+      <if test="deptId != null">
+        and dept_id in
+        <foreach collection="deptId" item="deptId" separator="," open="(" close=")">
+          '${deptId}'
+        </foreach>
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.util.List" >
+    delete from t_indent
+    where id in
+    <foreach collection="list" item="ids" open="(" close=")" separator=",">
+      '${ids}'
+    </foreach>
+  </delete>
+  <insert id="insert" parameterType="com.litte.entity.reception.TIndent" >
+    insert into t_indent (id, i_code, openid,
+      i_price, i_phone, i_type, 
+      i_time, is_time, hair_id, 
+      changing_time, i_mode, i_refund, 
+      i_refund_model, i_refund_money, condition
+      )
+    values (#{id,jdbcType=VARCHAR}, #{iCode,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR},
+      #{iPrice,jdbcType=VARCHAR}, #{iPhone,jdbcType=VARCHAR}, #{iType,jdbcType=VARCHAR}, 
+      #{iTime,jdbcType=TIMESTAMP}, #{isTime,jdbcType=TIMESTAMP}, #{hairId,jdbcType=VARCHAR}, 
+      #{changingTime,jdbcType=TIMESTAMP}, #{iMode,jdbcType=VARCHAR}, #{iRefund,jdbcType=VARCHAR}, 
+      #{iRefundModel,jdbcType=VARCHAR}, #{iRefundMoney,jdbcType=VARCHAR}, #{condition,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.litte.entity.reception.TIndent" >
+    insert into t_indent
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="iCode != null" >
+        i_code,
+      </if>
+      <if test="openid != null" >
+        openid,
+      </if>
+      <if test="iPrice != null" >
+        i_price,
+      </if>
+      <if test="iPhone != null" >
+        i_phone,
+      </if>
+      <if test="iType != null" >
+        i_type,
+      </if>
+      <if test="iTime != null" >
+        i_time,
+      </if>
+      <if test="isTime != null" >
+        is_time,
+      </if>
+      <if test="hairId != null" >
+        hair_id,
+      </if>
+      <if test="changingTime != null" >
+        changing_time,
+      </if>
+      <if test="iMode != null" >
+        i_mode,
+      </if>
+      <if test="iRefund != null" >
+        i_refund,
+      </if>
+      <if test="iRefundModel != null" >
+        i_refund_model,
+      </if>
+      <if test="iRefundMoney != null" >
+        i_refund_money,
+      </if>
+      <if test="condition != null" >
+        condition,
+      </if>
+      <if test="deptId != null" >
+        dept_id,
+      </if>
+      <if test="isSms != null" >
+        is_sms,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="iCode != null" >
+        #{iCode,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="iPrice != null" >
+        #{iPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="iPhone != null" >
+        #{iPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="iType != null" >
+        #{iType,jdbcType=VARCHAR},
+      </if>
+      <if test="iTime != null" >
+        #{iTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isTime != null" >
+        #{isTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hairId != null" >
+        #{hairId,jdbcType=VARCHAR},
+      </if>
+      <if test="changingTime != null" >
+        #{changingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iMode != null" >
+        #{iMode,jdbcType=VARCHAR},
+      </if>
+      <if test="iRefund != null" >
+        #{iRefund,jdbcType=VARCHAR},
+      </if>
+      <if test="iRefundModel != null" >
+        #{iRefundModel,jdbcType=VARCHAR},
+      </if>
+      <if test="iRefundMoney != null" >
+        #{iRefundMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="condition != null" >
+        #{condition,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="isSms != null" >
+        #{isSms,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.litte.entity.reception.TIndent" >
+    update t_indent
+    <set >
+      <if test="iCode != null" >
+        i_code = #{iCode,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="iPrice != null" >
+        i_price = #{iPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="iPhone != null" >
+        i_phone = #{iPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="iType != null" >
+        i_type = #{iType,jdbcType=VARCHAR},
+      </if>
+      <if test="iTime != null" >
+        i_time = #{iTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isTime != null" >
+        is_time = #{isTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hairId != null" >
+        hair_id = #{hairId,jdbcType=VARCHAR},
+      </if>
+      <if test="changingTime != null" >
+        changing_time = #{changingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iMode != null" >
+        i_mode = #{iMode,jdbcType=VARCHAR},
+      </if>
+      <if test="iRefund != null" >
+        i_refund = #{iRefund,jdbcType=VARCHAR},
+      </if>
+      <if test="iRefundModel != null" >
+        i_refund_model = #{iRefundModel,jdbcType=VARCHAR},
+      </if>
+      <if test="iRefundMoney != null" >
+        i_refund_money = #{iRefundMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="iCondition != null" >
+        i_condition = #{iCondition,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        dept_id = #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="out_refund_no != null" >
+        out_refund_no = #{out_refund_no,jdbcType=VARCHAR},
+      </if>
+      <if test="isSms != null" >
+        is_sms = #{isSms,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.litte.entity.reception.TIndent" >
+    update t_indent
+    set i_code = #{iCode,jdbcType=VARCHAR},
+      openid = #{openid,jdbcType=VARCHAR},
+      i_price = #{iPrice,jdbcType=VARCHAR},
+      i_phone = #{iPhone,jdbcType=VARCHAR},
+      i_type = #{iType,jdbcType=VARCHAR},
+      i_time = #{iTime,jdbcType=TIMESTAMP},
+      is_time = #{isTime,jdbcType=TIMESTAMP},
+      hair_id = #{hairId,jdbcType=VARCHAR},
+      changing_time = #{changingTime,jdbcType=TIMESTAMP},
+      i_mode = #{iMode,jdbcType=VARCHAR},
+      i_refund = #{iRefund,jdbcType=VARCHAR},
+      i_refund_model = #{iRefundModel,jdbcType=VARCHAR},
+      i_refund_money = #{iRefundMoney,jdbcType=VARCHAR},
+      condition = #{condition,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

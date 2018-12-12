@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <head th:replace="include/style :: acestyle" />
+        <div th:include="include/script"></div>
+        <script th:src="@{/htmljs/authority/menuadd.js}"></script>
+        <script th:src="@{/htmljs/authority/menulist.js}"></script>
+
+    </head>
+    <body>
+
+        <br>
+        <form class="form-horizontal" id="updateMenu">
+
+            <div class="form-group">
+                <label for="text" class="col-xs-12 col-sm-3 control-label no-padding-right">菜单名:</label>
+                <div class="col-xs-12 col-sm-5">
+                    <span class="block input-icon input-icon-right">
+                        <input type="text" id="text" name="text"  class="width-100" />
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-xs-12 col-sm-3 no-padding-right"   for="pName">父级菜单:</label>
+                <div class="col-xs-12 col-sm-5" >
+                    <span class="block input-icon input-icon-right">
+                        <input type="hidden" name="pid" id="pid">
+                        <input type="text" id="pName"  name="pName" class="width-100" readonly="readonly" onmouseenter="treeClick()"/>
+                        <ul id="tree" class="ztree" style="z-index: 9" onmouseleave="outTree()" ></ul>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="url">地址:</label>
+                <div class="col-xs-12 col-sm-5">
+                    <span class="block input-icon input-icon-right">
+                        <input type="text" id="url" name="url"  class="width-100" />
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="iconCls">图标:</label>
+                <div class="col-xs-12 col-sm-5">
+                    <span class="block input-icon input-icon-right">
+                        <input type="text" id="iconCls" name="iconCls"  class="width-100" />
+                    </span>
+                </div>
+            </div>
+
+        </form>
+    </body>
+</html>

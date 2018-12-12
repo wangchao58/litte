@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.litte.mapper.reception.TPriceMapper" >
+  <resultMap id="BaseResultMap" type="com.litte.entity.reception.TPrice" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="project" property="project" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="dept_id" property="deptId" jdbcType="VARCHAR" />
+    <result column="userName" property="userName" jdbcType="VARCHAR" />
+    <result column="headPortrait" property="headPortrait" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, project, price, remark, user_id, dept_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.litte.entity.reception.TPrice" >
+    select
+    p.id, p.price, p.remark, p.user_id, p.dept_id,
+    u.user_name as userName, s.p_name as project
+    from
+        t_price p
+    left join
+        t_user u on p.user_id = u.user_id
+    left join
+        t_projects s on p.project=s.id
+
+    <where>
+      <if test="deptIds != null" >
+        and p.dept_id in
+        <foreach collection="deptIds" item="ids" separator="," open="(" close=")">
+          '${ids}'
+        </foreach>
+      </if>
+      <if test="userName != null and userName !=''">
+        and p.user_id in
+        ( select user_id from t_user
+          where user_name like  concat('%',#{userName,jdbcType=VARCHAR},'%' )
+          and dept_id in
+        <foreach collection="deptIds" item="ids" separator="," open="(" close=")">
+          '${ids}'
+        </foreach>
+        )
+      </if>
+    </where>
+
+  </select>
+
+  <select id="listPriceUserByPort" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    p.id, p.price, p.remark, p.user_id, p.dept_id,
+    u.user_name as userName,u.head_portrait as headPortrait
+    from
+        t_price p
+    left join
+        t_user u on p.user_id = u.user_id
+    <where>
+      <if test="deptId != null" >
+        and p.dept_id = #{deptId,jdbcType=VARCHAR}
+      </if>
+      <if test="projectId != null" >
+        and p.project = #{projectId,jdbcType=VARCHAR}
+      </if>
+    </where>
+
+  </select>
+  <select id="listPriceRestByPort" resultType="java.util.Map" parameterType="java.util.Map" >
+    select is_date as isDate from t_rest
+    where is_date &gt;= date_format(now(), '%y-%m-%d')
+    group by is_date and dept_id=#{deptId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="listPriceUserRestByPort" resultType="java.util.Map" parameterType="java.util.Map" >
+    select
+    r.staff_id as staffId ,min(is_hour) as isHour,
+    r.is_rest as isRest,r.is_reserve as isReserve
+    from t_rest r
+    left join t_indent i on r.staff_id=i.hair_id  and r.is_date = date_format(i.i_time, '%y-%m-%d')
+    where
+    date_format(now(), '%H:%i')  &lt;  r.is_hour
+    and r.is_hour not in(select date_format(i.i_time, '%H:%i')
+    from t_indent where i_time = date_format(now(), '%y-%m-%d') and hair_id =r.staff_id)
+    and r.is_date =date_format(now(), '%y-%m-%d') and r.dept_id =#{deptId,jdbcType=VARCHAR}
+    group by r.staff_id
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_price
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.util.List" >
+    delete from t_price
+    where id in
+    <foreach collection="list" item="ids" separator="," open="(" close=")" >
+      '${ids}'
+    </foreach>
+  </delete>
+  <insert id="insert" parameterType="com.litte.entity.reception.TPrice" >
+    insert into t_price (id, project, price, 
+      remark, user_id, dept_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{project,jdbcType=VARCHAR}, #{price,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{deptId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.litte.entity.reception.TPrice" >
+    insert into t_price
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="project != null" >
+        project,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="deptId != null" >
+        dept_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="project != null" >
+        #{project,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        #{deptId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.litte.entity.reception.TPrice" >
+    update t_price
+    <set >
+      <if test="project != null" >
+        project = #{project,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        dept_id = #{deptId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.litte.entity.reception.TPrice" >
+    update t_price
+    set project = #{project,jdbcType=VARCHAR},
+      price = #{price,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      dept_id = #{deptId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
