@@ -4,6 +4,7 @@ import com.litte.util.Page;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class TRest extends Page {
     private String id;
@@ -29,6 +30,8 @@ public class TRest extends Page {
     private String isRest;
 
     List<String> listHour;
+
+    List<Map<String,Object>> listMap;
 
     public String getId() {
         return id;
@@ -126,5 +129,13 @@ public class TRest extends Page {
 
     public void setListHour(List<String> listHour) {
         this.listHour = listHour;
+    }
+
+    public List<Map<String, Object>> getListMap() {
+        return listMap;
+    }
+
+    public void setListMap(List<Map<String, Object>> listMap) {
+        this.listMap = listMap;
     }
 }

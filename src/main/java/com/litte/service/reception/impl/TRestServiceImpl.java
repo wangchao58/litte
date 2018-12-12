@@ -27,7 +27,16 @@ public class TRestServiceImpl implements TRestService {
         tRestMapper.deleteByPrimary(record);
         if(record.getIsHour() != null) {
             List<String> listHour = Arrays.asList(record.getIsHour().split(","));
-            record.setListHour(listHour);
+            List<Map<String,Object>> mapList = new ArrayList<>();
+            for(String hour : listHour) {
+                List<String> list = Arrays.asList(hour.split("-"));
+                Map<String,Object> map = new HashMap<>();
+                map.put("isHour",list.get(0));
+                map.put("isReserve",list.get(1));
+                mapList.add(map);
+            }
+            //record.setListHour(listHour);
+            record.setListMap(mapList);
             i = tRestMapper.insert(record);
         } else {
             record.setId(UUIDUtil.getUUID());
