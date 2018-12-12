@@ -15,6 +15,8 @@
     <result column="occupation" property="occupation" jdbcType="VARCHAR" />
     <result column="unionid" property="unionid" jdbcType="VARCHAR" />
     <result column="session_key" property="sessionKey" jdbcType="VARCHAR" />
+    <result column="style" property="style" jdbcType="VARCHAR" />
+    <result column="distance" property="distance" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -47,7 +49,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, user_id, real_name, user_img, create_time, update_time, phone, is_login, age, 
-    sex, occupation,unionid,session_key
+    sex, occupation,unionid,session_key,distance,style
   </sql>
 
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.litte.entity.reception.TPersonage" >
@@ -133,6 +135,12 @@
       <if test="sessionKey != null" >
         session_key,
       </if>
+      <if test="style != null" >
+        style,
+      </if>
+      <if test="distance != null" >
+        distance,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -174,6 +182,12 @@
       <if test="sessionKey != null" >
         #{sessionKey,jdbcType=VARCHAR},
       </if>
+      <if test="style != null" >
+        #{style,jdbcType=VARCHAR},
+      </if>
+      <if test="distance != null" >
+        #{distance,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.litte.entity.reception.TPersonage" >
@@ -211,6 +225,12 @@
       </if>
       <if test="sessionKey != null" >
         session_key = #{sessionKey,jdbcType=VARCHAR},
+      </if>
+      <if test="style != null" >
+        style = #{style,jdbcType=VARCHAR},
+      </if>
+      <if test="distance != null" >
+        distance = #{distance,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}

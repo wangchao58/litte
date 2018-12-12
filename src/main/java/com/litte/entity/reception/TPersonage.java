@@ -31,6 +31,10 @@ public class TPersonage extends Page {
 
     private String sessionKey;
 
+    private String style;
+
+    private String distance;
+
     public String getId() {
         return id;
     }
@@ -133,5 +137,21 @@ public class TPersonage extends Page {
 
     public void setSessionKey(String sessionKey) {
         this.sessionKey = sessionKey;
+    }
+
+    public String getStyle() {
+        return style;
+    }
+
+    public void setStyle(String style) {
+        this.style = style;
+    }
+
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
     }
 }
