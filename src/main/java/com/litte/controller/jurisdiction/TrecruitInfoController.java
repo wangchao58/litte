@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/trecruitInfo")
+@RequestMapping(value = "/trecruitInfo")
 public class TrecruitInfoController extends BaseController {
     @Autowired
     TrecruitInfoService trecruitInfoService;
