@@ -240,11 +240,11 @@ public class TIndentController extends BaseController {
         map.put("verifyCode",code);
         map.put("phone",phone);
         request.getSession().setAttribute("CodePhone",map);
-        Map<String,Object> mapSuc = new HashMap<>();
+        //Map<String,Object> mapSuc = new HashMap<>();
         if( response.getCode().equals("OK")) {
-            mapSuc.put("isOk","OK");
+            map.put("isOk","OK");
         }
-        return mapSuc;
+        return map;
     }
 
     /**
@@ -256,7 +256,7 @@ public class TIndentController extends BaseController {
     public Map<String,Object> verifyConde(String phone,String code,HttpServletRequest request) {
         Map<String,Object> map = new HashMap<>();
         Map<String,Object> mapCodePhone  = (Map<String, Object>) request.getSession().getAttribute("CodePhone");
-        if(mapCodePhone != null && mapCodePhone.get("phone").equals(phone) && code.equals(mapCodePhone.get("verifyCode")) ) {
+        if(mapCodePhone != null && mapCodePhone.get("phone").toString().equals(phone) && code.equals(mapCodePhone.get("verifyCode").toString()) ) {
             map.put("isOk","OK");
         }
         return map;
