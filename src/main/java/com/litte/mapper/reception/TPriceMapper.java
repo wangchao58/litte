@@ -20,7 +20,7 @@ public interface TPriceMapper {
 
     List<Map<String,Object>> listPriceUserRestByPort(Map<String,Object> map);
 
-    List<Map<String,Object>> listPriceDateRestByPort(Map<String,Object> map);
+    Map<String,Object> listPriceDateRestByPort(Map<String,Object> map);
 
     TPrice selectByPrimaryKey(String id);
 

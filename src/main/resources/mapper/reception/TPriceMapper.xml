@@ -113,6 +113,13 @@
     group by r.staff_id
   </select>
 
+  <select id="listPriceDateRestByPort" resultType="java.util.Map" parameterType="java.util.Map" >
+    select min(is_hour) as isHour, min(is_date) as isDate from t_rest
+    where
+    staff_id = #{staffId,jdbcType=VARCHAR} and
+    is_date > now() and is_rest ='0'
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
