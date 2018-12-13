@@ -58,6 +58,7 @@
       r.id,      r.staff_id, r.time_start, r.time_end, r.remark,
       r.dept_id ,r.is_date,  r.is_hour,    r.is_rest,
       case
+      when r.is_reserve = 0 then 0
       when r.is_rest = 1 then 0
       when
       concat(r.is_date ,' ' , r.is_hour) &lt; date_format(now(), '%y-%m-%d %h:%i')  then 0
