@@ -55,16 +55,17 @@ public class TPriceServiceImpl implements TPriceService {
                 if(maps.get(i).get("staffId").equals(price.getUserId())) {
                     price.setIsHour(maps.get(i).get("isHour").toString());//最早可预约
                     price.setIsRest(maps.get(i).get("isRest").toString());//是否休息
-                    price.setIsDate(maps.get(i).get("isDate").toString());//是否休息
+                    price.setIsDate(maps.get(i).get("isDate").toString());//日期
                     maps.remove(i);
                 }
             }
-            if(StringUtil.isEmpty(price.getIsHour())) {
+            if(StringUtil.isEmpty(price.getIsHour()) && !price.getIsRest().equals("1")) {
                 price.setIsRest("2");//约满
             }
         }
         return pricesList;
     }
+
 
     @Override
     public List<Map<String, Object>> listPriceRestByPort(Map<String, Object> map) {
