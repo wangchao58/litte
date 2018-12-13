@@ -9,6 +9,8 @@ public class TRecruitInfo {
 
     private String topImage;
 
+    private String url;
+
     public String getId() {
         return id;
     }
@@ -39,5 +41,13 @@ public class TRecruitInfo {
 
     public void setTopImage(String topImage) {
         this.topImage = topImage;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

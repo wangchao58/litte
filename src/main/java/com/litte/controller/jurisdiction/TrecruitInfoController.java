@@ -25,6 +25,7 @@ public class TrecruitInfoController extends BaseController {
     @RequestMapping(value = "/toTrecruitInfo")
     public String toTrecruitInfo(Model model) {
          TRecruitInfo tRecruitInfo = trecruitInfoService.selTrecruitInfo();
+        tRecruitInfo.setUrl("/file/download?fileName="+tRecruitInfo.getTopImage());
         model.addAttribute("tRecruitInfo", tRecruitInfo);
         return "html/authority/trecruitInfo/trecruitInfoUpd";
     }
