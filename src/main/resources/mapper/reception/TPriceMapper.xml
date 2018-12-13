@@ -117,7 +117,7 @@
     select min(is_hour) as isHour, min(is_date) as isDate from t_rest
     where
     staff_id = #{staffId,jdbcType=VARCHAR} and
-    is_date > now() and is_rest ='0'
+    is_date > now() and is_rest ='0' and is_reserve ='1'
   </select>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
