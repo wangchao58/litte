@@ -46,16 +46,17 @@ public class TPriceServiceImpl implements TPriceService {
 
     @Override
     public List<TPrice> listPriceUserByPort(Map<String, Object> map) {
-        List<TPrice> pricesList =tPriceMapper.listPriceUserByPort(map);
+        List<TPrice> pricesList = tPriceMapper.listPriceUserByPort(map);
 
         List<Map<String,Object>> maps = tPriceMapper.listPriceUserRestByPort(map);
 
         for(TPrice price : pricesList) {
-            for(Map<String,Object> mapHours : maps) {
-                if(mapHours.get("staffId")==price.getUserId()) {
-                    maps.remove(this);
-                    price.setIsHour(mapHours.get("isHour").toString());//最早可预约
-                    price.setIsRest(mapHours.get("isRest").toString());//是否休息
+            for( int i =0;i< maps.size();i++) {
+                if(maps.get(i).get("staffId").equals(price.getUserId())) {
+                    price.setIsHour(maps.get(i).get("isHour").toString());//最早可预约
+                    price.setIsRest(maps.get(i).get("isRest").toString());//是否休息
+                    price.setIsDate(maps.get(i).get("isDate").toString());//是否休息
+                    maps.remove(i);
                 }
             }
             if(StringUtil.isEmpty(price.getIsHour())) {

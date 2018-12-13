@@ -231,7 +231,9 @@ public class UserController extends BaseController {
     @RequestMapping("/listUserSele")
     @ResponseBody
     public List<TUser> listUserSele(HttpServletRequest request) {
-        List<String>deptIds = this.getSession(request).getGroups();
+        String deptid = this.getSession(request).getDeptId();
+        List<String>deptIds = new ArrayList<>();
+        deptIds.add(deptid);
 
         List<TUser> listUser = userService.listUserByPort(deptIds);
         return listUser;

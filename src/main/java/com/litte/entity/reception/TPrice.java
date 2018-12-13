@@ -27,6 +27,8 @@ public class TPrice extends Page {
 
     private String isReserve ;
 
+    private String isDate ;
+
     private List<String> deptIds;
 
     public String getId() {
@@ -123,5 +125,13 @@ public class TPrice extends Page {
 
     public void setIsReserve(String isReserve) {
         this.isReserve = isReserve;
+    }
+
+    public String getIsDate() {
+        return isDate;
+    }
+
+    public void setIsDate(String isDate) {
+        this.isDate = isDate;
     }
 }
