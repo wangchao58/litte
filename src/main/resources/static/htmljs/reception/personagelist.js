@@ -9,12 +9,14 @@ jQuery(function($) {
         mtype: "post",
         colModel:[
             {label:'id',name:'id', editable:false,hidden:true },
-            {label:'用户ID',name:'userId', editable: true },
             {label:'昵称',name:'realName', editable: true },
-            {label:'用户头像',name:'userImg',  editable: true},
+            {label:'电话号码',name:'phone', editable: true},
+            {label:'年龄',name:'age', editable: true},
+            {label:'性别',name:'sex', editable: true},
+            {label:'风格定位',name:'style', editable: true},
+            {label:'到店距离',name:'distance', editable: true},
             {label:'增加时间',name:'createTime', editable: true ,formatter:formatDatebox},
-            {label:'修改时间',name:'updateTime', editable: true ,formatter:formatDatebox},
-            {label:'是否可登录后台',name:'isLogin', editable: true ,formatter: operation}
+            {label:'最近登录时间',name:'updateTime', editable: true ,formatter:formatDatebox}
         ],
 
         viewrecords : true,//定义是否要显示总记录数

@@ -58,6 +58,7 @@
       r.id,      r.staff_id, r.time_start, r.time_end, r.remark,
       r.dept_id ,r.is_date,  r.is_hour,    r.is_rest,
       case
+      when r.is_reserve = 0 then 0
       when r.is_rest = 1 then 0
       when
       concat(r.is_date ,' ' , r.is_hour) &lt; date_format(now(), '%y-%m-%d %h:%i')  then 0
@@ -91,9 +92,9 @@
   <insert id="insert" parameterType="com.litte.entity.reception.TRest" >
     insert into t_rest ( id, staff_id, remark,dept_id,is_reserve,is_date,is_hour,is_rest)
     values
-    <foreach collection="listHour" item="hour"  separator=",">
+    <foreach collection="listMap" item="hour"  separator=",">
       (replace(uuid(),'-',''),#{staffId,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{deptId,jdbcType=VARCHAR},
-      #{isReserve,jdbcType=VARCHAR},#{isDate,jdbcType=VARCHAR},'${hour}',#{isRest,jdbcType=VARCHAR})
+      '${hour.isReserve}',#{isDate,jdbcType=VARCHAR},'${hour.isHour}',#{isRest,jdbcType=VARCHAR})
     </foreach>
 
   </insert>

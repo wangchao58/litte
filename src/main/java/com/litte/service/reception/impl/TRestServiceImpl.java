@@ -1,5 +1,6 @@
 package com.litte.service.reception.impl;
 
+import com.github.pagehelper.StringUtil;
 import com.litte.entity.reception.TRest;
 import com.litte.mapper.reception.TRestMapper;
 import com.litte.service.reception.TRestService;
@@ -25,9 +26,18 @@ public class TRestServiceImpl implements TRestService {
         int i =0;
         record.getIsDate();
         tRestMapper.deleteByPrimary(record);
-        if(record.getIsHour() != null) {
+        if(StringUtil.isNotEmpty(record.getIsHour())) {
             List<String> listHour = Arrays.asList(record.getIsHour().split(","));
-            record.setListHour(listHour);
+            List<Map<String,Object>> mapList = new ArrayList<>();
+            for(String hour : listHour) {
+                List<String> list = Arrays.asList(hour.split("-"));
+                Map<String,Object> map = new HashMap<>();
+                map.put("isHour",list.get(0));
+                map.put("isReserve",list.get(1));
+                mapList.add(map);
+            }
+            //record.setListHour(listHour);
+            record.setListMap(mapList);
             i = tRestMapper.insert(record);
         } else {
             record.setId(UUIDUtil.getUUID());
