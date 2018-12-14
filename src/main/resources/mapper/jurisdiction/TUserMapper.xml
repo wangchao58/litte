@@ -66,6 +66,7 @@
         '${groups}'
       </foreach>
     </where>
+    group by u.add_time desc
   </select>
 
   <select id="listUserByPort" resultMap="BaseResultMap" parameterType="java.util.List" >
