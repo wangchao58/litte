@@ -50,5 +50,6 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
                         "/projects/listProjectsByPort",
                         "/trecruitInfo/trecruitInfoData",
                         "/trecruitInfo/updTrecruitInfo");
+
     }
 }
