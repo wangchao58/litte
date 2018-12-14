@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -83,6 +84,7 @@ public class TDeptController extends BaseController {
     public int addDept(TDept dept,HttpServletRequest request,String headPortrait) {
         int i = 0;
         dept.setPortrait(headPortrait);
+        dept.setCreateTime(new Date());
         if (StringUtil.isNotEmpty(dept.getId())) {
             i = tDeptService.updateByPrimaryKeySelective(dept);
         } else {

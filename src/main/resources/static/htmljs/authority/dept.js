@@ -14,6 +14,7 @@ jQuery(function($) {
             {label:'地址',name:'site',  editable: true},
             {label:'门店简介',name:'introduction', editable: true},
             {label:'备注',name:'remark', editable: true},
+            {label:'增加时间',name:'createTime', editable: true, formatter:formatDatebox},
             {label:'操作',name:'operate', editable: true ,formatter: operation}
         ],
         viewrecords : true,//定义是否要显示总记录数
@@ -184,5 +185,15 @@ function mySubmit(){
         }
     });
 }
+
+function formatDatebox(Value, options, rowObject){
+
+    var time = new Date(Value);
+    var y = time.getFullYear();
+    var m = time.getMonth()+1;
+    var d = time.getDate();
+    return y+'-'+add(m)+'-'+add(d);
+}
+function add(m){return m<10?'0'+m:m };
 
 

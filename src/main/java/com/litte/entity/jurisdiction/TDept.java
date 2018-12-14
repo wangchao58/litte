@@ -2,6 +2,7 @@ package com.litte.entity.jurisdiction;
 
 import com.litte.util.Page;
 
+import java.util.Date;
 import java.util.List;
 
 public class TDept extends Page {
@@ -36,6 +37,8 @@ public class TDept extends Page {
     private String endTime;
 
     private String period;
+
+    private Date createTime;
 
     public String getId() {
         return id;
@@ -163,5 +166,13 @@ public class TDept extends Page {
 
     public void setPeriod(String period) {
         this.period = period;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }
