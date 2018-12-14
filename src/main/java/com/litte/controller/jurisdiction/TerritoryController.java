@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -99,6 +100,7 @@ public class TerritoryController extends BaseController {
     @ResponseBody
     public int addTerritory(TTerritory tTerritory) {
         int i = 0;
+        tTerritory.setCreateTime(new Date());
         if (StringUtil.isNotEmpty(tTerritory.getId())) {
             i = territoryService.updateByPrimaryKeySelective(tTerritory);
         } else {

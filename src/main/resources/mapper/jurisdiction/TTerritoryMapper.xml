@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.litte.entity.jurisdiction.TTerritory" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="territory" property="territory" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -36,7 +37,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, territory, remark
+    id, territory, create_time, remark
   </sql>
 
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.litte.entity.jurisdiction.TTerritory" >
@@ -48,10 +49,11 @@
         and territory like  concat('%',#{territory,jdbcType=VARCHAR},'%' )
       </if>
     </where>
+    order by create_time desc
   </select>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_territory
     where id = #{id,jdbcType=VARCHAR}
@@ -66,9 +68,9 @@
   </delete>
 
   <insert id="insert" parameterType="com.litte.entity.jurisdiction.TTerritory" >
-    insert into t_territory (id, territory, remark
+    insert into t_territory (id, territory,create_time, remark
       )
-    values (#{id,jdbcType=VARCHAR}, #{territory,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+    values (#{id,jdbcType=VARCHAR}, #{territory,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.litte.entity.jurisdiction.TTerritory" >
@@ -83,6 +85,9 @@
       <if test="remark != null" >
         remark,
       </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -94,6 +99,9 @@
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
       </if>
+        <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.litte.entity.jurisdiction.TTerritory" >
@@ -101,6 +109,9 @@
     <set >
       <if test="territory != null" >
         territory = #{territory,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
@@ -111,6 +122,7 @@
   <update id="updateByPrimaryKey" parameterType="com.litte.entity.jurisdiction.TTerritory" >
     update t_territory
     set territory = #{territory,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>

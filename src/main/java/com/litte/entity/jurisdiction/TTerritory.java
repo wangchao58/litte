@@ -2,12 +2,16 @@ package com.litte.entity.jurisdiction;
 
 import com.litte.util.Page;
 
+import java.util.Date;
+
 public class TTerritory extends Page {
     private String id;
 
     private String territory;
 
     private String remark;
+
+    private Date createTime;
 
     public String getId() {
         return id;
@@ -31,5 +35,13 @@ public class TTerritory extends Page {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }
