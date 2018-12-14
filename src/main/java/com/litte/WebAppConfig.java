@@ -47,6 +47,8 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
                         "/evaluate/addEvaluate",
                         "/price/listPriceRestByPort",
                         "/rest/seleDateStaffRort",
-                        "/projects/listProjectsByPort");
+                        "/projects/listProjectsByPort",
+                        "/trecruitInfo/trecruitInfoData",
+                        "/trecruitInfo/updTrecruitInfo");
     }
 }

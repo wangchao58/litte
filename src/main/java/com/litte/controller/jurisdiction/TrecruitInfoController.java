@@ -43,4 +43,18 @@ public class TrecruitInfoController extends BaseController {
         int i = trecruitInfoService.updTrecruitInfo(tRecruitInfo);
         return i;
     }
+
+    /**
+     * @Description: 获取招聘联系人相关信息
+     * @Param:
+     * @return:
+     * @Author: Mr.Jiang
+     * @Date: 2018/12/14 20:14
+     */
+    @RequestMapping(value = "/trecruitInfoData")
+    @ResponseBody
+    public TRecruitInfo trecruitInfoData() {
+        TRecruitInfo tRecruitInfo = trecruitInfoService.selTrecruitInfo();
+        return tRecruitInfo;
+    }
 }
