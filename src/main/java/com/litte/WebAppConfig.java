@@ -41,6 +41,7 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
                         "/wallet/walletCardOrder",
                         "/wallet/payWallet",
                         "/user/listUserByPort",
+                        "/recruit/listRecruitByPort",
                         "/personage/seleByKeyPort",
                         "/file/uploadFile",
                         "/evaluate/addEvaluate",
