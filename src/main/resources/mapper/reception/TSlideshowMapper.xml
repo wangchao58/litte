@@ -42,7 +42,7 @@
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.litte.entity.reception.TSlideshow" >
     select
     <include refid="Base_Column_List" />
-    from t_slideshow
+    from t_slideshow order by create_time desc
   </select>
 
   <select id="selectByExampleByTime" resultMap="BaseResultMap" >
