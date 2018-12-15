@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -31,6 +30,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int insertSelective(TUser record) {
+        TUser tUser = tUserMapper.selUserByLoginName(record.getLoginName());
+        if(null != tUser){
+            return 2;
+        }
         record.setPassword(Md5Util.md5(record.getPassword()));
         record.setAddTime(new Date());
         record.setUserId(UUIDUtil.getUUID());

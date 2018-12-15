@@ -228,4 +228,12 @@
       remark = #{remark,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
+
+  <!-- 根据登录名查询用户数据 selUserByLoginName -->
+  <select id="selUserByLoginName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from t_user
+    where login_name = #{loginName,jdbcType=VARCHAR}
+  </select>
 </mapper>

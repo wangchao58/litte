@@ -1,11 +1,9 @@
 package com.litte.mapper.jurisdiction;
 
 import com.litte.entity.jurisdiction.TUser;
-import com.litte.entity.jurisdiction.TUserExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
 
 public interface TUserMapper {
     int deleteByPrimaryKey(List<String>ids);
@@ -27,4 +25,6 @@ public interface TUserMapper {
     int updateByPrimaryKeySelective(TUser record);
 
     int updateByPrimaryKey(TUser record);
+
+    TUser selUserByLoginName(String loginName);
 }
