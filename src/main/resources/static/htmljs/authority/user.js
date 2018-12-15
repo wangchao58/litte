@@ -201,6 +201,10 @@ function mySubmit(){
                 layer.alert('操作成功！',function () {
                     parent.location.reload(); // 父页面刷新
                 });
+            }else if(result == "2"){
+                layer.alert('登陆名已经存在！',function () {
+                parent.location.reload(); // 父页面刷新
+                });
             } else {
                 layer.msg('对不起，操作失败！');
             }
