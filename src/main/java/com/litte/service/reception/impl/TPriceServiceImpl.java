@@ -62,9 +62,11 @@ public class TPriceServiceImpl implements TPriceService {
            /* if(StringUtil.isNotEmpty(price.getIsRest()) && price.getIsRest().equals("1")) {
                 price.setIsRest("2");//约满
             }*/
-            if(StringUtil.isEmpty(price.getIsRest()) || !price.getIsRest().equals("0") ){//如果休息或约满
+            if(StringUtil.isEmpty(price.getIsRest()) || price.getIsRest().equals("1") ){//如果休息或约满
                 map.put("staffId",price.getUserId());
-                price.setIsRest("2");//约满
+                if(StringUtil.isEmpty(price.getIsRest())) {
+                    price.setIsRest("2");//约满
+                }
                 Map<String,Object> listPriceDate = tPriceMapper.listPriceDateRestByPort(map);
                 if(listPriceDate != null){
                     price.setIsHour(listPriceDate.get("isHour").toString());//最早可预约
