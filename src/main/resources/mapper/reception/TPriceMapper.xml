@@ -80,9 +80,9 @@
     p.id, p.price, p.remark, p.user_id, p.dept_id,
     u.user_name as userName,u.head_portrait as headPortrait
     from
-        t_price p
+        t_user u
     left join
-        t_user u on p.user_id = u.user_id
+        t_price p on p.user_id = u.user_id
     <where>
       <if test="deptId != null" >
         and p.dept_id = #{deptId,jdbcType=VARCHAR}
