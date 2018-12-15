@@ -47,7 +47,7 @@ public class TMenuServiceImpl implements TMenuService {
                 if(menu.getId().equals("723faaa445e8488d8294c095e85b4ae1")){
                     map.put("arrange","1");
                 }
-                if(menu.getId().equals("70d9a42f868f4a9b89af143e20fbd184")){
+                if(menu.getId().equals("caff701003f54dea8a2d40965851c950")){
                     map.put("isIndent","1");
                 }
             }
