@@ -20,7 +20,7 @@
 <br>
 <form class="form-horizontal" id="aouDept">
     <div class="form-group">
-        <label for="id" class="col-xs-12 col-sm-3 control-label no-padding-right">部门名:</label>
+        <label for="id" class="col-xs-12 col-sm-3 control-label no-padding-right">门店名:</label>
         <div class="col-xs-12 col-sm-5">
             <span class="block input-icon input-icon-right">
                 <input type="hidden" id="id" name="id"  class="width-100" />
@@ -30,7 +30,7 @@
     </div>
 
     <div class="form-group">
-        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="deptName">所属部门:</label>
+        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="deptName">上级:</label>
         <div class="col-xs-12 col-sm-5" >
             <span class="block input-icon input-icon-right">
                 <input type="hidden" name="pid" id="deptId" >
@@ -100,19 +100,19 @@
             </span>
         </div>
     </div>
-    <!--<div class="form-group">
+    <div class="form-group">
         <label class="control-label col-xs-12 col-sm-3  no-padding-right" for="startTime">每天开门时间:</label>
-        &lt;!&ndash;<div class="col-xs-12 col-sm-5 form_datetime" >
+        <!--<div class="col-xs-12 col-sm-5 form_datetime" >
             <span class="block input-icon input-icon-right">
                 <input type="text" id="startTime"  name="startTime" class="width-100" />
             </span>
-        </div>&ndash;&gt;
+        </div>-->
         <div class="input-group date form_datetime col-md-5" id="startTime" data-link-field="dtp_input1">
             <input class="form-control" name="startTime" size="16" type="text" value="" readonly>
             <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
             <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
         </div>
-    </div>-->
+    </div>
     <div class="form-group">
         <label class="control-label col-xs-12 col-sm-3  no-padding-right" for="endTime">每天关门时间:</label>
         <!--<div class="input-group date form_datetime col-md-5" id="timeEnd" data-link-field="dtp_input1">
@@ -122,7 +122,7 @@
         </div>-->
         <div class="input-group date form_datetime col-md-5" id="endTime" data-link-field="dtp_input1">
             <input class="form-control" name="endTime" size="16" type="text" value="" readonly>
-            <span class="input-group-addon"><span class="glyphicon glyphicon-wrench"></span></span>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
             <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
         </div>
     </div>

@@ -9,8 +9,8 @@ jQuery(function($) {
         mtype: "post",
         colModel:[
             {label:'id',name:'id', editable:false,hidden:true },
-            {label:'部门名',name:'deptName', editable: true },
-            {label:'上级部门',name:'pName', editable: true },
+            {label:'门店名',name:'deptName', editable: true },
+            {label:'上级门店',name:'pName', editable: true },
             {label:'地址',name:'site',  editable: true},
             {label:'门店简介',name:'introduction', editable: true},
             {label:'备注',name:'remark', editable: true},

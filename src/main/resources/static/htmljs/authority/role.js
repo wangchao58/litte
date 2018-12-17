@@ -128,7 +128,7 @@ function openEditDiag(uuid) {
     //页面层
     var indext = layer.open({
         type: 2,
-        title:'用户编辑',
+        title:'角色编辑',
         area: ['70%', '80%'],
         fixed: false, //不固定
         maxmin: true,

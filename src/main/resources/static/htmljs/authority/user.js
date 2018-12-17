@@ -151,7 +151,7 @@ function openRoleDiag(uuid) {
     var indext = layer.open({
         type: 2,
         title:'用户授角色',
-        area: ['20%', '80%'],
+        area: ['300px', '500px'],
         fixed: false, //不固定
         maxmin: true,
         content: '/user/accreditRoleView?id='+uuid,

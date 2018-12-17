@@ -9,8 +9,8 @@ jQuery(function($) {
         mtype: "post",
         colModel:[
             {label:'id',name:'id', editable:false,hidden:true },
-            {label:'卡券类型',name:'cCode', editable: true },
-            {label:'卡券金额',name:'cMoney', editable: true },
+            {label:'储值卡类型',name:'cCode', editable: true },
+            {label:'储值卡金额',name:'cMoney', editable: true },
             {label:'实收金额',name:'cMoneyReceipts',  editable: true},
             {label:'备注',name:'remark', editable: true},
             {label:'是否启用',name:'isStatus', editable: true ,formatter: operation},
@@ -168,7 +168,7 @@ function openUpdDiag(uuid) {
     //页面层
     var indext = layer.open({
         type: 2,
-        title:'卡券编辑',
+        title:'储值卡编辑',
         area: ['70%', '80%'],
         fixed: false, //不固定
         maxmin: true,
@@ -186,7 +186,7 @@ function openAddDiag() {
     //页面层
     var indext = layer.open({
         type: 2,
-        title:'卡券增加',
+        title:'储值卡增加',
         area: ['70%', '80%'],
         fixed: false, //不固定
         maxmin: true,

@@ -70,7 +70,7 @@ function treeClick() {
         deptId.attr("value", ids);
     }
 
-    $.fn.zTree.init($("#tree"), setting, zNodes);
+    $.fn.zTree.init($("#tree"), setting, zNodes).expandAll(true);
     $("#tree").show();
 }
 

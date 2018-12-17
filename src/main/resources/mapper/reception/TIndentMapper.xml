@@ -131,7 +131,11 @@
     select
     <include refid="Base_Column_List" />
     from t_indent
-    where date_format(adddate(i_time, interval 30 minute),'%y-%m-%d %h:%i:%s') &lt;= now() and i_condition='1' and is_sms = '0'
+    where
+    date_format(adddate(i_time, interval 30 minute),'%y-%m-%d %h:%i:%s') &lt;= now()
+    and i_condition='1'
+    and is_sms = '0'
+    and i_phone is not null
     limit 1
   </select>
   <select id="selectCancelIndent" resultMap="BaseResultMap">

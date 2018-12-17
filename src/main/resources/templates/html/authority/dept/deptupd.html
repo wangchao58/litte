@@ -20,7 +20,7 @@
 <br>
 <form class="form-horizontal" id="aouDept">
     <div class="form-group">
-        <label for="id" class="col-xs-12 col-sm-3 control-label no-padding-right">部门名:</label>
+        <label for="id" class="col-xs-12 col-sm-3 control-label no-padding-right">门店名:</label>
         <div class="col-xs-12 col-sm-5">
             <span class="block input-icon input-icon-right">
                 <input type="hidden" id="id" name="id" th:value="${dept.id}" class="width-100" />
@@ -30,7 +30,7 @@
     </div>
 
     <div class="form-group">
-        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="deptName">所属部门:</label>
+        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="deptName">上级:</label>
         <div class="col-xs-12 col-sm-5" >
             <span class="block input-icon input-icon-right">
                 <input type="hidden" name="pid" id="deptId" th:value="${dept.pid}">
@@ -86,7 +86,7 @@
         <div class="col-xs-12 col-sm-5" >
             <span class="block input-icon input-icon-right">
                 <!--<input type="text" id="portrait"  name="portrait" class="width-100" />-->
-                <input type="hidden" id="headPortrait" name="headPortrait"  class="width-100" />
+                <input type="hidden" id="headPortrait" name="headPortrait" th:value="${dept.portrait}"  class="width-100" />
                 <input type="file" id="uploadClick" name="file"  class="width-100" />
                 <img id="previewImg"
                      style="width:200px;height:auto;margin-left: 15px;margin-top: 15px;margin-bottom: 20px;"/>
@@ -184,7 +184,7 @@
         language:'zh-CN',
         pickerPosition:"bottom-left"
     });
-
+    $("#previewImg").attr('src', "/file/download?fileName=" + $("#headPortrait").val());
     $.ajax({
         url : "/territory/listTerritorySele",
         async : false,
