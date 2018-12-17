@@ -32,6 +32,7 @@
     id, i_code, openid, i_price, i_phone, i_type, i_time, is_time, hair_id, changing_time,
     i_mode, i_refund, i_refund_model, i_refund_money, i_condition,dept_id,projects_id,is_sms
   </sql>
+
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.litte.entity.reception.TIndent" >
     select
         i.id,     i.i_code,   i.openid,         i.i_price,        i.i_phone,
@@ -58,6 +59,67 @@
 
     order by i.i_time desc
   </select>
+
+  <select id="selIndentByUser" resultType="java.util.Map" parameterType="com.litte.entity.reception.TIndent" >
+    select
+      i.id,    i.i_time  as iTime,       i.i_code as iCode,    i.i_mode as iMode,   i.openid,
+      p.p_name as pName,u.head_portrait as headPortrait,d.dept_name as deptName, u.user_name as userName ,d.site
+    from t_indent i left join t_projects p
+    on
+    i.i_type=p.id
+    left join t_user u on i.hair_id=u.user_id
+    left join t_dept d on i.dept_id=d.id
+    <where>
+      <if test="openid != null" >
+        and i.openid= #{openid,jdbcType=VARCHAR}
+      </if>
+      <if test="iCondition != null" >
+        and i.i_condition= #{iCondition,jdbcType=VARCHAR}
+      </if>
+      <if test="id != null" >
+        and i.id= #{id,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
+  <select id="selIndentByHair" resultType="java.util.Map" parameterType="com.litte.entity.reception.TIndent" >
+    select
+    i.id,    i.i_time  as iTime,       i.i_code as iCode,    i.i_mode as iMode,   i.openid,
+    p.p_name as pName,u.head_portrait as headPortrait,d.dept_name as deptName, u.user_name as userName ,d.site
+    from t_indent i left join t_projects p
+    on
+    i.i_type=p.id
+    left join t_user u on i.hair_id=u.user_id
+    left join t_dept d on i.dept_id=d.id
+    <where>
+      <if test="hairId != null" >
+        and i.hair_id= #{hairId,jdbcType=VARCHAR}
+      </if>
+      <if test="iCondition != null" >
+        and i.i_condition= #{iCondition,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
+  <select id="selIndentByPort" resultType="java.util.Map" parameterType="com.litte.entity.reception.TIndent" >
+    select
+    i.id,i.i_code as iCode ,i.i_phone as iPhone,i.hair_id as haiId,
+    i.i_time as iTime,i.i_condition as iCondition, p.real_name as realName,u.user_name as userName
+    from t_indent i left join t_personage p on i.openid = p.id
+    <where>
+      <if test="hairId != null" >
+        and hair_id= #{hairId,jdbcType=VARCHAR}
+      </if>
+      <if test="iCondition != null" >
+        and i_condition= #{iCondition,jdbcType=VARCHAR}
+      </if>
+      <if test="openid != null" >
+        and openid= #{openid,jdbcType=VARCHAR}
+      </if>
+      and i_condition not in ('6','7')
+    </where>
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
@@ -107,13 +169,13 @@
       i_price, i_phone, i_type, 
       i_time, is_time, hair_id, 
       changing_time, i_mode, i_refund, 
-      i_refund_model, i_refund_money, condition
+      i_refund_model, i_refund_money, i_condition
       )
     values (#{id,jdbcType=VARCHAR}, #{iCode,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR},
       #{iPrice,jdbcType=VARCHAR}, #{iPhone,jdbcType=VARCHAR}, #{iType,jdbcType=VARCHAR}, 
       #{iTime,jdbcType=TIMESTAMP}, #{isTime,jdbcType=TIMESTAMP}, #{hairId,jdbcType=VARCHAR}, 
       #{changingTime,jdbcType=TIMESTAMP}, #{iMode,jdbcType=VARCHAR}, #{iRefund,jdbcType=VARCHAR}, 
-      #{iRefundModel,jdbcType=VARCHAR}, #{iRefundMoney,jdbcType=VARCHAR}, #{condition,jdbcType=VARCHAR}
+      #{iRefundModel,jdbcType=VARCHAR}, #{iRefundMoney,jdbcType=VARCHAR}, #{iCondition,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.litte.entity.reception.TIndent" >
@@ -161,14 +223,17 @@
       <if test="iRefundMoney != null" >
         i_refund_money,
       </if>
-      <if test="condition != null" >
-        condition,
+      <if test="iCondition != null" >
+        i_condition,
       </if>
       <if test="deptId != null" >
         dept_id,
       </if>
       <if test="isSms != null" >
         is_sms,
+      </if>
+      <if test="projectsId != null" >
+        projects_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -214,14 +279,17 @@
       <if test="iRefundMoney != null" >
         #{iRefundMoney,jdbcType=VARCHAR},
       </if>
-      <if test="condition != null" >
-        #{condition,jdbcType=VARCHAR},
+      <if test="iCondition != null" >
+        #{iCondition,jdbcType=VARCHAR},
       </if>
       <if test="deptId != null" >
         #{deptId,jdbcType=VARCHAR},
       </if>
       <if test="isSms != null" >
         #{isSms,jdbcType=VARCHAR},
+      </if>
+      <if test="projectsId != null" >
+        #{projectsId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -279,6 +347,9 @@
       <if test="isSms != null" >
         is_sms = #{isSms,jdbcType=VARCHAR},
       </if>
+      <if test="projectsId != null" >
+        projects_id = #{projectsId,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -297,7 +368,7 @@
       i_refund = #{iRefund,jdbcType=VARCHAR},
       i_refund_model = #{iRefundModel,jdbcType=VARCHAR},
       i_refund_money = #{iRefundMoney,jdbcType=VARCHAR},
-      condition = #{condition,jdbcType=VARCHAR}
+      i_condition = #{iCondition,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

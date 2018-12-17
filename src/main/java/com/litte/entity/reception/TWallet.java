@@ -11,6 +11,8 @@ public class TWallet extends Page {
 
     private String phone;
 
+    private String couponId;
+
     public String getId() {
         return id;
     }
@@ -41,5 +43,13 @@ public class TWallet extends Page {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getCouponId() {
+        return couponId;
+    }
+
+    public void setCouponId(String couponId) {
+        this.couponId = couponId;
     }
 }

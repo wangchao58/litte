@@ -57,7 +57,7 @@ public class TWalletServiceImpl implements TWalletService {
         String code = DateUtil.getDateTime();
         String id = UUIDUtil.getUUID();
         PayUtil payUtil = new PayUtil();
-        payUtil.setBody("欣星尚支付中心-充值支付");
+        payUtil.setBody("xxszfzx-czzf");
         payUtil.setOut_trade_no(code);
         payUtil.setNonce_str(id);
         payUtil.setTotal_fee(Integer.parseInt(coupon.getcMoneyReceipts())*100);
@@ -76,6 +76,7 @@ public class TWalletServiceImpl implements TWalletService {
         wallet.setId(UUIDUtil.getUUID());
         wallet.setUserId(personage.getUserId());
         wallet.setPhone(personage.getPhone());
+        wallet.setCouponId(coupon.getId());
         tWalletMapper.insert(wallet);
         int i = tStatedMapper.insertSelective(record);
         if (i > 0) {
@@ -102,5 +103,10 @@ public class TWalletServiceImpl implements TWalletService {
             }
         }
         return 0;
+    }
+
+    @Override
+    public TWallet selWalletByUser(TWallet record) {
+        return tWalletMapper.selectByPrimaryUser(record.getUserId());
     }
 }

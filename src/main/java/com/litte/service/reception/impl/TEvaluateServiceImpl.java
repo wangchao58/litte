@@ -7,6 +7,7 @@ import com.litte.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -18,6 +19,7 @@ public class TEvaluateServiceImpl implements TEvaluateService {
     @Override
     public int insertSelective(TEvaluate record) {
         record.setId(UUIDUtil.getUUID());
+        record.setCreateTime(new Date());
         return tEvaluateMapper.insertSelective(record);
     }
 

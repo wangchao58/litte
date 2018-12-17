@@ -132,5 +132,20 @@ public class TIndentServiceImpl implements TIndentService {
         return tIndentMapper.selectJob();
     }
 
+    @Override
+    public List<Map<String, Object>> selIndentByUser(TIndent record) {
+        return tIndentMapper.selIndentByUser(record);
+    }
+
+    @Override
+    public List<Map<String, Object>> selIndentByHair(TIndent record) {
+        return tIndentMapper.selIndentByHair(record);
+    }
+
+    @Override
+    public List<Map<String, Object>> selIndentByPort(TIndent record) {
+        return tIndentMapper.selIndentByPort(record);
+    }
+
 
 }

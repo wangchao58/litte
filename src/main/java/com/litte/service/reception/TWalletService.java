@@ -1,5 +1,6 @@
 package com.litte.service.reception;
 
+import com.litte.entity.reception.TStated;
 import com.litte.entity.reception.TWallet;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,5 +17,5 @@ public interface TWalletService {
 
     int payUpdateWallet(Map<String,Object> map) throws Exception;
 
-
+    TWallet selWalletByUser(TWallet record);
 }

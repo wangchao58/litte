@@ -17,6 +17,8 @@ public interface TWalletMapper {
 
     TWallet selectByPrimaryUserId(String userId);
 
+    TWallet selectByPrimaryUser(String userId);
+
     int updateByPrimaryKeySelective(TWallet record);
 
     int updateByPrimaryKey(TWallet record);

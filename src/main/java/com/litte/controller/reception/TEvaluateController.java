@@ -78,7 +78,11 @@ public class TEvaluateController extends BaseController {
      */
     @RequestMapping(value = "/listEvaluateByPort")
     @ResponseBody
-    public List<TEvaluate> listEvaluateByPort(TEvaluate evaluate) {
+    public List<TEvaluate> listEvaluateByPort(TEvaluate evaluate,int rows,int page) {
+        PageHelper.startPage(page,rows);//分页查询
+        //evaluate.setDeptIds(this.getSession(request).getGroups());
+        //List<TEvaluate> tEvaluateList = tEvaluateService.selectByExample(evaluate);
+        //if(evaluate.getePersonShopId())
         List<TEvaluate> tEvaluateList = tEvaluateService.selectByExample(evaluate);
         return tEvaluateList;
     }

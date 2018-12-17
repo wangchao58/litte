@@ -2,6 +2,7 @@ package com.litte.controller.reception;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.StringUtil;
 import com.litte.entity.reception.TIndent;
 import com.litte.entity.reception.TWallet;
 import com.litte.service.reception.TWalletService;
@@ -79,11 +80,29 @@ public class TWalletController extends BaseController {
      * 付款后微信返回信息，更改订单状态
      */
     @RequestMapping(value = "/walletCardOrder")
+    @ResponseBody
     public void walletCardOrder(HttpServletRequest request) throws Exception {
         String xmlStr = NotifyServlet.getWxXml(request);
         Map map2 = WinxinUtil.doXMLParse(xmlStr);
         tWalletService.payUpdateWallet(map2);
+    }
+
+    /**
+     * 接口查询余额
+     */
+    @RequestMapping(value = "/selWalletByUser")
+    @ResponseBody
+    public TWallet selWalletByUser(TWallet record)   {
+
+        if(record != null && StringUtil.isNotEmpty(record.getUserId())) {
+            TWallet wallet = tWalletService.selWalletByUser(record);
+            return wallet;
+        } else {
+            return null;
+        }
 
     }
+
+
 
 }

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -35,7 +36,7 @@ public class TIndentController extends BaseController {
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//自定义格式
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");//自定义格式
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor( dateFormat, true));
     }
@@ -104,17 +105,38 @@ public class TIndentController extends BaseController {
     public Map<String,Object> payIndent(String id,String iMode,HttpServletRequest request) throws Exception {
         Map<String,Object> map = new HashMap<>();
         TIndent indent = tIndentService.selectByPrimaryKey(id);
+        double total_fee = Double.parseDouble(indent.getiPrice())*100;
+        int isss =  (new Double(total_fee)).intValue();
         if(iMode.equals("0")) {
             PayUtil payUtil = new PayUtil();
-            payUtil.setBody("欣星尚支付中心-剪发支付");
+            payUtil.setBody("xxszfzx-jfzf");
             payUtil.setOut_trade_no(indent.getiCode());
             payUtil.setNonce_str(indent.getId());
-            payUtil.setTotal_fee(Integer.parseInt(indent.getiPrice())*100);
+            payUtil.setTotal_fee(isss);
+            payUtil.setDevice_info("WEB");
             payUtil.setNotify_url(fileUploadUtil.getBaseUrl()+"/indent/noticeCardOrder");
             payUtil.setOpenid(indent.getOpenid());
             map=WinxinUtil.wxPay(payUtil,request);
-            map.put("timeStamp",new Date().getTime());
+
+            String nonceStr = UUIDUtil.getUUID().toUpperCase();
+            String dateTime = String.valueOf (new Date().getTime());
+            String signType = "MD5";
+            String packages = "prepay_id="+map.get("prepay_id").toString();
+            map.put("timeStamp",dateTime);
+            String paySign="appId="+map.get("appid")
+                    +"&nonceStr=" +nonceStr
+                    +"&package="+packages
+                    +"&signType="+signType
+                    +"&timeStamp="+dateTime
+                    +"&key=xinxingshang2018xinxingshang2018";
+
+            map.put("paySign",Md5Util.md5(paySign).toUpperCase());
+            map.put("nonceStr",nonceStr);
+            map.put("signType",signType);
+            map.put("package",packages);
+            indent.setiMode("0");
         } else if(iMode.equals("1")){
+            indent.setiMode("1");
             int i  = tIndentService.updateByPrimaryKeyPay(indent);
             if(i>0) {
                 map.put("return_code","SUCCESS");
@@ -124,6 +146,7 @@ public class TIndentController extends BaseController {
                 map.put("return_msg","支付失败");
             }
         }
+        tIndentService.updateByPrimaryKeySelective(indent);
         return  map;
     }
 
@@ -137,6 +160,8 @@ public class TIndentController extends BaseController {
     public Map<String,Object> refund(String id,HttpServletRequest request) throws Exception {
         Map<String,Object> map = new HashMap<>();
         TIndent indent = tIndentService.selectByPrimaryKey(id);
+        double total_fee = Double.parseDouble(indent.getiPrice())*100;
+        int isss =  (new Double(total_fee)).intValue();
         String mode = indent.getiMode();
         String out_refund_no = UUIDUtil.getUUID();
         indent.setOut_refund_no(out_refund_no);
@@ -144,14 +169,15 @@ public class TIndentController extends BaseController {
             PayUtil payUtil = new PayUtil();
             payUtil.setOut_trade_no(indent.getiCode());
             payUtil.setNonce_str(indent.getId());
-            payUtil.setTotal_fee(Integer.parseInt(indent.getiPrice())*100);
-            payUtil.setRefund_fee(Integer.parseInt(indent.getiPrice())*100);
+            payUtil.setTotal_fee(isss);
+            payUtil.setRefund_fee(isss);
             payUtil.setOut_refund_no(out_refund_no);
-            payUtil.setOpenid(indent.getOpenid());
             payUtil.setNotify_url(fileUploadUtil.getBaseUrl()+"/indent/refundCardOrder");
-            map=WinxinUtil.wxPay(payUtil,request);
-            indent.setiCondition("6");
-            tIndentService.updateByPrimaryKeySelective(indent);
+            map=WinxinUtil.wxRefund(payUtil,request);
+            if(map.get("return_code").equals("SUCCESS")) {
+                indent.setiCondition("6");
+                tIndentService.updateByPrimaryKeySelective(indent);
+            }
         } else if(mode.equals("1")){
             int i  = tIndentService.updateByPrimaryKeyRefund(indent);
             if(i>0) {
@@ -169,6 +195,7 @@ public class TIndentController extends BaseController {
      * 付款后微信返回信息，更改订单状态
      */
     @RequestMapping(value = "/noticeCardOrder")
+    @ResponseBody
     public void noticeCardOrder(HttpServletRequest request) throws Exception {
         String xmlStr = NotifyServlet.getWxXml(request);
         Map map2 = WinxinUtil.doXMLParse(xmlStr);
@@ -187,6 +214,7 @@ public class TIndentController extends BaseController {
      * 退款后微信返回信息，更改订单状态
      */
     @RequestMapping(value = "/refundCardOrder")
+    @ResponseBody
     public void refundCardOrder(HttpServletRequest request) throws Exception {
         String xmlStr = NotifyServlet.getWxXml(request);
         Map map2 = WinxinUtil.doXMLParse(xmlStr);
@@ -260,6 +288,40 @@ public class TIndentController extends BaseController {
             map.put("isOk","OK");
         }
         return map;
+    }
+
+    /**
+     * 客户查询订单
+     * @return
+     */
+    @RequestMapping(value = "/selIndentByUser")
+    @ResponseBody
+    public List<Map<String,Object>> selIndentByUser(TIndent indent) {
+        return tIndentService.selIndentByUser(indent);
+    }
+
+    /**
+     * 发型师查询订单
+     * @return
+     */
+    @RequestMapping(value = "/selIndentByHair")
+    @ResponseBody
+    public List<Map<String,Object>> selIndentByHair(TIndent indent) {
+        return tIndentService.selIndentByHair(indent);
+    }
+
+    /**
+     * 消费记录接口查询
+     * @return
+     */
+    @RequestMapping(value = "/selIndentByPort")
+    @ResponseBody
+    public List<Map<String,Object>> selIndentByPort(TIndent indent) {
+        if(indent != null && StringUtil.isNotEmpty(indent.getOpenid())) {
+            return tIndentService.selIndentByPort(indent);
+        }
+        return null;
+
     }
 
 }

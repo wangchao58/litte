@@ -25,4 +25,10 @@ public interface TIndentService {
     TIndent selectByPrimaryKey(String id);
 
     TIndent selectJob();
+
+    List<Map<String,Object>> selIndentByUser(TIndent record);
+
+    List<Map<String,Object>> selIndentByHair(TIndent record);
+
+    List<Map<String,Object>> selIndentByPort(TIndent record);
 }

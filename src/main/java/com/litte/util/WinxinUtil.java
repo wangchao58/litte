@@ -32,25 +32,28 @@ public class WinxinUtil {
         payUtil.setMch_id("1515291591");
         String spbill_create_ip = Util.getIpAddr(request);//当前服务器IP
         //payUtil.setOut_trade_no(DateUtil.getDateTime());
-        String stringA = "appid="
-                + payUtil.getAppid()
-                + "&body="
-                + payUtil.getBody()
-                + "&device_info="
-                + payUtil.getDevice_info()
-                + "&mch_id=" + payUtil.getMch_id() + "&nonce_str=" + payUtil.getNonce_str() + "&key=cff148670d0e8dd06be650a6ed6774fe";
+        String stringA = "appid="  + payUtil.getAppid()
+                + "&body=" + payUtil.getBody()
+                + "&mch_id=" + payUtil.getMch_id()
+                + "&nonce_str=" + payUtil.getNonce_str()
+                + "&notify_url=" + payUtil.getNotify_url()
+                + "&openid=" + payUtil.getOpenid()
+                + "&out_trade_no=" + payUtil.getOut_trade_no()
+                + "&spbill_create_ip=120.27.11.164"
+                + "&total_fee="+ payUtil.getTotal_fee()
+                + "&trade_type=JSAPI"
+                + "&key=xinxingshang2018xinxingshang2018";
         String sign = Md5Util.md5(stringA).toUpperCase();
 
         String xml = "<xml>" +
                 "   <appid>" + payUtil.getAppid() + "</appid>" +
-                "   <attach>" + payUtil.getAttach() + "</attach>" +
                 "   <body>" + payUtil.getBody() + "</body>" +
                 "   <mch_id>" + payUtil.getMch_id() + "</mch_id>" +
                 "   <nonce_str>" + payUtil.getNonce_str() + "</nonce_str>" +
                 "   <notify_url>" + payUtil.getNotify_url() + "</notify_url>" +
                 "   <openid>" + payUtil.getOpenid() + "</openid>" +
                 "   <out_trade_no>" + payUtil.getOut_trade_no() + "</out_trade_no>" +
-                "   <spbill_create_ip>" + spbill_create_ip + "</spbill_create_ip>" +
+                "   <spbill_create_ip>120.27.11.164</spbill_create_ip>" +
                 "   <total_fee>" + payUtil.getTotal_fee() + "</total_fee>" +
                 "   <trade_type>JSAPI</trade_type>" +
                 "   <sign>" + sign + "</sign>" +
@@ -81,13 +84,14 @@ public class WinxinUtil {
         payUtil.setAppid("wx64219b04c3af9d85");
         payUtil.setMch_id("1515291591");
         //payUtil.setOut_trade_no(DateUtil.getDateTime());
-        String stringA = "appid="
-                + payUtil.getAppid()
-                + "&body="
-                + payUtil.getBody()
-                + "&device_info="
-                + payUtil.getDevice_info()
-                + "&mch_id=" + payUtil.getMch_id() + "&nonce_str=" + payUtil.getNonce_str() + "&key=cff148670d0e8dd06be650a6ed6774fe";
+        String stringA = "appid="  + payUtil.getAppid()
+                + "&mch_id=" + payUtil.getMch_id()
+                + "&nonce_str="  + payUtil.getNonce_str()
+                + "&out_trade_no="  + payUtil.getOut_trade_no()
+                + "&out_refund_no="  + payUtil.getOut_refund_no()
+                + "&total_fee="  + payUtil.getTotal_fee()
+                + "&refund_fee="  + payUtil.getRefund_fee()
+                + "&key=xinxingshang2018xinxingshang2018";
 
         String sign = Md5Util.md5(stringA).toUpperCase();
 
@@ -95,18 +99,17 @@ public class WinxinUtil {
                 "   <appid>" + payUtil.getAppid() + "</appid>" +
                 "   <mch_id>" + payUtil.getMch_id() + "</mch_id>" +
                 "   <nonce_str>" + payUtil.getNonce_str() + "</nonce_str>" +
-                "   <out_refund_no>" + payUtil.getOut_refund_no() + "</out_refund_no>" +
                 "   <out_trade_no>" + payUtil.getOut_trade_no() + "</out_trade_no>" +
-                "   <refund_fee>"+ payUtil.getRefund_fee()+"</refund_fee>" +
+                "   <out_refund_no>" + payUtil.getOut_refund_no() + "</out_refund_no>" +
                 "   <total_fee>"+ payUtil.getTotal_fee()+"</total_fee>" +
-                "   <transaction_id></transaction_id>" +
+                "   <refund_fee>"+ payUtil.getRefund_fee()+"</refund_fee>" +
                 "   <sign>"+sign+"</sign>" +
                 "</xml> ";
 
-        System.out.println("调试模式_统一下单接口 请求XML数据：" + xml);
+        System.out.println("调试模式_退款接口 请求XML数据：" + xml);
 
         //调用统一下单接口，并接受返回的结果
-        String result = BasePay.httpRequest("https://api.mch.weixin.qq.com/pay/unifiedorder", "POST", xml);
+        String result = BasePay.httpRequest("https://api.mch.weixin.qq.com/secapi/pay/refund", "POST", xml);
         // 将解析结果存储在HashMap中
         Map map = doXMLParse(result);
         return map;

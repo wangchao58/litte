@@ -2,6 +2,7 @@ package com.litte.controller.reception;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.StringUtil;
 import com.litte.entity.reception.TStated;
 import com.litte.service.reception.TStatedService;
 import com.litte.util.JsonUtil;
@@ -24,7 +25,7 @@ public class TStatedController {
     TStatedService tStatedService;
 
     /**
-     * 进入卡券管理列表页面
+     * 进入充值记录管理列表页面
      * @return
      */
     @RequestMapping(value = "/listStatedView")
@@ -35,7 +36,7 @@ public class TStatedController {
     }
 
     /**
-     * 卡券列表
+     * 充值记录列表
      *
      * @return
      */
@@ -51,5 +52,22 @@ public class TStatedController {
         stated.setTotal(pageInfo.getPages());
         return JsonUtil.toJsonString(stated);
     }
+
+    /**
+     * 充值记录列表
+     *
+     * @return
+     */
+    @RequestMapping(value = "/listStatedPort")
+    @ResponseBody
+    public List<TStated> listStatedPort(TStated stated) {
+        if(stated != null && StringUtil.isNotEmpty(stated.getUserId())) {
+            List<TStated> tStatedList = tStatedService.selectByExample(stated);
+            return tStatedList;
+        } else {
+            return null;
+        }
+    }
+
 
 }

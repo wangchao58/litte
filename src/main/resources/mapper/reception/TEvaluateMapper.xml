@@ -47,12 +47,8 @@
     select
     <include refid="Base_Column_List" />
     from t_evaluate
-
     <where>
-      and e_person_shop_id in
-      <foreach collection="deptIds" item="deptIds" separator="," open="(" close=")">
-        '${deptIds}'
-      </foreach>
+      and e_person_shop_id =id = #{ePersonShopId,jdbcType=VARCHAR}
     </where>
     order by create_time desc
   </select>

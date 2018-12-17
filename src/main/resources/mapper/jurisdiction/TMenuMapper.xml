@@ -34,6 +34,8 @@
         t_menu_role where role_id in (
         select role_id from
         t_user_role where user_id=#{userId,jdbcType=VARCHAR}))
+
+        order by sort
     </select>
 
     <select id="selectByLisAll" resultMap="BaseResultMap" parameterType="com.litte.entity.jurisdiction.TMenu">
