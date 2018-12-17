@@ -44,16 +44,20 @@
   <sql id="Base_Column_List" >
     id, e_userid, e_person_shop, e_person_shop_id, e_content, create_time,score,picture,projects_id
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.litte.entity.reception.TEvaluate" >
+  <select id="selectByExample" resultType="java.util.Map" parameterType="com.litte.entity.reception.TEvaluate" >
     select
-    <include refid="Base_Column_List" />
-    from t_evaluate
+    e.id, e.e_userid as eUserid, e.e_person_shop as ePersonShop,
+    e.e_person_shop_id as ePersonShopId, e.e_content as eContent,
+    e.create_time as createTime,e.score,e.picture,e.projects_id as projectsId,
+    p.real_name as realName,d.dept_name as deptName
+    from t_evaluate e left join t_personage p on e.e_userid = p.id
+    left join t_dept d on e.e_person_shop_id=d.id
     <where>
       <if test="ePersonShopId != null">
-        and e_person_shop_id = #{ePersonShopId,jdbcType=VARCHAR}
+        and e.e_person_shop_id = #{ePersonShopId,jdbcType=VARCHAR}
       </if>
     </where>
-    order by create_time desc
+    order by e.create_time desc
   </select>
   <select id="selectByExampleByPort" resultType="java.util.Map" parameterType="com.litte.entity.reception.TEvaluate" >
     select
@@ -63,10 +67,12 @@
     left join t_personage p on e.e_userid=e.e_userid
     left join t_projects s on e.projects_id=s.id
     <where>
-      and e.e_person_shop_id = #{ePersonShopId,jdbcType=VARCHAR}
-      <if test="eUserid != null">
-        and e.e_userid= = #{eUserid,jdbcType=VARCHAR}
-      </if>
+        <if test="ePersonShopId != null">
+            and e.e_person_shop_id = #{ePersonShopId,jdbcType=VARCHAR}
+        </if>
+        <if test="eUserid != null">
+          and e.e_userid= = #{eUserid,jdbcType=VARCHAR}
+        </if>
     </where>
     order by e.create_time desc
   </select>

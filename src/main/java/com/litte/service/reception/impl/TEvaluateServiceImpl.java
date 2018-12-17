@@ -30,7 +30,7 @@ public class TEvaluateServiceImpl implements TEvaluateService {
     }
 
     @Override
-    public List<TEvaluate> selectByExample(TEvaluate record) {
+    public List<Map<String,Object>> selectByExample(TEvaluate record) {
         return tEvaluateMapper.selectByExample(record);
     }
 

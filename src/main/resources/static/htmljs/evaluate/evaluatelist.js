@@ -9,18 +9,20 @@ jQuery(function($) {
         mtype: "post",
         colModel:[
             {label:'id',name:'id', editable:false,hidden:true },
-            {label:'评价人',name:'eUserid', editable: true },
-            {label:'门店',name:'ePersonShopId', editable: true },
+            {label:'评价人',name:'realName', editable: true },
+            {label:'门店',name:'deptName', editable: true },
             {label:'评价内容',name:'eContent',  editable: true},
             {label:'评价时间',name:'createTime', editable: true ,formatter: formatDatebox}
         ],
 
         viewrecords : true,//定义是否要显示总记录数
         rowNum:10,//每页显示的条数
+        nowrap:false,
         rownumbers: true,
         rowList:[10,20,30],//用来改变显示记录数
         pager : pager_selector,//定义翻页用的导航栏
         height: 'auto',        //自动行高
+        width : 'auto',
         shrinkToFit:false,  //设置为true时，列数充满表格，当列数较多时，只会缩小列宽，并不会出现滚动条，需要将属性设置为false
         autoScroll: true,    //设置滚动条
         altRows: true,//设置行交替样式
@@ -173,14 +175,17 @@ function mySubmit(){
 
 function formatDatebox(Value, options, rowObject){
 
-    var time = new Date(Value);
-    var y = time.getFullYear();
-    var m = time.getMonth()+1;
-    var d = time.getDate();
-    var h = time.getHours();
-    var mm = time.getMinutes();
-    var s = time.getSeconds();
-    return y+'-'+add(m)+'-'+add(d)+' '+add(h)+':'+add(mm)+':'+add(s);
+    if(Value != null) {
+        var time = new Date(Value);
+        var y = time.getFullYear();
+        var m = time.getMonth()+1;
+        var d = time.getDate();
+        var h = time.getHours();
+        var mm = time.getMinutes();
+        var s = time.getSeconds();
+        return y+'-'+add(m)+'-'+add(d)+' '+add(h)+':'+add(mm)+':'+add(s);
+    }
+    return "";
 
 }
 

@@ -11,7 +11,7 @@ public interface TEvaluateService {
 
     int deleteByPrimaryKey(List<String> ids);
 
-    List<TEvaluate> selectByExample(TEvaluate record);
+    List<Map<String,Object>> selectByExample(TEvaluate record);
 
     List<Map<String,Object>> selectByExampleByPort(TEvaluate record);
 }

@@ -13,7 +13,6 @@ jQuery(function($) {
             {label:'储值卡金额',name:'cMoney', editable: true },
             {label:'实收金额',name:'cMoneyReceipts',  editable: true},
             {label:'备注',name:'remark', editable: true},
-            {label:'是否启用',name:'isStatus', editable: true ,formatter: operation},
             {label:'操作',name:'', editable: true ,formatter: openupd}
         ],
         viewrecords : true,//定义是否要显示总记录数
@@ -40,11 +39,11 @@ jQuery(function($) {
         if(rowObject.isStatus=="1") {
             htmlstr+=
                 "<input name='switch-field-1' class='ace ace-switch ace-switch-5'" +
-                " onclick='openEditDiag("+rowObject.id+","+rowObject.isStatus+")' checked='checked' type='checkbox' />"
+                " onclick=openEditDiag("+rowObject.id+","+rowObject.isStatus+") checked='checked' type='checkbox' />"
         } else {
             htmlstr+=
                 "<input name='switch-field-1' class='ace ace-switch ace-switch-5'" +
-                " onclick='openEditDiag("+rowObject.id+","+rowObject.isStatus+")' type='checkbox' />"
+                " onclick=openEditDiag("+rowObject.id+","+rowObject.isStatus+") type='checkbox' />"
         }
         htmlstr+="<span class='lbl'></span></label></div>";
         return htmlstr;
@@ -143,6 +142,7 @@ function deletes() {
  * @param isLogin
  */
 function openEditDiag(uuid,isStatus) {
+
 
     $.ajax({
         url: '/coupon/addCoupon',

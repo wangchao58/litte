@@ -49,8 +49,8 @@ public class TEvaluateController extends BaseController {
     public String listCoupon(TEvaluate evaluate, int rows, HttpServletRequest request) {
         PageHelper.startPage(evaluate.getPage(),rows);//分页查询
         evaluate.setDeptIds(this.getSession(request).getGroups());
-        List<TEvaluate> tEvaluateList = tEvaluateService.selectByExample(evaluate);
-        PageInfo<TEvaluate> pageInfo = new PageInfo<>(tEvaluateList);
+        List<Map<String,Object>> tEvaluateList = tEvaluateService.selectByExample(evaluate);
+        PageInfo<Map<String,Object>> pageInfo = new PageInfo<>(tEvaluateList);
         evaluate.setPageSize(rows);
         evaluate.setRows(tEvaluateList);
         evaluate.setPage(evaluate.getPage());
