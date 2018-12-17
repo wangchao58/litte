@@ -18,6 +18,7 @@ public class Jobs {
 
     @Autowired
     TIndentService tIndentService;
+
     @Autowired
     TDeptService tDeptService;
 
@@ -47,7 +48,11 @@ public class Jobs {
     //表示每隔3秒
     @Scheduled(fixedRate=3000)
     public void fixedRateJob(){
-        //System.out.println("fixedRate 每隔3秒"+new Date());
+        TIndent record = tIndentService.selectCancelIndent();
+        if(record != null) {
+            record.setiCondition("7");
+            tIndentService.updateByPrimaryKeyJob(record);
+        }
     }
 
     /*//表示每天8时30分0秒执行

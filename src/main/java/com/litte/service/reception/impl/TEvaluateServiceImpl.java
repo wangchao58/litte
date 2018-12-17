@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TEvaluateServiceImpl implements TEvaluateService {
@@ -31,5 +32,10 @@ public class TEvaluateServiceImpl implements TEvaluateService {
     @Override
     public List<TEvaluate> selectByExample(TEvaluate record) {
         return tEvaluateMapper.selectByExample(record);
+    }
+
+    @Override
+    public List<Map<String, Object>> selectByExampleByPort(TEvaluate record) {
+        return tEvaluateMapper.selectByExampleByPort(record);
     }
 }

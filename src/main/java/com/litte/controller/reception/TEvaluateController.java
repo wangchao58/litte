@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  *  评价管理
@@ -78,12 +79,9 @@ public class TEvaluateController extends BaseController {
      */
     @RequestMapping(value = "/listEvaluateByPort")
     @ResponseBody
-    public List<TEvaluate> listEvaluateByPort(TEvaluate evaluate,int rows,int page) {
+    public List<Map<String,Object>> listEvaluateByPort(TEvaluate evaluate, int rows, int page) {
         PageHelper.startPage(page,rows);//分页查询
-        //evaluate.setDeptIds(this.getSession(request).getGroups());
-        //List<TEvaluate> tEvaluateList = tEvaluateService.selectByExample(evaluate);
-        //if(evaluate.getePersonShopId())
-        List<TEvaluate> tEvaluateList = tEvaluateService.selectByExample(evaluate);
+        List<Map<String,Object>> tEvaluateList = tEvaluateService.selectByExampleByPort(evaluate);
         return tEvaluateList;
     }
 

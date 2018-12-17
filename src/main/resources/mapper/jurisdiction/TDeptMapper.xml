@@ -58,6 +58,7 @@
           and area = (select id from (select id from t_territory order by sort limit 1) as trr)
         </otherwise>
       </choose>
+      and id != '1'
     </where>
   </select>
 

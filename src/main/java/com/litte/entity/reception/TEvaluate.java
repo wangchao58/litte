@@ -22,6 +22,8 @@ public class TEvaluate extends Page {
 
     private String score;
 
+    private String projectsId;
+
     private List<String> deptIds;
 
     public String getId() {
@@ -95,5 +97,13 @@ public class TEvaluate extends Page {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    public String getProjectsId() {
+        return projectsId;
+    }
+
+    public void setProjectsId(String projectsId) {
+        this.projectsId = projectsId;
     }
 }

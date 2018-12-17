@@ -26,6 +26,8 @@ public interface TIndentService {
 
     TIndent selectJob();
 
+    TIndent selectCancelIndent();
+
     List<Map<String,Object>> selIndentByUser(TIndent record);
 
     List<Map<String,Object>> selIndentByHair(TIndent record);

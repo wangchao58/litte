@@ -134,6 +134,13 @@
     where date_format(adddate(i_time, interval 30 minute),'%y-%m-%d %h:%i:%s') &lt;= now() and i_condition='1' and is_sms = '0'
     limit 1
   </select>
+  <select id="selectCancelIndent" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_indent
+    where date_format(adddate(i_time, interval 1 minute),'%y-%m-%d %h:%i:%s') &lt;= now() and i_condition='0'
+    limit 1
+  </select>
 
   <select id="accountByList" resultType="java.lang.String" parameterType="java.util.Map" >
     select

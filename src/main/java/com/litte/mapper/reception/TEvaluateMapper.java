@@ -3,6 +3,7 @@ package com.litte.mapper.reception;
 import com.litte.entity.reception.TEvaluate;
 import com.litte.entity.reception.TEvaluateExample;
 import java.util.List;
+import java.util.Map;
 
 public interface TEvaluateMapper {
 
@@ -12,6 +13,7 @@ public interface TEvaluateMapper {
 
     List<TEvaluate> selectByExample(TEvaluate record);
 
+    List<Map<String,Object>> selectByExampleByPort(TEvaluate record);
 
     int insert(TEvaluate record);
 

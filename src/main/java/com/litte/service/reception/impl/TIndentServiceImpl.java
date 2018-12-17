@@ -133,6 +133,11 @@ public class TIndentServiceImpl implements TIndentService {
     }
 
     @Override
+    public TIndent selectCancelIndent() {
+        return tIndentMapper.selectCancelIndent();
+    }
+
+    @Override
     public List<Map<String, Object>> selIndentByUser(TIndent record) {
         return tIndentMapper.selIndentByUser(record);
     }

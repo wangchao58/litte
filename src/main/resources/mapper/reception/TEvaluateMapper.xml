@@ -10,6 +10,7 @@
     <result column="score" property="score" jdbcType="VARCHAR" />
     <result column="picture" property="picture" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="projects_id" property="projectsId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -41,16 +42,33 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, e_userid, e_person_shop, e_person_shop_id, e_content, create_time,score,picture
+    id, e_userid, e_person_shop, e_person_shop_id, e_content, create_time,score,picture,projects_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.litte.entity.reception.TEvaluate" >
     select
     <include refid="Base_Column_List" />
     from t_evaluate
     <where>
-      and e_person_shop_id =id = #{ePersonShopId,jdbcType=VARCHAR}
+      <if test="ePersonShopId != null">
+        and e_person_shop_id = #{ePersonShopId,jdbcType=VARCHAR}
+      </if>
     </where>
     order by create_time desc
+  </select>
+  <select id="selectByExampleByPort" resultType="java.util.Map" parameterType="com.litte.entity.reception.TEvaluate" >
+    select
+    e.id,e.e_userid as eUserid,e.e_content as eContent,e.picture ,
+    e.create_time as createTime,e.score,p.user_img as userimg,s.p_name as pName
+    from t_evaluate e
+    left join t_personage p on e.e_userid=e.e_userid
+    left join t_projects s on e.projects_id=s.id
+    <where>
+      and e.e_person_shop_id = #{ePersonShopId,jdbcType=VARCHAR}
+      <if test="eUserid != null">
+        and e.e_userid= = #{eUserid,jdbcType=VARCHAR}
+      </if>
+    </where>
+    order by e.create_time desc
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -67,10 +85,11 @@
   </delete>
   <insert id="insert" parameterType="com.litte.entity.reception.TEvaluate" >
     insert into t_evaluate (id, e_userid, e_person_shop, 
-      e_person_shop_id, e_content, create_time
+      e_person_shop_id, e_content, create_time,projects_id
       )
     values (#{id,jdbcType=VARCHAR}, #{eUserid,jdbcType=VARCHAR}, #{ePersonShop,jdbcType=VARCHAR}, 
       #{ePersonShopId,jdbcType=VARCHAR}, #{eContent,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      , #{projectsId,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.litte.entity.reception.TEvaluate" >
@@ -100,6 +119,9 @@
       <if test="picture != null" >
         picture,
       </if>
+      <if test="projectsId != null" >
+        projects_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -126,6 +148,9 @@
       <if test="picture != null" >
         #{picture,jdbcType=TIMESTAMP},
       </if>
+      <if test="projectsId != null" >
+        #{projectsId,jdbcType=TIMESTAMP},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.litte.entity.reception.TEvaluate" >
@@ -151,6 +176,9 @@
       </if>
       <if test="picture != null" >
         picture = #{picture,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectsId != null" >
+        projects_id = #{projectsId,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}

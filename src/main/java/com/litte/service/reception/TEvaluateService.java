@@ -3,6 +3,7 @@ package com.litte.service.reception;
 import com.litte.entity.reception.TEvaluate;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TEvaluateService {
 
@@ -11,4 +12,6 @@ public interface TEvaluateService {
     int deleteByPrimaryKey(List<String> ids);
 
     List<TEvaluate> selectByExample(TEvaluate record);
+
+    List<Map<String,Object>> selectByExampleByPort(TEvaluate record);
 }

@@ -24,6 +24,8 @@ public interface TIndentMapper {
 
     TIndent selectJob();
 
+    TIndent selectCancelIndent();
+
     int updateByPrimaryKeySelective(TIndent record);
 
     int updateByPrimaryKey(TIndent record);

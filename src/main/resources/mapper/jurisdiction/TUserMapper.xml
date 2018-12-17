@@ -78,6 +78,7 @@
       <foreach collection="list" item="deptId" separator="," open="(" close=")">
         '${deptId}'
       </foreach>
+      and id !='8aa1bd629c744a2b8130aa7eef391b7d'
     </where>
   </select>
 
