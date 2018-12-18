@@ -9,7 +9,7 @@ jQuery(function($) {
         mtype: "post",
         colModel:[
             {label:'id',name:'id', editable:false,hidden:true },
-            {label:'图片',name:'picture', editable: true, width:300 },
+            {label:'图片',name:'picture', editable: true, width:300 , formatter:showimage},
             {label:'增加时间',name:'createTime', editable: true, formatter:formatDatebox }
         ],
         viewrecords : true,//定义是否要显示总记录数
@@ -178,6 +178,11 @@ function formatDatebox(Value, options, rowObject){
     var d = time.getDate();
     return y+'-'+add(m)+'-'+add(d);
 
-}
 
 function add(m){return m<10?'0'+m:m };
+}
+function showimage(Value, options, rowObject){
+
+    return "<img  src='/file/download?fileName="+Value+"' width='100px' height='100px'/>";
+
+}
