@@ -9,12 +9,13 @@ jQuery(function($) {
         mtype: "post",
         colModel:[
             {label:'id',name:'id', editable:false,hidden:true },
-            {label:'昵称',name:'realName', editable: true },
-            {label:'电话号码',name:'phone', editable: true},
-            {label:'年龄',name:'age', editable: true},
-            {label:'性别',name:'sex', editable: true},
+            {label:'昵称',name:'realName', editable: true,width:100 },
+            {label:'电话号码',name:'phone', editable: true,width:100},
+            {label:'年龄',name:'age', editable: true,width:50},
+            {label:'性别',name:'sex', editable: true,width:50},
             {label:'风格定位',name:'style', editable: true},
-            {label:'到店距离',name:'distance', editable: true},
+            {label:'到店距离',name:'distance', editable: true,width:100},
+            {label:'职业属性',name:'occupation', editable: true,width:100},
             {label:'增加时间',name:'createTime', editable: true ,formatter:formatDatebox},
             {label:'最近登录时间',name:'updateTime', editable: true ,formatter:formatDatebox}
         ],
