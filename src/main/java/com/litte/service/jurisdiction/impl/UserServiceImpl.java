@@ -3,6 +3,7 @@ package com.litte.service.jurisdiction.impl;
 import com.github.pagehelper.StringUtil;
 import com.litte.entity.jurisdiction.TUser;
 import com.litte.mapper.jurisdiction.TUserMapper;
+import com.litte.mapper.jurisdiction.TUserRoleMapper;
 import com.litte.service.jurisdiction.UserService;
 import com.litte.util.Md5Util;
 import com.litte.util.UUIDUtil;
@@ -17,6 +18,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     TUserMapper tUserMapper;
+    @Autowired
+    TUserRoleMapper tUserRoleMapper;
 
     @Override
     public List<TUser> selectByExample(TUser user) {
@@ -50,7 +53,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int deleteByPrimaryKey(List<String> ids) {
-        return tUserMapper.deleteByPrimaryKey(ids);
+        int i = 0;
+        i = tUserMapper.deleteByPrimaryKey(ids);
+        if(0 != i){
+            // 删除用户时，同时删除角色
+            i = tUserRoleMapper.deleteUserRole(ids);
+        }
+        return i;
     }
 
     @Override

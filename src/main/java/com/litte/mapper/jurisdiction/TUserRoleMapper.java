@@ -1,7 +1,7 @@
 package com.litte.mapper.jurisdiction;
 
 import com.litte.entity.jurisdiction.TUserRole;
-import com.litte.entity.jurisdiction.TUserRoleExample;
+
 import java.util.List;
 import java.util.Map;
 
@@ -19,4 +19,11 @@ public interface TUserRoleMapper {
     int updateByPrimaryKeySelective(TUserRole record);
 
     int updateByPrimaryKey(TUserRole record);
+
+    /**
+     * 删除用户时，同时删除角色
+     * @param userId
+     * @return
+     */
+    int deleteUserRole(List<String > userId);
 }

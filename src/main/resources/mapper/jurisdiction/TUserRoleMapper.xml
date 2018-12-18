@@ -107,4 +107,14 @@
       role_id = #{roleId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <!-- 删除用户时，同时删除角色 -->
+  <delete id="deleteUserRole" parameterType="java.util.List" >
+    delete from t_user_role
+    where user_id in
+    <foreach collection="list" item="ids" separator="," open="(" close=")">
+      '${ids}'
+    </foreach>
+    and user_id != '8aa1bd629c744a2b8130aa7eef391b7d'
+  </delete>
 </mapper>
