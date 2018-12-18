@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -146,6 +147,7 @@ public class TIndentController extends BaseController {
                 map.put("return_msg","支付失败");
             }
         }
+        indent.setOpenid("");
         tIndentService.updateByPrimaryKeySelective(indent);
         return  map;
     }
@@ -200,12 +202,17 @@ public class TIndentController extends BaseController {
         String xmlStr = NotifyServlet.getWxXml(request);
         Map map2 = WinxinUtil.doXMLParse(xmlStr);
         String return_code = (String) map2.get("return_code");
+        System.out.println("接收到的数据 return_code："+return_code);
         String id = (String) map2.get("nonce_str");
+        System.out.println("接收到的数据 id："+id);
         TIndent indent = tIndentService.selectByPrimaryKey(id);
-        indent.setiCondition("1");
+        System.out.println("查出的数据 iCondition："+indent.getiCondition());
         if (indent.getiCondition().equals("0")) {
             if (return_code.equals("SUCCESS")) {
-                tIndentService.updateByPrimaryKeySelective(indent);
+                indent.setiCondition("1");
+                indent.setOpenid("");
+                TIndent indentUpdate = tIndentService.updateByPrimaryKeySelective(indent);
+                System.out.println("修改成功后 indent id："+indentUpdate.getiCondition());
             }
         }
     }
@@ -219,10 +226,14 @@ public class TIndentController extends BaseController {
         String xmlStr = NotifyServlet.getWxXml(request);
         Map map2 = WinxinUtil.doXMLParse(xmlStr);
         String return_code = (String) map2.get("return_code");
+
         String id = (String) map2.get("nonce_str");
         TIndent indent = tIndentService.selectByPrimaryKey(id);
+        System.out.println("接收到的数据 return_code："+return_code);
+        System.out.println("接收到的数据 id："+id);
+        System.out.println("indent id："+indent.getiCondition());
         indent.setiCondition("5");
-        if (indent.getiCondition().equals("0")) {
+        if (indent.getiCondition().equals("1")) {
             if (return_code.equals("SUCCESS")) {
                 tIndentService.updateByPrimaryKeySelective(indent);
             }

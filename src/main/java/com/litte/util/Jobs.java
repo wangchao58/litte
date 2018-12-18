@@ -28,7 +28,8 @@ public class Jobs {
         TIndent record = tIndentService.selectJob();
 
         if(record != null) {
-            TDept dept = tDeptService.selectBySmsKey(record.getDeptId());
+            String id = record.getDeptId();
+            TDept dept = tDeptService.selectBySmsKey(id);
             String TemplateCode = "SMS_152440521";
             String TemplateParam = "{\"name\":\""+dept.getDeptName()+"\"}";
             SendSmsResponse response = SmsXsk.sendSms(record.getiPhone(),TemplateParam,TemplateCode);

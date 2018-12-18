@@ -310,7 +310,7 @@
       <if test="iCode != null" >
         i_code = #{iCode,jdbcType=VARCHAR},
       </if>
-      <if test="openid != null" >
+      <if test="openid != null and openid !=''" >
         openid = #{openid,jdbcType=VARCHAR},
       </if>
       <if test="iPrice != null" >

@@ -73,7 +73,8 @@
   <select id="selectBySmsKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
    select
     <include refid="Base_Column_List" />
-    where d.id = #{id,jdbcType=VARCHAR}
+    from t_dept
+    where id = #{id,jdbcType=VARCHAR}
   </select>
 
   <select id="getMaxGroupId" resultType="java.lang.String" parameterType="java.lang.String" >
