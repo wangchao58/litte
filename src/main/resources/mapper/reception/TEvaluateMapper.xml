@@ -11,6 +11,7 @@
     <result column="picture" property="picture" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="projects_id" property="projectsId" jdbcType="VARCHAR" />
+    <result column="anonymity" property="anonymity" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -42,7 +43,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, e_userid, e_person_shop, e_person_shop_id, e_content, create_time,score,picture,projects_id
+    id, e_userid, e_person_shop, e_person_shop_id, e_content, create_time,score,picture,projects_id,anonymity
   </sql>
   <select id="selectByExample" resultType="java.util.Map" parameterType="com.litte.entity.reception.TEvaluate" >
     select
@@ -61,7 +62,7 @@
   </select>
   <select id="selectByExampleByPort" resultType="java.util.Map" parameterType="com.litte.entity.reception.TEvaluate" >
     select
-    e.id,e.e_userid as eUserid,e.e_content as eContent,e.picture ,
+    e.id,e.e_userid as eUserid,e.e_content as eContent,e.picture ,e.anonymity,
     e.create_time as createTime,e.score,p.user_img as userimg,s.p_name as pName
     from t_evaluate e
     left join t_personage p on e.e_userid=e.e_userid
@@ -128,6 +129,9 @@
       <if test="projectsId != null" >
         projects_id,
       </if>
+      <if test="anonymity != null" >
+        anonymity,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -149,13 +153,16 @@
         #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="score != null" >
-        #{score,jdbcType=TIMESTAMP},
+        #{score,jdbcType=VARCHAR},
       </if>
       <if test="picture != null" >
-        #{picture,jdbcType=TIMESTAMP},
+        #{picture,jdbcType=VARCHAR},
       </if>
       <if test="projectsId != null" >
-        #{projectsId,jdbcType=TIMESTAMP},
+        #{projectsId,jdbcType=VARCHAR},
+      </if>
+      <if test="anonymity != null" >
+        #{anonymity,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -178,13 +185,16 @@
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="score != null" >
-          score = #{score,jdbcType=TIMESTAMP},
+          score = #{score,jdbcType=VARCHAR},
       </if>
       <if test="picture != null" >
-        picture = #{picture,jdbcType=TIMESTAMP},
+        picture = #{picture,jdbcType=VARCHAR},
       </if>
       <if test="projectsId != null" >
-        projects_id = #{projectsId,jdbcType=TIMESTAMP},
+        projects_id = #{projectsId,jdbcType=VARCHAR},
+      </if>
+      <if test="anonymity != null" >
+        anonymity = #{anonymity,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}

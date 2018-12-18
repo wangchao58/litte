@@ -26,6 +26,8 @@ public class TEvaluate extends Page {
 
     private List<String> deptIds;
 
+    private String anonymity;
+
     public String getId() {
         return id;
     }
@@ -105,5 +107,13 @@ public class TEvaluate extends Page {
 
     public void setProjectsId(String projectsId) {
         this.projectsId = projectsId;
+    }
+
+    public String getAnonymity() {
+        return anonymity;
+    }
+
+    public void setAnonymity(String anonymity) {
+        this.anonymity = anonymity;
     }
 }
