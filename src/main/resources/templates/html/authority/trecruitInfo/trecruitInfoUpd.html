@@ -59,6 +59,17 @@
                         </span>
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="email">投诉建议:</label>
+                            <div class="col-xs-12 col-sm-5">
+                        <span class="block input-icon input-icon-right">
+                            <input type="text" id="complaint" name="complaint" th:value="${tRecruitInfo.complaint}"
+                                   class="width-100" onchange="updTrecruitInfo()"/>
+                        </span>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="email">联系邮箱:</label>
                             <div class="col-xs-12 col-sm-5">

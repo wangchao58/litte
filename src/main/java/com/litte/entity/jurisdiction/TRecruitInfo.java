@@ -11,6 +11,8 @@ public class TRecruitInfo {
 
     private String url;
 
+    private String complaint;
+
     public String getId() {
         return id;
     }
@@ -49,5 +51,13 @@ public class TRecruitInfo {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getComplaint() {
+        return complaint;
+    }
+
+    public void setComplaint(String complaint) {
+        this.complaint = complaint;
     }
 }

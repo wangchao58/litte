@@ -6,6 +6,7 @@
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="top_image" jdbcType="VARCHAR" property="topImage" />
+    <result column="complaint" jdbcType="VARCHAR" property="complaint" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -37,7 +38,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, phone, email, top_image
+    id, phone, email, top_image, complaint
   </sql>
   <select id="selectByExample" parameterType="com.litte.entity.jurisdiction.TRecruitInfoExample" resultMap="BaseResultMap">
     select
@@ -66,9 +67,9 @@
   </delete>
   <insert id="insert" parameterType="com.litte.entity.jurisdiction.TRecruitInfo">
     insert into t_recruit_info (id, phone, email, 
-      top_image)
+      top_image, complaint)
     values (#{id,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-      #{topImage,jdbcType=VARCHAR})
+      #{topImage,jdbcType=VARCHAR}, #{complaint,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.litte.entity.jurisdiction.TRecruitInfo">
     insert into t_recruit_info
@@ -85,6 +86,9 @@
       <if test="topImage != null">
         top_image,
       </if>
+      <if test="complaint != null">
+        complaint,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -98,6 +102,9 @@
       </if>
       <if test="topImage != null">
         #{topImage,jdbcType=VARCHAR},
+      </if>
+      <if test="complaint != null">
+        #{complaint,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -113,6 +120,9 @@
       <if test="topImage != null">
         top_image = #{topImage,jdbcType=VARCHAR},
       </if>
+      <if test="complaint != null">
+        complaint = #{complaint,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -120,7 +130,8 @@
     update t_recruit_info
     set phone = #{phone,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
-      top_image = #{topImage,jdbcType=VARCHAR}
+      top_image = #{topImage,jdbcType=VARCHAR},
+      complaint = #{complaint,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>
