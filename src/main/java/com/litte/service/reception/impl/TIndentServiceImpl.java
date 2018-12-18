@@ -122,8 +122,8 @@ public class TIndentServiceImpl implements TIndentService {
     @Override
     public TIndent selectByPrimaryKey(String id) {
         TIndent indent = tIndentMapper.selectByPrimaryKey(id);
-        /*TPersonage tPersonage = tPersonageMapper.selectByPrimaryKeyUser(indent.getOpenid());
-        indent.setOpenid(tPersonage.getUserId());*/
+        TPersonage tPersonage = tPersonageMapper.selectByPrimaryKeyUser(indent.getOpenid());
+        indent.setOpenid(tPersonage.getUserId());
         return indent;
     }
 
