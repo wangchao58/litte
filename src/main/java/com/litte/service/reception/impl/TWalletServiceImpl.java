@@ -91,6 +91,7 @@ public class TWalletServiceImpl implements TWalletService {
         wallet.setUserId(personage.getUserId());
         wallet.setPhone(personage.getPhone());
         wallet.setCouponId(coupon.getId());
+        wallet.setwMoney("0");
         tWalletMapper.insert(wallet);
         int i = tStatedMapper.insertSelective(record);
         if (i > 0) {

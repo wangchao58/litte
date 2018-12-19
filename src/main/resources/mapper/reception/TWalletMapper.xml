@@ -72,7 +72,7 @@
   <insert id="insert" parameterType="com.litte.entity.reception.TWallet" >
     insert into t_wallet (id, user_id, w_money ,coupon_id )
     values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{wMoney,jdbcType=VARCHAR},#{couponId,jdbcType=VARCHAR}
-      ) on duplicate key update phone=#{phone,jdbcType=VARCHAR} , coupon_id=#{couponId,jdbcType=VARCHAR};
+      ) on duplicate key update phone=#{phone,jdbcType=VARCHAR} , coupon_id=#{couponId,jdbcType=VARCHAR}
   </insert>
   <insert id="insertSelective" parameterType="com.litte.entity.reception.TWallet" >
     insert into t_wallet
