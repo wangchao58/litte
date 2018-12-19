@@ -17,6 +17,8 @@ public class TStated extends Page {
 
     private String isSucceed;
 
+    private String realNmae;
+
     public String getId() {
         return id;
     }
@@ -63,5 +65,13 @@ public class TStated extends Page {
 
     public void setIsSucceed(String isSucceed) {
         this.isSucceed = isSucceed;
+    }
+
+    public String getRealNmae() {
+        return realNmae;
+    }
+
+    public void setRealNmae(String realNmae) {
+        this.realNmae = realNmae;
     }
 }

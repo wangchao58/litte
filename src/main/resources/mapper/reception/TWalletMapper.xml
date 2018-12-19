@@ -7,6 +7,7 @@
     <result column="w_money" property="wMoney" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="coupon_id" property="couponId" jdbcType="VARCHAR" />
+    <result column="realName" property="realName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -41,11 +42,8 @@
     id, user_id, w_money,phone,coupon_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.litte.entity.reception.TWallet" >
-    select
-
-    <include refid="Base_Column_List" />
-    from t_wallet
-
+    select w.id, w.user_id, w.w_money,w.phone,w.coupon_id,
+    p.real_name as realName from t_wallet w left join t_personage p on w.user_id=p.id
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 

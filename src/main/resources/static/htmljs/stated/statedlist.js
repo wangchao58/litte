@@ -9,10 +9,11 @@ jQuery(function($) {
         mtype: "post",
         colModel:[
             {label:'id',name:'id', editable:false,hidden:true },
-            {label:'储值卡用户',name:'userId', editable: true },
+            {label:'储值卡用户',name:'realNmae', editable: true },
             {label:'充值时间',name:'createTime', editable: true,formatter:formatDatebox },
             {label:'充值金额',name:'sAmount',  editable: true},
-            {label:'实收金额',name:'sReal',  editable: true}
+            {label:'实收金额',name:'sReal',  editable: true},
+            {label:'是否成功',name:'isSucceed', editable: true }
         ],
         viewrecords : true,//定义是否要显示总记录数
         rowNum:10,//每页显示的条数

@@ -8,6 +8,7 @@
     <result column="s_amount" property="sAmount" jdbcType="VARCHAR" />
     <result column="s_real" property="sReal" jdbcType="VARCHAR" />
     <result column="is_succeed" property="isSucceed" jdbcType="VARCHAR" />
+    <result column="realNmae" property="realNmae" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -43,15 +44,22 @@
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.litte.entity.reception.TStated" >
     select
-    <include refid="Base_Column_List" />
-    from t_stated
+    s.id, s.user_id, s.create_time, s.s_amount, s.s_real,
+    case s.is_succeed
+    when   0 then '失败'
+    when  1 then '成功'
+    end as is_succeed,
+    p.real_name as realNmae
+    from t_stated s left join t_personage p on s.user_id=p.id
+
     <where>
       <if test="userId != null" >
         user_id= #{userId,jdbcType=VARCHAR}
       </if>
     </where>
-    order by create_time desc
+    order by s.create_time desc
   </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

@@ -9,7 +9,8 @@ jQuery(function($) {
         mtype: "post",
         colModel:[
             {label:'id',name:'id', editable:false,hidden:true },
-            {label:'用户',name:'userId', editable: true },
+            {label:'用户',name:'realName', editable: true },
+            {label:'手机号',name:'phone', editable: true },
             {label:'剩余金额',name:'wMoney', editable: true}
         ],
         viewrecords : true,//定义是否要显示总记录数

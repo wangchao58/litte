@@ -13,6 +13,10 @@ public class TWallet extends Page {
 
     private String couponId;
 
+    private String realName;
+
+
+
     public String getId() {
         return id;
     }
@@ -51,5 +55,13 @@ public class TWallet extends Page {
 
     public void setCouponId(String couponId) {
         this.couponId = couponId;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 }
