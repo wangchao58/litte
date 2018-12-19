@@ -10,7 +10,6 @@ jQuery(function($) {
         colModel:[
             {label:'id',name:'id', editable:false,hidden:true },
             {label:'订单号',name:'iCode', editable: true },
-            {label:'订单用户',name:'userId', editable: true },
             {label:'订单价格',name:'iPrice',  editable: true},
             {label:'预定时间',name:'iTime', editable: true, formatter:formatDatebox},
             {label:'发型师',name:'userName', editable: true},
