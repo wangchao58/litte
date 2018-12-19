@@ -1,39 +1,37 @@
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <style type="text/css">
-	.logo {
-		width: 20px;
-		height: 20px;
-	}
+    .logo {
+        width: 20px;
+        height: 20px;
+    }
 </style>
-<div class="navbar-container" id="navbar-container" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" th:fragment="header">
+<div class="navbar-container" id="navbar-container" xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" th:fragment="header">
 
-	<div class="navbar-header pull-left">
-		<a href="#" class="navbar-brand">
-			<small>
-				<!--<i style="background: url('./assets/images/logo.png') ; width: 100%;height: 100%;"></i>-->
-				<img src="../assets/images/logo.png" style="width: 23px;height: 23px;">
-				欣星尚后台管理
-			</small>
-		</a>
-	</div>
+    <div class="navbar-header pull-left">
+        <small class="navbar-brand">
+            <img src="../assets/images/logo.png" style="width: 23px;height: 23px;">
+            <span style="font-size: 20px">欣星尚后台管理</span>
+        </small>
+    </div>
 
-	<div class="navbar-header pull-right" role="navigation">
-		<ul class="nav ace-nav">
+    <div class="navbar-header pull-right" role="navigation">
+        <ul class="nav ace-nav">
 
-			<li class="light-blue" >
-				<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-					<img class="nav-user-photo" src="/file/download" alt="" />
-					<span class="user-info">
+            <li class="light-blue">
+                <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                    <img class="nav-user-photo" src="/file/download" alt=""/>
+                    <span class="user-info">
 						<small id="SessionUser"></small>
 						<span onclick="logout();">退出</span>
 					<i class="icon-off"></i>
 					</span>
-					<i class="icon-caret-down"></i>
-				</a>
+                    <i class="icon-caret-down"></i>
+                </a>
 
 
-			</li>
-		</ul>
-	</div>
+            </li>
+        </ul>
+    </div>
 </div>
 
