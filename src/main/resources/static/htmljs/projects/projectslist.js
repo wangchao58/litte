@@ -11,7 +11,7 @@ jQuery(function($) {
             {label:'id',name:'id', editable:false,hidden:true },
             {label:'服务名',name:'pName', editable: true },
             {label:'价格',name:'pCode', editable: true },
-            {label:'操作',name:'', editable: true ,formatter: operation}
+            {label:'操作',name:'ss', editable: true ,formatter: operation}
         ],
 
         viewrecords : true,//定义是否要显示总记录数
@@ -37,7 +37,7 @@ jQuery(function($) {
         var htmlstr = "<div class='visible-md visible-lg hidden-sm hidden-xs btn-group'>"
             + "<button class='btn btn-xs btn-info' onclick=openEditDiag('"
             + rowObject.id
-            + "')><i class='icon-edit bigger-120'></i></button></div>";
+            + "')><i class='icon-edit bigger-120'></i>编辑</button></div>";
         return htmlstr;
 
     }

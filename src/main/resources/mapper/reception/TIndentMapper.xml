@@ -42,7 +42,7 @@
     from
         t_indent i
     left join
-        t_user u on i.hair_id=u.openid
+        t_user u on i.hair_id=u.user_id
     left join
         t_personage p on i.openid=p.id
     left join
