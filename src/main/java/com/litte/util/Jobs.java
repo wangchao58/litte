@@ -21,7 +21,7 @@ public class Jobs {
 
     @Autowired
     TDeptService tDeptService;
-
+/*
     //表示方法执行完成后5秒
     @Scheduled(fixedDelay=5000)
     public void fixedDelayJob() throws InterruptedException, ClientException {
@@ -44,7 +44,7 @@ public class Jobs {
 
        // System.out.println(record);
         //System.out.println("fixedDelay 每隔5秒"+new Date());
-    }
+    }*/
 
     //表示每隔3秒
     @Scheduled(fixedRate=3000)
