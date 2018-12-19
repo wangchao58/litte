@@ -83,12 +83,12 @@ public class TWalletServiceImpl implements TWalletService {
 
         record.setId(id);
         record.setCreateTime(new Date());
-        record.setUserId(personage.getUserId());
+        record.setUserId(personage.getId());
         record.setsAmount(coupon.getcMoney());
         record.setsReal(coupon.getcMoneyReceipts());
         TWallet wallet = new TWallet();
         wallet.setId(UUIDUtil.getUUID());
-        wallet.setUserId(personage.getUserId());
+        wallet.setUserId(personage.getId());
         wallet.setPhone(personage.getPhone());
         wallet.setCouponId(coupon.getId());
         wallet.setwMoney("0");
