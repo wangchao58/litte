@@ -53,7 +53,9 @@ public class TRestServiceImpl implements TRestService {
 
     @Override
     public List<TRest> seleDateStaffRort(TRest record) {
-        return tRestMapper.seleDateStaffRort(record);
+        List<TRest> listRest = tRestMapper.seleDateStaffRort(record);
+
+        return listRest;
     }
 
     @Override

@@ -7,10 +7,7 @@ import com.litte.mapper.reception.TPersonageMapper;
 import com.litte.mapper.reception.TStatedMapper;
 import com.litte.mapper.reception.TWalletMapper;
 import com.litte.service.reception.TWalletService;
-import com.litte.util.DateUtil;
-import com.litte.util.FileUploadUtil;
-import com.litte.util.UUIDUtil;
-import com.litte.util.WinxinUtil;
+import com.litte.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,7 +61,23 @@ public class TWalletServiceImpl implements TWalletService {
         payUtil.setNotify_url(fileUploadUtil.getBaseUrl()+"/wallet/walletCardOrder");
         payUtil.setOpenid(personage.getUserId());
         map=WinxinUtil.wxPay(payUtil,request);
-        map.put("timeStamp",new Date().getTime());
+        //map.put("timeStamp",new Date().getTime());
+
+        String nonceStr = UUIDUtil.getUUID().toUpperCase();
+        String dateTime = String.valueOf (new Date().getTime());
+        String signType = "MD5";
+        String packages = "prepay_id="+map.get("prepay_id").toString();
+        map.put("timeStamp",dateTime);
+        String paySign="appId="+map.get("appid")
+                +"&nonceStr=" +nonceStr
+                +"&package="+packages
+                +"&signType="+signType
+                +"&timeStamp="+dateTime
+                +"&key=xinxingshang2018xinxingshang2018";
+        map.put("paySign",Md5Util.md5(paySign).toUpperCase());
+        map.put("nonceStr",nonceStr);
+        map.put("signType",signType);
+        map.put("package",packages);
         TStated record = new TStated();
 
         record.setId(id);

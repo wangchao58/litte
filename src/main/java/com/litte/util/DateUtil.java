@@ -24,6 +24,16 @@ public class DateUtil {
     }
 
     /**
+     * 当前时间
+     * @return
+     */
+    public static String nowDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String dateStr = formatter.format(new Date());
+        return dateStr;
+    }
+
+    /**
      * 设置5天 时间
      * @return
      */
@@ -47,6 +57,6 @@ public class DateUtil {
         cal.setTime(date);//设置起时间
         cal.add(Calendar.DATE, 1);//增加一天 
 
-        System.out.println(getWeekOfDate());
+        System.out.println(nowDate());
     }*/
 }

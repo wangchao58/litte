@@ -61,12 +61,13 @@
       when r.is_reserve = 0 then 0
       when r.is_rest = 1 then 0
       when
-      concat(r.is_date ,' ' , r.is_hour) &lt; date_format(now(), '%y-%m-%d %h:%i')  then 0
+      concat(r.is_date ,' ' , r.is_hour) &lt; date_format(now(), '%Y-%m-%d %h:%i')  then 0
       when
-      i.is_time = concat(r.is_date ,' ' , r.is_hour) and i.i_condition !='7' then 0
+      r.is_hour in (select date_format(i_time, '%h:%i') from t_indent
+      where  date_format(i_time, '%Y-%m-%d')=#{isDate,jdbcType=VARCHAR}  and hair_id=#{staffId,jdbcType=VARCHAR} and i_condition not in ('6','7'))  then 0
       else 1
       end as is_reserve
-      from t_rest r left join t_indent i on r.staff_id=i.hair_id and i.i_time=date_format(#{isDate,jdbcType=VARCHAR}, '%y-%m-%d')
+      from t_rest r
      where r.staff_id=#{staffId,jdbcType=VARCHAR} and r.is_date=#{isDate,jdbcType=VARCHAR}
      group by r.id
 

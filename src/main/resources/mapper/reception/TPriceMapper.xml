@@ -101,28 +101,22 @@
 
   <select id="listPriceUserRestByPort" resultType="java.util.Map" parameterType="java.util.Map" >
     select
-    r.staff_id as staffId ,min(is_hour) as isHour,r.is_date as isDate,
-    r.is_rest as isRest,r.is_reserve as isReserve
-    from t_rest r
-    left join t_indent i on r.staff_id=i.hair_id  and r.is_date = date_format(i.i_time, '%y-%m-%d')
-    where
-    date_format(now(), '%H:%i')  &lt;  r.is_hour
-    and r.is_hour not in(select date_format(i.i_time, '%H:%i')
-    from t_indent where i_time = date_format(now(), '%y-%m-%d') and hair_id =r.staff_id)
-    and r.dept_id =#{deptId,jdbcType=VARCHAR}
-    group by r.staff_id
+    min(concat(r.is_date ,' ' , r.is_hour)) as dateHour ,r.staff_id AS staffId,
+    r.is_rest as isRest,r.is_reserve AS isReserve
+    from t_rest r  left join t_indent i on r.staff_id = i.hair_id
+    where  concat(is_date ,' ' , is_hour) &gt; date_format(now(), '%Y-%m-%d %H:%i')
+    and r.dept_id=#{deptId,jdbcType=VARCHAR} and is_rest='0' and is_reserve='1'
+    and concat(r.is_date ,' ' , r.is_hour,':00') != i.i_time
+    group by staff_id
   </select>
 
   <select id="listPriceDateRestByPort" resultType="java.util.Map" parameterType="java.util.Map" >
-    select min(r.is_hour) as isHour, r.is_date as isDate from t_rest r left join t_indent i on r.staff_id=i.hair_id and r.is_date = date_format(i.i_time, '%y-%m-%d')
-    where
-    staff_id = #{staffId,jdbcType=VARCHAR} and
-    is_date = (select min(is_date)  from t_rest where is_date > now()
-    and is_rest='0' and staff_id = #{staffId,jdbcType=VARCHAR} )
-    and is_rest ='0' and is_reserve ='1'
-    and r.is_hour not in
-    ( select date_format(i_time, '%H:%i') from t_indent where i_time = date_format((select min(is_date)  from t_rest where is_date > now() and is_rest='0' ), '%y-%m-%d')
-    and hair_id =r.staff_id)
+
+    select is_rest as isRest from t_rest
+    where is_date = #{isDate,jdbcType=VARCHAR}
+    and staff_id = #{staffId,jdbcType=VARCHAR}
+    group by  staff_id
+
   </select>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
