@@ -105,7 +105,7 @@
     r.is_rest as isRest,r.is_reserve AS isReserve
     from t_rest r  left join t_indent i on r.staff_id = i.hair_id
     where  concat(is_date ,' ' , is_hour) &gt; date_format(now(), '%Y-%m-%d %H:%i')
-    and r.dept_id=#{deptId,jdbcType=VARCHAR} and is_rest='0' and is_reserve='1'
+    and r.dept_id=#{deptId,jdbcType=VARCHAR} and r.is_rest='0' and r.is_reserve='1'
     and concat(r.is_date ,' ' , r.is_hour,':00') != i.i_time
     group by staff_id
   </select>

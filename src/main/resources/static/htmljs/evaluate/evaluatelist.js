@@ -18,13 +18,11 @@ jQuery(function($) {
         viewrecords : true,//定义是否要显示总记录数
         rowNum:10,//每页显示的条数
         nowrap:false,
-        rownumbers: true,
         rowList:[10,20,30],//用来改变显示记录数
         pager : pager_selector,//定义翻页用的导航栏
         height: 'auto',        //自动行高
-        width : 'auto',
         shrinkToFit:false,  //设置为true时，列数充满表格，当列数较多时，只会缩小列宽，并不会出现滚动条，需要将属性设置为false
-        autoScroll: true,    //设置滚动条
+        autoScroll: false,    //设置滚动条
         altRows: true,//设置行交替样式
         multiselect: true, //是否可以多选
         loadComplete : function() {

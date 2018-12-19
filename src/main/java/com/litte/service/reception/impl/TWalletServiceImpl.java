@@ -50,14 +50,15 @@ public class TWalletServiceImpl implements TWalletService {
     public Map<String, Object> payWallet(Map<String,Object> map, HttpServletRequest request) throws Exception {
         TCoupon coupon = tCouponMapper.selectByPrimaryKey(map.get("id").toString());
         TPersonage personage = tPersonageMapper.selectByPrimaryKeyUser(map.get("userId").toString());
-
+        double total_fee = Double.parseDouble(coupon.getcMoneyReceipts())*100;
+        int isss =  (new Double(total_fee)).intValue();
         String code = DateUtil.getDateTime();
         String id = UUIDUtil.getUUID();
         PayUtil payUtil = new PayUtil();
         payUtil.setBody("xxszfzx-czzf");
         payUtil.setOut_trade_no(code);
         payUtil.setNonce_str(id);
-        payUtil.setTotal_fee(Integer.parseInt(coupon.getcMoneyReceipts())*100);
+        payUtil.setTotal_fee(isss);
         payUtil.setNotify_url(fileUploadUtil.getBaseUrl()+"/wallet/walletCardOrder");
         payUtil.setOpenid(personage.getUserId());
         map=WinxinUtil.wxPay(payUtil,request);
