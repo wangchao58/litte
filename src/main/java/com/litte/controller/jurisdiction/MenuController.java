@@ -56,7 +56,7 @@ public class MenuController extends BaseController {
     @ResponseBody
     public Map<String,Object> menuTreePort(String phone) {
         Map<String, Object> map = new HashMap<>();
-        if(StringUtil.isNotEmpty(phone)) {
+        if(StringUtil.isNotEmpty(phone)&& !phone.equals("undefined")) {
             map.put("phone",phone);
             Map<String,Object> tMenuList = tMenuService.menuTreePort(map);
             return tMenuList;

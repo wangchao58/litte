@@ -85,12 +85,14 @@
   <select id="selIndentByHair" resultType="java.util.Map" parameterType="com.litte.entity.reception.TIndent" >
     select
     i.id,    i.i_time  as iTime,       i.i_code as iCode,    i.i_mode as iMode,   i.openid,
-    p.p_name as pName,u.head_portrait as headPortrait,d.dept_name as deptName, u.user_name as userName ,d.site
+    p.p_name as pName,u.head_portrait as headPortrait,d.dept_name as deptName,
+    u.user_name as userName ,d.site,pg.real_name as realName
     from t_indent i left join t_projects p
     on
     i.i_type=p.id
     left join t_user u on i.hair_id=u.user_id
     left join t_dept d on i.dept_id=d.id
+    left join t_personage pg on pg.id=i.openid
     <where>
       <if test="hairId != null" >
         and i.hair_id= #{hairId,jdbcType=VARCHAR}
