@@ -21,7 +21,6 @@ public class Jobs {
 
     @Autowired
     TDeptService tDeptService;
-/*
     //表示方法执行完成后5秒
     @Scheduled(fixedDelay=5000)
     public void fixedDelayJob() throws InterruptedException, ClientException {
@@ -30,7 +29,7 @@ public class Jobs {
         if(record != null) {
             String id = record.getDeptId();
             TDept dept = tDeptService.selectBySmsKey(id);
-            String TemplateCode = "SMS_152440521";
+            String TemplateCode = "SMS_152507676";
             String TemplateParam = "{\"name\":\""+dept.getDeptName()+"\"}";
             SendSmsResponse response = SmsXsk.sendSms(record.getiPhone(),TemplateParam,TemplateCode);
             System.out.println("短信接口返回的数据----------------");
@@ -44,7 +43,7 @@ public class Jobs {
 
        // System.out.println(record);
         //System.out.println("fixedDelay 每隔5秒"+new Date());
-    }*/
+    }
 
     //表示每隔3秒
     @Scheduled(fixedRate=3000)

@@ -96,7 +96,7 @@ public class TIndentServiceImpl implements TIndentService {
         Double iPrice = Double.parseDouble(record.getiPrice());
         Double m = wMoney - iPrice;
         if(m>=0) {
-            tWallet.setwMoney(m.toString());
+            tWallet.setwMoney(String.format("%.2f", m));
             i = tWalletMapper.updateByPrimaryKeySelective(tWallet);
         }
         return i;
