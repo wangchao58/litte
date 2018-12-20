@@ -140,6 +140,7 @@ public class TIndentController extends BaseController {
             indent.setiMode("1");
             int i  = tIndentService.updateByPrimaryKeyPay(indent);
             if(i>0) {
+                indent.setiCondition("1");
                 map.put("return_code","SUCCESS");
                 map.put("return_msg","支付成功");
             } else {
