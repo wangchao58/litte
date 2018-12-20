@@ -1,8 +1,11 @@
 package com.litte.service.reception.impl;
 
+import com.github.pagehelper.StringUtil;
+import com.litte.entity.jurisdiction.TUser;
 import com.litte.entity.reception.TIndent;
 import com.litte.entity.reception.TPersonage;
 import com.litte.entity.reception.TWallet;
+import com.litte.mapper.jurisdiction.TUserMapper;
 import com.litte.mapper.reception.TIndentMapper;
 import com.litte.mapper.reception.TPersonageMapper;
 import com.litte.mapper.reception.TWalletMapper;
@@ -27,6 +30,9 @@ public class TIndentServiceImpl implements TIndentService {
 
     @Autowired
     TPersonageMapper tPersonageMapper;
+
+    @Autowired
+    TUserMapper tUserMapper;
 
     @Override
     public int deleteByPrimaryKey(List<String> ids) {
@@ -84,7 +90,8 @@ public class TIndentServiceImpl implements TIndentService {
     @Override
     public int updateByPrimaryKeyPay(TIndent record) {
         int i = 0;
-        TWallet tWallet = tWalletMapper.selectByPrimaryUserId(record.getOpenid());
+        TIndent records = tIndentMapper.selectByPrimaryKey(record.getId());
+        TWallet tWallet = tWalletMapper.selectByPrimaryUserId(records.getOpenid());
         Double wMoney = Double.parseDouble(tWallet.getwMoney());
         Double iPrice = Double.parseDouble(record.getiPrice());
         Double m = wMoney - iPrice;
@@ -144,7 +151,25 @@ public class TIndentServiceImpl implements TIndentService {
 
     @Override
     public List<Map<String, Object>> selIndentByHair(TIndent record) {
-        return tIndentMapper.selIndentByHair(record);
+        TPersonage personage  = tPersonageMapper.selectByPrimaryKeyUser(record.getOpenid());
+        TUser user = tUserMapper.selectByNamePhone(personage.getPhone());
+        if(user != null && StringUtil.isNotEmpty(user.getUserId())) {
+            record.setHairId(user.getUserId());
+            if(record.getiCondition().equals("undefined")) {
+                record.setiCondition("1");
+            }
+            List<Map<String, Object>> mapList = tIndentMapper.selIndentByHair(record);
+            return mapList;
+        } else {
+            return null;
+        }
+
+    }
+
+    @Override
+    public List<Map<String, Object>> selIndentByHairById(TIndent record) {
+        List<Map<String, Object>> mapList = tIndentMapper.selIndentByHairById(record);
+        return mapList;
     }
 
     @Override

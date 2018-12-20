@@ -30,6 +30,7 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
                         "/indent/refundCardOrder",
                         "/indent/selIndentByHair",
                         "/indent/selIndentByUser",
+                        "/indent/selIndentByHairById",
                         "/personage/addPersonage",
                         "/indent/payIndent",
                         "/indent/refund",

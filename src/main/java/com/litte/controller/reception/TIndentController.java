@@ -318,7 +318,19 @@ public class TIndentController extends BaseController {
     @RequestMapping(value = "/selIndentByHair")
     @ResponseBody
     public List<Map<String,Object>> selIndentByHair(TIndent indent) {
-        return tIndentService.selIndentByHair(indent);
+        List<Map<String,Object>> mapList = tIndentService.selIndentByHair(indent);
+        return mapList;
+    }
+
+    /**
+     * 发型师查询单条订单
+     * @return
+     */
+    @RequestMapping(value = "/selIndentByHairById")
+    @ResponseBody
+    public List<Map<String,Object>> selIndentByHairById(TIndent indent) {
+        List<Map<String,Object>> mapList = tIndentService.selIndentByHairById(indent);
+        return mapList;
     }
 
     /**

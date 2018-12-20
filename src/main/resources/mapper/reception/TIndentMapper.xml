@@ -86,7 +86,7 @@
     select
     i.id,    i.i_time  as iTime,       i.i_code as iCode,    i.i_mode as iMode,   i.openid,
     p.p_name as pName,u.head_portrait as headPortrait,d.dept_name as deptName,
-    u.user_name as userName ,d.site,pg.real_name as realName
+    u.user_name as userName ,d.site,pg.real_name as realName,pg.user_img as userImg
     from t_indent i left join t_projects p
     on
     i.i_type=p.id
@@ -98,9 +98,30 @@
         and i.hair_id= #{hairId,jdbcType=VARCHAR}
       </if>
       <if test="iCondition != null" >
-        and i.i_condition= #{iCondition,jdbcType=VARCHAR}
+        <choose>
+          <when test="iCondition==1">
+            and i.i_condition in ('1','2')
+          </when>
+          <otherwise>
+            and i.i_condition = #{iCondition,jdbcType=VARCHAR}
+          </otherwise>
+        </choose>
+
+
       </if>
     </where>
+  </select>
+
+  <select id="selIndentByHairById" resultType="java.util.Map" parameterType="com.litte.entity.reception.TIndent" >
+      select
+      i.id, i.i_time as iTime, ps.p_name as pName, i.i_mode as iMode , i.i_price as iPrice,
+      i.i_code as iCode,p.real_name as realName, p.style,p.occupation,p.distance,p.user_img as userImg,
+      p.age,p.sex
+      from t_indent i
+      left join t_personage p on i.openid = p.id
+      left join t_projects ps on i.i_code = ps.id
+      where i.id=#{id,jdbcType=VARCHAR}
+
   </select>
 
   <select id="selIndentByPort" resultType="java.util.Map" parameterType="com.litte.entity.reception.TIndent" >

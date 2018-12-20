@@ -18,6 +18,8 @@ public interface TIndentMapper {
 
     List<Map<String,Object>> selIndentByHair(TIndent record);
 
+    List<Map<String,Object>> selIndentByHairById(TIndent record);
+
     List<Map<String,Object>> selIndentByPort(TIndent record);
 
     TIndent selectByPrimaryKey(String id);
