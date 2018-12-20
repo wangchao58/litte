@@ -182,6 +182,7 @@ public class TIndentController extends BaseController {
                 tIndentService.updateByPrimaryKeySelective(indent);
             }
         } else if(mode.equals("1")){
+            indent.setiCondition("5");
             int i  = tIndentService.updateByPrimaryKeyRefund(indent);
             if(i>0) {
                 map.put("return_code","SUCCESS");

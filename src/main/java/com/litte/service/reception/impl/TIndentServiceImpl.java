@@ -105,12 +105,15 @@ public class TIndentServiceImpl implements TIndentService {
     @Override
     public int updateByPrimaryKeyRefund(TIndent record) {
         int i = 0;
-        TWallet tWallet = tWalletMapper.selectByPrimaryUserId(record.getOpenid());
+        TIndent records = tIndentMapper.selectByPrimaryKey(record.getId());
+        TWallet tWallet = tWalletMapper.selectByPrimaryUserId(records.getOpenid());
         Double wMoney = Double.parseDouble(tWallet.getwMoney());
-        Double iPrice = Double.parseDouble(record.getiPrice());
+        Double iPrice = Double.parseDouble(records.getiPrice());
         Double m = wMoney + iPrice;
-        tWallet.setwMoney(m.toString());
+        tWallet.setwMoney(String.format("%.2f", m));
         i = tWalletMapper.updateByPrimaryKeySelective(tWallet);
+        records.setiCondition("5");
+        tIndentMapper.updateByPrimaryKeySelective(records);
         return i;
     }
 
