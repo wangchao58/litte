@@ -310,7 +310,8 @@ public class TIndentController extends BaseController {
     @RequestMapping(value = "/selIndentByUser")
     @ResponseBody
     public List<Map<String,Object>> selIndentByUser(TIndent indent) {
-        return tIndentService.selIndentByUser(indent);
+        List<Map<String,Object>> mapList = tIndentService.selIndentByUser(indent);
+        return mapList;
     }
 
     /**

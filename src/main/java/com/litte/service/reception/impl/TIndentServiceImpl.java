@@ -149,7 +149,11 @@ public class TIndentServiceImpl implements TIndentService {
 
     @Override
     public List<Map<String, Object>> selIndentByUser(TIndent record) {
-        return tIndentMapper.selIndentByUser(record);
+        if(record.getiCondition().equals("undefined")) {
+            record.setiCondition("");
+        }
+        List<Map<String, Object>> mapList = tIndentMapper.selIndentByUser(record);
+        return mapList;
     }
 
     @Override

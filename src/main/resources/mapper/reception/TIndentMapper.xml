@@ -63,7 +63,8 @@
   <select id="selIndentByUser" resultType="java.util.Map" parameterType="com.litte.entity.reception.TIndent" >
     select
       i.id,    i.i_time  as iTime,       i.i_code as iCode,    i.i_mode as iMode,   i.openid,
-      p.p_name as pName,u.head_portrait as headPortrait,d.dept_name as deptName, u.user_name as userName ,d.site
+      p.p_name as pName,u.head_portrait as headPortrait,d.dept_name as deptName, u.user_name as userName ,d.site,
+      i.i_price as iPrice
     from t_indent i left join t_projects p
     on
     i.i_type=p.id
@@ -73,7 +74,7 @@
       <if test="openid != null" >
         and i.openid= #{openid,jdbcType=VARCHAR}
       </if>
-      <if test="iCondition != null" >
+      <if test="iCondition != null and iCondition != ''" >
         and i.i_condition= #{iCondition,jdbcType=VARCHAR}
       </if>
       <if test="id != null" >
@@ -115,11 +116,15 @@
   <select id="selIndentByHairById" resultType="java.util.Map" parameterType="com.litte.entity.reception.TIndent" >
       select
       i.id, i.i_time as iTime, ps.p_name as pName, i.i_mode as iMode , i.i_price as iPrice,
-      i.i_code as iCode,p.real_name as realName, p.style,p.occupation,p.distance,p.user_img as userImg,
-      p.age,p.sex
+      i.i_code as iCode,p.real_name as realName, p.style,p.occupation,p.distance,
+      p.user_img as userImg, p.age,p.sex,d.dept_name as deptName,u.user_name as userName,
+      d.start_time as startTime , d.end_time as endTime, d.site,u.head_portrait as headPortrait,
+      i.i_condition as iCondition
       from t_indent i
       left join t_personage p on i.openid = p.id
       left join t_projects ps on i.i_code = ps.id
+      left join t_dept d on i.dept_id = d.id
+      left join t_user u on i.hair_id=u.user_id
       where i.id=#{id,jdbcType=VARCHAR}
 
   </select>
