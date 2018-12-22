@@ -131,7 +131,7 @@
 
   <select id="selIndentByPort" resultType="java.util.Map" parameterType="com.litte.entity.reception.TIndent" >
     select
-    i.id,i.i_code as iCode ,i.i_phone as iPhone,i.hair_id as haiId,
+    i.id,i.i_code as iCode ,i.i_phone as iPhone,i.hair_id as haiId,i.i_price as iPrice,
     i.i_time as iTime,i.i_condition as iCondition, p.real_name as realName,u.user_name as userName
     from t_indent i left join t_personage p on i.openid = p.id
     <where>
