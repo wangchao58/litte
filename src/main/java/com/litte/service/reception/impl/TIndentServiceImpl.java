@@ -184,5 +184,15 @@ public class TIndentServiceImpl implements TIndentService {
         return tIndentMapper.selIndentByPort(record);
     }
 
+    /**
+     * 根据主键ID查询数据
+     * @param id
+     */
+    @Override
+    public TIndent selByPrimaryKey(String id) {
+        TIndent TIndent = tIndentMapper.selectByPrimaryKey(id);
+        return TIndent;
+    }
+
 
 }

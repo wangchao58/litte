@@ -35,4 +35,10 @@ public interface TIndentService {
     List<Map<String,Object>> selIndentByHairById(TIndent record);
 
     List<Map<String,Object>> selIndentByPort(TIndent record);
+
+    /**
+     * 根据主键ID查询数据
+     * @param id
+     */
+    TIndent selByPrimaryKey(String id);
 }

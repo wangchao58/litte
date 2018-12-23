@@ -80,7 +80,7 @@ public class TIndentController extends BaseController {
      * 增加、修改订单
      * @return
      */
-    @RequestMapping(value = "/addIndent")
+    /*@RequestMapping(value = "/addIndent")
     @ResponseBody
     public TIndent addUser(TIndent indent,String userId) {
         int i = 0;
@@ -94,6 +94,34 @@ public class TIndentController extends BaseController {
             indent = tIndentService.insertSelective(indent);
         }
         return indent;
+    }*/
+    @RequestMapping(value = "/addIndent")
+    @ResponseBody
+    public Map<String,Object> addUser(TIndent indent,String userId) {
+        Map<String,Object> map = new HashMap<>();
+        if(StringUtil.isNotEmpty(userId)) {
+            indent.setOpenid(userId);
+        }
+        if (StringUtil.isNotEmpty(indent.getId())) {
+            TIndent tIndent = tIndentService.selByPrimaryKey(indent.getId());
+            long l = 0L;
+            if(null != indent.getiTime()){
+                long newDate = new Date().getTime();//当前时间
+                long iTime = tIndent.getiTime().getTime();//预约时间
+                l = (newDate - iTime) / 1000 / (60 * 60);
+            }
+            if(l > 0 && null != indent.getiTime()){
+                map.put("time_out","TIMEOUT");
+            }else{
+                indent = tIndentService.updateByPrimaryKeySelective(indent);
+                map.put("indent",indent);
+            }
+        } else {
+            indent.setId(UUIDUtil.getUUIDBig());
+            indent = tIndentService.insertSelective(indent);
+            map.put("indent",indent);
+        }
+        return map;
     }
 
 
@@ -158,7 +186,7 @@ public class TIndentController extends BaseController {
      * 退款
      * @return
      */
-    @RequestMapping(value = "/refund")
+    /*@RequestMapping(value = "/refund")
     @ResponseBody
     public Map<String,Object> refund(String id,HttpServletRequest request) throws Exception {
         Map<String,Object> map = new HashMap<>();
@@ -190,6 +218,51 @@ public class TIndentController extends BaseController {
             } else {
                 map.put("return_code","ERROR");
                 map.put("return_msg","退款失败");
+            }
+        }
+        return  map;
+    }*/
+
+    @RequestMapping(value = "/refund")
+    @ResponseBody
+    public Map<String,Object> refund(String id,HttpServletRequest request) throws Exception {
+        Map<String,Object> map = new HashMap<>();
+        TIndent indent = tIndentService.selectByPrimaryKey(id);
+        long time = indent.getiTime().getTime();//预约时间
+        long nowTime = new Date().getTime();//系统当前时间
+        long l = (nowTime - time) / 1000 / (60 * 60);
+        if(l > 0){
+            map.put("return_code","TIMEOUT");
+            map.put("return_msg","退款失败，已超出退款时间");
+        }else{
+            double total_fee = Double.parseDouble(indent.getiPrice())*100;
+            int isss =  (new Double(total_fee)).intValue();
+            String mode = indent.getiMode();
+            String out_refund_no = UUIDUtil.getUUID();
+            indent.setOut_refund_no(out_refund_no);
+            if(mode.equals("0")) {
+                PayUtil payUtil = new PayUtil();
+                payUtil.setOut_trade_no(indent.getiCode());
+                payUtil.setNonce_str(indent.getId());
+                payUtil.setTotal_fee(isss);
+                payUtil.setRefund_fee(isss);
+                payUtil.setOut_refund_no(out_refund_no);
+                payUtil.setNotify_url(fileUploadUtil.getBaseUrl()+"/indent/refundCardOrder");
+                map=WinxinUtil.wxRefund(payUtil,request);
+                if(map.get("return_code").equals("SUCCESS")) {
+                    indent.setiCondition("6");
+                    tIndentService.updateByPrimaryKeySelective(indent);
+                }
+            } else if(mode.equals("1")){
+                indent.setiCondition("5");
+                int i  = tIndentService.updateByPrimaryKeyRefund(indent);
+                if(i>0) {
+                    map.put("return_code","SUCCESS");
+                    map.put("return_msg","已退款");
+                } else {
+                    map.put("return_code","ERROR");
+                    map.put("return_msg","退款失败");
+                }
             }
         }
         return  map;
