@@ -1,7 +1,9 @@
 package com.litte.service.reception.impl;
 
 import com.litte.entity.reception.TEvaluate;
+import com.litte.entity.reception.TIndent;
 import com.litte.mapper.reception.TEvaluateMapper;
+import com.litte.mapper.reception.TIndentMapper;
 import com.litte.service.reception.TEvaluateService;
 import com.litte.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +18,19 @@ public class TEvaluateServiceImpl implements TEvaluateService {
 
     @Autowired
     TEvaluateMapper tEvaluateMapper;
+    @Autowired
+    TIndentMapper tIndentMapper;
 
     @Override
     public int insertSelective(TEvaluate record) {
+
+        TIndent indent = new TIndent();
+        indent.setId(record.getId());
+        indent.setiCondition("4");
+        tIndentMapper.updateByPrimaryKeySelective(indent);
         record.setId(UUIDUtil.getUUID());
         record.setCreateTime(new Date());
+
         return tEvaluateMapper.insertSelective(record);
     }
 
