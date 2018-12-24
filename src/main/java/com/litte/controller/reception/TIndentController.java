@@ -6,7 +6,6 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.StringUtil;
 import com.litte.entity.PayUtil;
-import com.litte.entity.jurisdiction.TUser;
 import com.litte.entity.reception.TIndent;
 import com.litte.service.reception.TIndentService;
 import com.litte.util.*;
@@ -20,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -111,14 +108,17 @@ public class TIndentController extends BaseController {
                 l = (newDate - iTime) / 1000 / (60 * 60);
             }
             if(l > 0 && null != indent.getiTime()){
-                map.put("time_out","TIMEOUT");
+                map.put("time_out","IS");
+                map.put("indent",new TIndent());
             }else{
                 indent = tIndentService.updateByPrimaryKeySelective(indent);
+                map.put("time_out","NO");
                 map.put("indent",indent);
             }
         } else {
             indent.setId(UUIDUtil.getUUIDBig());
             indent = tIndentService.insertSelective(indent);
+            map.put("time_out","NO");
             map.put("indent",indent);
         }
         return map;
