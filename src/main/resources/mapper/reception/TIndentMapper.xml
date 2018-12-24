@@ -132,9 +132,13 @@
   <select id="selIndentByPort" resultType="java.util.Map" parameterType="com.litte.entity.reception.TIndent" >
     select
     i.id,i.i_code as iCode ,i.i_phone as iPhone,i.hair_id as haiId,i.i_price as iPrice,
-    i.i_time as iTime,i.i_condition as iCondition, p.real_name as realName,u.user_name as userName
-    from t_indent i left join t_personage p on i.openid = p.id
+    i.i_time as iTime,i.i_condition as iCondition, p.real_name as realName,u.user_name as userName,
+    d.dept_name as deptName, ps.p_name as pName
+    from t_indent i
+    left join t_personage p on i.openid = p.id
     left join t_user u on i.hair_id=u.user_id
+    left join t_dept d on i.dept_id = d.id
+    left join t_projects ps on i.i_type = ps.id
     <where>
       <if test="hairId != null" >
         and hair_id= #{hairId,jdbcType=VARCHAR}
