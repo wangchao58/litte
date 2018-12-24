@@ -1,13 +1,26 @@
 package com.litte.util;
 
 import com.litte.entity.PayUtil;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContexts;
+import org.apache.http.util.EntityUtils;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 
+import javax.net.ssl.SSLContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
+import java.security.KeyStore;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -72,7 +85,7 @@ public class WinxinUtil {
     }
 
      /**
-     * 支付
+     * 退款
      * @param payUtil
      * @param request
      * @return
@@ -109,7 +122,7 @@ public class WinxinUtil {
         System.out.println("调试模式_退款接口 请求XML数据：" + xml);
 
         //调用统一下单接口，并接受返回的结果
-        String result = BasePay.httpRequest("https://api.mch.weixin.qq.com/secapi/pay/refund", "POST", xml);
+        String result = doRefund("https://api.mch.weixin.qq.com/secapi/pay/refund",  xml);
         // 将解析结果存储在HashMap中
         Map map = doXMLParse(result);
         return map;
@@ -118,6 +131,55 @@ public class WinxinUtil {
 
     }
 
+
+    /**
+     * 申请退款
+     */
+    public static String doRefund(String url, String data) throws Exception {
+        KeyStore keyStore = KeyStore.getInstance("PKCS12");
+        FileInputStream is = new FileInputStream(new File("****证书文件存放的路劲*******"));
+        try {
+            keyStore.load(is, "xinxingshang2018xinxingshang2018".toCharArray());
+        } finally {
+            is.close();
+        }
+        // Trust own CA and all self-signed certs
+        SSLContext sslcontext = SSLContexts.custom().loadKeyMaterial(
+                keyStore,
+                "xinxingshang2018xinxingshang2018".toCharArray())
+                .build();
+        // Allow TLSv1 protocol only
+        SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
+                sslcontext,
+                new String[]{"TLSv1"},
+                null,
+                SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER
+        );
+        CloseableHttpClient httpclient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
+        try {
+            HttpPost httpost = new HttpPost(url); // 设置响应头信息
+            httpost.addHeader("Connection", "keep-alive");
+            httpost.addHeader("Accept", "*/*");
+            httpost.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+            httpost.addHeader("Host", "api.mch.weixin.qq.com");
+            httpost.addHeader("X-Requested-With", "XMLHttpRequest");
+            httpost.addHeader("Cache-Control", "max-age=0");
+            httpost.addHeader("User-Agent", "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) ");
+            httpost.setEntity(new StringEntity(data, "UTF-8"));
+            CloseableHttpResponse response = httpclient.execute(httpost);
+            try {
+                HttpEntity entity = response.getEntity();
+
+                String jsonStr = EntityUtils.toString(response.getEntity(), "UTF-8");
+                EntityUtils.consume(entity);
+                return jsonStr;
+            } finally {
+                response.close();
+            }
+        } finally {
+            httpclient.close();
+        }
+    }
 
 
     /**
