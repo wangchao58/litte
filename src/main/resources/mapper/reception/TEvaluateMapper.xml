@@ -72,7 +72,7 @@
             and e.e_person_shop_id = #{ePersonShopId,jdbcType=VARCHAR}
         </if>
         <if test="eUserid != null">
-          and e.e_userid= = #{eUserid,jdbcType=VARCHAR}
+          and e.e_userid = #{eUserid,jdbcType=VARCHAR}
         </if>
     </where>
     order by e.create_time desc
