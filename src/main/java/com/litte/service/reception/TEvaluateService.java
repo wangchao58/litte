@@ -14,4 +14,6 @@ public interface TEvaluateService {
     List<Map<String,Object>> selectByExample(TEvaluate record);
 
     List<Map<String,Object>> selectByExampleByPort(TEvaluate record);
+
+    int selCountByExampleByPort(TEvaluate evaluate);
 }

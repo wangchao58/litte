@@ -22,4 +22,6 @@ public interface TEvaluateMapper {
     TEvaluate selectByPrimaryKey(String id);
 
     int updateByPrimaryKey(TEvaluate record);
+
+    int selCountByExampleByPort(TEvaluate evaluate);
 }

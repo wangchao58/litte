@@ -63,7 +63,8 @@
   <select id="selectByExampleByPort" resultType="java.util.Map" parameterType="com.litte.entity.reception.TEvaluate" >
     select
     e.id,e.e_userid as eUserid,e.e_content as eContent,e.picture ,e.anonymity,
-    e.create_time as createTime,e.score,p.user_img as userimg,s.p_name as pName
+    e.create_time as createTime,e.score,p.user_img as userimg,s.p_name as pName,
+    p.real_name as realName
     from t_evaluate e
     left join t_personage p on e.e_userid=e.e_userid
     left join t_projects s on e.projects_id=s.id
@@ -77,6 +78,23 @@
     </where>
     order by e.create_time desc
   </select>
+
+  <!-- 查询评论数据条数 -->
+  <select id="selCountByExampleByPort" resultType="java.lang.Integer" parameterType="com.litte.entity.reception.TEvaluate" >
+    select count(1)
+    from t_evaluate e
+    left join t_personage p on e.e_userid=e.e_userid
+    left join t_projects s on e.projects_id=s.id
+    <where>
+      <if test="ePersonShopId != null">
+        and e.e_person_shop_id = #{ePersonShopId,jdbcType=VARCHAR}
+      </if>
+      <if test="eUserid != null">
+        and e.e_userid = #{eUserid,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

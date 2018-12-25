@@ -56,7 +56,8 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
                         "/rest/seleDateStaffRort",
                         "/projects/listProjectsByPort",
                         "/trecruitInfo/trecruitInfoData",
-                        "/trecruitInfo/updTrecruitInfo");
+                        "/trecruitInfo/updTrecruitInfo",
+                        "/evaluate/listEvaluateCountByPort");
 
     }
 }

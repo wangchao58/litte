@@ -48,4 +48,9 @@ public class TEvaluateServiceImpl implements TEvaluateService {
     public List<Map<String, Object>> selectByExampleByPort(TEvaluate record) {
         return tEvaluateMapper.selectByExampleByPort(record);
     }
+
+    @Override
+    public int selCountByExampleByPort(TEvaluate evaluate) {
+        return tEvaluateMapper.selCountByExampleByPort(evaluate);
+    }
 }

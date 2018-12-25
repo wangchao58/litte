@@ -2,7 +2,6 @@ package com.litte.controller.reception;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.litte.entity.reception.TCoupon;
 import com.litte.entity.reception.TEvaluate;
 import com.litte.service.reception.TEvaluateService;
 import com.litte.util.BaseController;
@@ -83,6 +82,18 @@ public class TEvaluateController extends BaseController {
         PageHelper.startPage(page,rows);//分页查询
         List<Map<String,Object>> tEvaluateList = tEvaluateService.selectByExampleByPort(evaluate);
         return tEvaluateList;
+    }
+
+    /**
+     * 接口查询评价列表数据总条数
+     * @param evaluate
+     * @return
+     */
+    @RequestMapping(value = "/listEvaluateCountByPort")
+    @ResponseBody
+    public int listEvaluateCountByPort(TEvaluate evaluate) {
+        int i = tEvaluateService.selCountByExampleByPort(evaluate);
+        return i;
     }
 
     /**
