@@ -228,7 +228,7 @@ public class TIndentController extends BaseController {
     public Map<String,Object> refund(String id,HttpServletRequest request) throws Exception {
         Map<String,Object> map = new HashMap<>();
         TIndent indent = tIndentService.selectByPrimaryKey(id);
-        long time = indent.getiTime().getTime();//预约时间
+        long time = indent.getIsTime().getTime();//首次预约时间
         long nowTime = new Date().getTime();//系统当前时间
         long l = (nowTime - time) / 1000 / (60 * 60);
         if(l > 0){
