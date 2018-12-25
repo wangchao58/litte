@@ -100,10 +100,11 @@ public class WinxinUtil {
         String stringA = "appid="  + payUtil.getAppid()
                 + "&mch_id=" + payUtil.getMch_id()
                 + "&nonce_str="  + payUtil.getNonce_str()
-                + "&out_trade_no="  + payUtil.getOut_trade_no()
+                + "&notify_url="+payUtil.getNotify_url()
                 + "&out_refund_no="  + payUtil.getOut_refund_no()
-                + "&total_fee="  + payUtil.getTotal_fee()
+                + "&out_trade_no="  + payUtil.getOut_trade_no()
                 + "&refund_fee="  + payUtil.getRefund_fee()
+                + "&total_fee="  + payUtil.getTotal_fee()
                 + "&key=xinxingshang2018xinxingshang2018";
 
         String sign = Md5Util.md5(stringA).toUpperCase();
@@ -112,10 +113,11 @@ public class WinxinUtil {
                 "   <appid>" + payUtil.getAppid() + "</appid>" +
                 "   <mch_id>" + payUtil.getMch_id() + "</mch_id>" +
                 "   <nonce_str>" + payUtil.getNonce_str() + "</nonce_str>" +
-                "   <out_trade_no>" + payUtil.getOut_trade_no() + "</out_trade_no>" +
                 "   <out_refund_no>" + payUtil.getOut_refund_no() + "</out_refund_no>" +
-                "   <total_fee>"+ payUtil.getTotal_fee()+"</total_fee>" +
+                "   <out_trade_no>" + payUtil.getOut_trade_no() + "</out_trade_no>" +
                 "   <refund_fee>"+ payUtil.getRefund_fee()+"</refund_fee>" +
+                "   <total_fee>"+ payUtil.getTotal_fee()+"</total_fee>" +
+                "   <notify_url>"+payUtil.getNotify_url()+"</notify_url>" +
                 "   <sign>"+sign+"</sign>" +
                 "</xml> ";
 
@@ -137,16 +139,16 @@ public class WinxinUtil {
      */
     public static String doRefund(String url, String data) throws Exception {
         KeyStore keyStore = KeyStore.getInstance("PKCS12");
-        FileInputStream is = new FileInputStream(new File("****证书文件存放的路劲*******"));
+        FileInputStream is = new FileInputStream(new File("C:\\Users\\Administrator\\Desktop\\cert\\apiclient_cert.p12"));
         try {
-            keyStore.load(is, "xinxingshang2018xinxingshang2018".toCharArray());
+            keyStore.load(is, "1515291591".toCharArray());
         } finally {
             is.close();
         }
         // Trust own CA and all self-signed certs
         SSLContext sslcontext = SSLContexts.custom().loadKeyMaterial(
                 keyStore,
-                "xinxingshang2018xinxingshang2018".toCharArray())
+                "1515291591".toCharArray())
                 .build();
         // Allow TLSv1 protocol only
         SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(

@@ -55,7 +55,10 @@ public class PayUtil {
     private String openid;//trade_type=JSAPI，此参数必传，用户在商户appid下的唯一标识。openid如何获取 必填
 
     private String Out_refund_no;//商户退款单号
+
     private int refund_fee;//退款金额
+
+    private String transaction_id;
 
 
     public String getAppid() {
@@ -240,5 +243,13 @@ public class PayUtil {
 
     public void setRefund_fee(int refund_fee) {
         this.refund_fee = refund_fee;
+    }
+
+    public String getTransaction_id() {
+        return transaction_id;
+    }
+
+    public void setTransaction_id(String transaction_id) {
+        this.transaction_id = transaction_id;
     }
 }

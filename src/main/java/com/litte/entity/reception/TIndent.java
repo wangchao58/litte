@@ -50,6 +50,8 @@ public class TIndent extends Page {
 
     private String isSms;
 
+    private String transactionId;
+
     public String getId() {
         return id;
     }
@@ -224,5 +226,13 @@ public class TIndent extends Page {
 
     public void setIsSms(String isSms) {
         this.isSms = isSms;
+    }
+
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
     }
 }

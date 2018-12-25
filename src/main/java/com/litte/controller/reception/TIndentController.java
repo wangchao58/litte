@@ -247,14 +247,17 @@ public class TIndentController extends BaseController {
                 payUtil.setTotal_fee(isss);
                 payUtil.setRefund_fee(isss);
                 payUtil.setOut_refund_no(out_refund_no);
+                payUtil.setTransaction_id(indent.getTransactionId());
                 payUtil.setNotify_url(fileUploadUtil.getBaseUrl()+"/indent/refundCardOrder");
                 map=WinxinUtil.wxRefund(payUtil,request);
                 if(map.get("return_code").equals("SUCCESS")) {
                     indent.setiCondition("6");
+                    indent.setOpenid("");
                     tIndentService.updateByPrimaryKeySelective(indent);
                 }
             } else if(mode.equals("1")){
                 indent.setiCondition("5");
+                indent.setOpenid("");
                 int i  = tIndentService.updateByPrimaryKeyRefund(indent);
                 if(i>0) {
                     map.put("return_code","SUCCESS");
@@ -282,6 +285,11 @@ public class TIndentController extends BaseController {
         System.out.println("接收到的数据 id："+id);
         TIndent indent = tIndentService.selectByPrimaryKey(id);
         System.out.println("查出的数据 iCondition："+indent.getiCondition());
+        String transaction_id = (String)map2.get("transaction_id");
+        String out_trade_no = (String)map2.get("out_trade_no");
+        System.out.println("接收到的数据 out_trade_no："+out_trade_no);
+        System.out.println("接收到数据 transaction_id："+transaction_id);
+        indent.setTransactionId(transaction_id);
         if (indent.getiCondition().equals("0")) {
             if (return_code.equals("SUCCESS")) {
                 indent.setiCondition("1");
@@ -301,7 +309,6 @@ public class TIndentController extends BaseController {
         String xmlStr = NotifyServlet.getWxXml(request);
         Map map2 = WinxinUtil.doXMLParse(xmlStr);
         String return_code = (String) map2.get("return_code");
-
         String id = (String) map2.get("nonce_str");
         TIndent indent = tIndentService.selectByPrimaryKey(id);
         System.out.println("接收到的数据 return_code："+return_code);
@@ -310,6 +317,7 @@ public class TIndentController extends BaseController {
         indent.setiCondition("5");
         if (indent.getiCondition().equals("1")) {
             if (return_code.equals("SUCCESS")) {
+                indent.setOpenid("");
                 tIndentService.updateByPrimaryKeySelective(indent);
             }
         }
