@@ -104,7 +104,7 @@ public class TIndentController extends BaseController {
             long l = 0L;
             if(null != indent.getiTime()){
                 long newDate = new Date().getTime();//当前时间
-                long iTime = tIndent.getiTime().getTime();//预约时间
+                long iTime = tIndent.getIsTime().getTime();//首次预约时间
                 l = (newDate - iTime) / 1000 / (60 * 60);
             }
             if(l > 0 && null != indent.getiTime()){
