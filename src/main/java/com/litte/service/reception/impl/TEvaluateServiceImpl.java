@@ -5,6 +5,7 @@ import com.litte.entity.reception.TIndent;
 import com.litte.mapper.reception.TEvaluateMapper;
 import com.litte.mapper.reception.TIndentMapper;
 import com.litte.service.reception.TEvaluateService;
+import com.litte.util.DateUtil;
 import com.litte.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,7 +47,11 @@ public class TEvaluateServiceImpl implements TEvaluateService {
 
     @Override
     public List<Map<String, Object>> selectByExampleByPort(TEvaluate record) {
-        return tEvaluateMapper.selectByExampleByPort(record);
+        List<Map<String, Object>> mapList = tEvaluateMapper.selectByExampleByPort(record);
+        for (Map<String,Object> map: mapList) {
+            map.put("createTime",DateUtil.formatDate((Date) map.get("createTime"),"yyyy-MM-dd HH:mm"));
+        }
+        return mapList;
     }
 
     @Override
