@@ -15,6 +15,7 @@ import com.litte.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -149,10 +150,13 @@ public class TIndentServiceImpl implements TIndentService {
 
     @Override
     public List<Map<String, Object>> selIndentByUser(TIndent record) {
-        if(record.getiCondition().equals("undefined")) {
+        if(StringUtil.isNotEmpty(record.getiCondition())&&record.getiCondition().equals("undefined")) {
             record.setiCondition("");
         }
         List<Map<String, Object>> mapList = tIndentMapper.selIndentByUser(record);
+        for(Map<String,Object> map : mapList) {
+            map.put("iTime", DateUtil.formatDate((Date) map.get("iTime"),"yyyy-MM-dd HH:mm"));
+        }
         return mapList;
     }
 
@@ -166,6 +170,9 @@ public class TIndentServiceImpl implements TIndentService {
                 record.setiCondition("1");
             }
             List<Map<String, Object>> mapList = tIndentMapper.selIndentByHair(record);
+            for(Map<String,Object> map :mapList) {
+                map.put("iTime",DateUtil.formatDate((Date) map.get("iTime"),"yyyy-MM-dd HH:mm"));
+            }
             return mapList;
         } else {
             return null;
@@ -176,6 +183,9 @@ public class TIndentServiceImpl implements TIndentService {
     @Override
     public List<Map<String, Object>> selIndentByHairById(TIndent record) {
         List<Map<String, Object>> mapList = tIndentMapper.selIndentByHairById(record);
+        for(Map<String,Object> map :mapList) {
+            map.put("iTime",DateUtil.formatDate((Date) map.get("iTime"),"yyyy-MM-dd HH:mm"));
+        }
         return mapList;
     }
 
