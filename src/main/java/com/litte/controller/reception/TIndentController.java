@@ -107,7 +107,7 @@ public class TIndentController extends BaseController {
                 long iTime = tIndent.getIsTime().getTime();//首次预约时间
                 l = (newDate - iTime) / 1000 / (60 * 60);
             }
-            if(l > 0 && null != indent.getiTime() && !tIndent.getiCondition().equals("2")){
+            if((l > 0 && null != indent.getiTime())||tIndent.getiCondition().equals("2")){
                 map.put("time_out","IS");
                 map.put("indent",new TIndent());
             }else{
