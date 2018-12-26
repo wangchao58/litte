@@ -105,9 +105,9 @@ public class TIndentController extends BaseController {
             if(null != indent.getiTime()){
                 long newDate = new Date().getTime();//当前时间
                 long iTime = tIndent.getIsTime().getTime();//首次预约时间
-                l = (newDate - iTime) / 1000 / (60 * 60);
+                l = (iTime - newDate) / 1000 / (60 * 60);
             }
-            if((l > 0 && null != indent.getiTime())||tIndent.getiCondition().equals("2")){
+            if((l <= 0 && null != indent.getiTime())||tIndent.getiCondition().equals("2")){
                 map.put("time_out","IS");
                 map.put("indent",new TIndent());
             }else{
@@ -238,8 +238,8 @@ public class TIndentController extends BaseController {
         TIndent indent = tIndentService.selectByPrimaryKey(id);
         long time = indent.getIsTime().getTime();//首次预约时间
         long nowTime = new Date().getTime();//系统当前时间
-        long l = (nowTime - time) / 1000 / (60 * 60);
-        if(l > 0 || indent.getiCondition().equals("2")){
+        long l = (time - nowTime) / 1000 / (60 * 60);
+        if(l <= 0 || indent.getiCondition().equals("2")){
             map.put("return_code","TIMEOUT");
             map.put("return_msg","退款失败，已超出退款时间");
         }else{
