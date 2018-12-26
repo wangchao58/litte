@@ -52,7 +52,7 @@ public class WinxinUtil {
                 + "&notify_url=" + payUtil.getNotify_url()
                 + "&openid=" + payUtil.getOpenid()
                 + "&out_trade_no=" + payUtil.getOut_trade_no()
-                + "&spbill_create_ip=120.27.11.164"
+                + "&spbill_create_ip=154.8.185.184"
                 + "&total_fee="+ payUtil.getTotal_fee()
                 + "&trade_type=JSAPI"
                 + "&key=xinxingshang2018xinxingshang2018";
@@ -66,7 +66,7 @@ public class WinxinUtil {
                 "   <notify_url>" + payUtil.getNotify_url() + "</notify_url>" +
                 "   <openid>" + payUtil.getOpenid() + "</openid>" +
                 "   <out_trade_no>" + payUtil.getOut_trade_no() + "</out_trade_no>" +
-                "   <spbill_create_ip>120.27.11.164</spbill_create_ip>" +
+                "   <spbill_create_ip>154.8.185.184</spbill_create_ip>" +
                 "   <total_fee>" + payUtil.getTotal_fee() + "</total_fee>" +
                 "   <trade_type>JSAPI</trade_type>" +
                 "   <sign>" + sign + "</sign>" +
