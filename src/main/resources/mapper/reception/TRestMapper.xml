@@ -63,7 +63,7 @@
       when
       concat(r.is_date ,' ' , r.is_hour) &lt; date_format(now(), '%Y-%m-%d %h:%i')  then 0
       when
-      r.is_hour in (select date_format(i_time, '%h:%i') from t_indent
+      r.is_hour in (select date_format(i_time, '%H:%i') from t_indent
       where  date_format(i_time, '%Y-%m-%d')=#{isDate,jdbcType=VARCHAR}  and hair_id=#{staffId,jdbcType=VARCHAR} and i_condition not in ('6','7'))  then 0
       else 1
       end as is_reserve
