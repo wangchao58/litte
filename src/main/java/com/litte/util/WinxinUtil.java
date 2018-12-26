@@ -139,7 +139,8 @@ public class WinxinUtil {
      */
     public static String doRefund(String url, String data) throws Exception {
         KeyStore keyStore = KeyStore.getInstance("PKCS12");
-        FileInputStream is = new FileInputStream(new File("C:\\Users\\Administrator\\Desktop\\cert\\apiclient_cert.p12"));
+//        FileInputStream is = new FileInputStream(new File("C:\\Users\\Administrator\\Desktop\\cert\\apiclient_cert.p12"));
+        FileInputStream is = new FileInputStream(new File("C:\\tuikuan\\cert\\apiclient_cert.p12"));
         try {
             keyStore.load(is, "1515291591".toCharArray());
         } finally {
