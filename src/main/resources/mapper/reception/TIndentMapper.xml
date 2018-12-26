@@ -167,7 +167,7 @@
     <include refid="Base_Column_List" />
     from t_indent
     where
-    date_format(adddate(i_time, interval 30 minute),'%Y-%m-%d %h:%i:%s') &lt;= now()
+    round((unix_timestamp(i_time)-unix_timestamp(now()))/60) &gt; 0 and round((unix_timestamp(i_time)-unix_timestamp(now()))/60) &lt;= 30
     and i_condition='1'
     and is_sms = '0'
     and i_phone is not null
