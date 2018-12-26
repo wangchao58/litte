@@ -183,7 +183,7 @@
 
   <select id="accountByList" resultType="java.lang.String" parameterType="java.util.Map" >
     select
-    ound(sum(i_price),2) as price
+    round(sum(i_price),2) as price
     from t_indent
     <where>
       <if test="startTime != null and startTime !=''" >
