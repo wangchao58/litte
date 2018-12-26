@@ -103,18 +103,23 @@ public class TWalletServiceImpl implements TWalletService {
     @Override
     public int payUpdateWallet(Map<String, Object> map) throws Exception {
         String return_code = (String) map.get("return_code");
+        System.out.println("接收到的状态是否成功："+ return_code);
         String id = (String) map.get("nonce_str");
+        System.out.println("接收到的ID是否正常："+ id);
         TStated stated = tStatedMapper.selectByPrimaryKey(id);
-
+        System.out.println("查出的ID是否正常："+ stated.getId());
         if (stated.getIsSucceed().equals("0")) {
             if (return_code.equals("SUCCESS")) {
-
-                TWallet wallet = tWalletMapper.selectByPrimaryKey(stated.getUserId());
+                TWallet wallet = tWalletMapper.selectByPrimaryUserId(stated.getUserId());
+                System.out.println("查出的钱包ID："+ wallet.getId());
                 Double a = Double.parseDouble(wallet.getwMoney())+Double.parseDouble(stated.getsAmount());
                 wallet.setwMoney(a.toString());
-                tWalletMapper.updateByPrimaryKeySelective(wallet);
+                System.out.println("充值的钱数："+ a);
+                int i = tWalletMapper.updateByPrimaryKeySelective(wallet);
+                System.out.println("钱包是否充值成功："+ i);
                 stated.setIsSucceed("1");
-                tStatedMapper.updateByPrimaryKeySelective(stated);
+                int j = tStatedMapper.updateByPrimaryKeySelective(stated);
+                System.out.println("充值记录是否充值成功："+ j);
             }
         }
         return 0;
