@@ -107,13 +107,21 @@ public class TIndentController extends BaseController {
                 long iTime = tIndent.getIsTime().getTime();//首次预约时间
                 l = (newDate - iTime) / 1000 / (60 * 60);
             }
-            if(l > 0 && null != indent.getiTime()){
+            if(l > 0 && null != indent.getiTime() && !tIndent.getiCondition().equals("2")){
                 map.put("time_out","IS");
                 map.put("indent",new TIndent());
             }else{
-                indent = tIndentService.updateByPrimaryKeySelective(indent);
-                map.put("time_out","NO");
-                map.put("indent",indent);
+                if(indent.getiTime() != null && !tIndent.getiCondition().equals("2")) {
+                    indent.setiCondition("2");
+                }
+                if(!tIndent.getiCondition().equals("2")) {
+                    indent = tIndentService.updateByPrimaryKeySelective(indent);
+                    map.put("time_out","NO");
+                    map.put("indent",indent);
+                } else {
+                    map.put("time_out","只能改签一次，不能多次改签");
+                    map.put("indent",new TIndent());
+                }
             }
         } else {
             indent.setId(UUIDUtil.getUUIDBig());
