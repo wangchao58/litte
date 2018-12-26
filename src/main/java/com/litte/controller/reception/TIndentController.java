@@ -239,7 +239,7 @@ public class TIndentController extends BaseController {
         long time = indent.getIsTime().getTime();//首次预约时间
         long nowTime = new Date().getTime();//系统当前时间
         long l = (nowTime - time) / 1000 / (60 * 60);
-        if(l > 0){
+        if(l > 0 || indent.getiCondition().equals("2")){
             map.put("return_code","TIMEOUT");
             map.put("return_msg","退款失败，已超出退款时间");
         }else{
