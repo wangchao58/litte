@@ -80,10 +80,10 @@
   </select>
 
   <!-- 查询评论数据条数 -->
-  <select id="selCountByExampleByPort" resultType="java.util.Map" parameterType="com.litte.entity.reception.TEvaluate" >
+  <select id="selCountByExampleByPort" resultType="java.lang.Integer" parameterType="com.litte.entity.reception.TEvaluate" >
     select count(1)
     from t_evaluate e
-    left join t_personage p on e.e_userid=e.e_userid
+    left join t_personage p on e.e_userid=p.id
     left join t_projects s on e.projects_id=s.id
     <where>
       <if test="ePersonShopId != null">
