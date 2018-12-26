@@ -76,7 +76,14 @@
         and i.openid= #{openid,jdbcType=VARCHAR}
       </if>
       <if test="iCondition != null and iCondition != ''" >
-        and i.i_condition= #{iCondition,jdbcType=VARCHAR}
+          <choose>
+            <when test="iCondition==1">
+              and i.i_condition in ('1','2')
+            </when>
+            <otherwise>
+              and i.i_condition = #{iCondition,jdbcType=VARCHAR}
+            </otherwise>
+          </choose>
       </if>
       <if test="id != null and id != ''" >
         and i.id= #{id,jdbcType=VARCHAR}
