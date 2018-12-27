@@ -83,6 +83,19 @@ public class TRecruitController {
 
 
     /**
+     * 接口单条招聘列表
+     *
+     * @return
+     */
+    @RequestMapping(value = "/listRecruitByPortId")
+    @ResponseBody
+    public TRecruit listRecruitByPortId(TRecruit recruit) {
+        TRecruit tDeptList = tRecruitService.selectByPrimaryKey(recruit.getId());
+        return tDeptList;
+    }
+
+
+    /**
      * 增加、修改部门
      * @return
      */

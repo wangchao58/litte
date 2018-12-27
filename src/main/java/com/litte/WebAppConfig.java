@@ -49,6 +49,7 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
                         "/stated/listStatedPort",
                         "/user/listUserByPort",
                         "/recruit/listRecruitByPort",
+                        "/recruit/listRecruitByPortId",
                         "/personage/seleByKeyPort",
                         "/file/uploadFile",
                         "/evaluate/addEvaluate",
