@@ -93,13 +93,16 @@ public class TIndentServiceImpl implements TIndentService {
         int i = 0;
         TIndent records = tIndentMapper.selectByPrimaryKey(record.getId());
         TWallet tWallet = tWalletMapper.selectByPrimaryUserId(records.getOpenid());
-        Double wMoney = Double.parseDouble(tWallet.getwMoney());
-        Double iPrice = Double.parseDouble(record.getiPrice());
-        Double m = wMoney - iPrice;
-        if(m>=0) {
-            tWallet.setwMoney(String.format("%.2f", m));
-            i = tWalletMapper.updateByPrimaryKeySelective(tWallet);
+        if(tWallet != null) {
+            Double wMoney = Double.parseDouble(tWallet.getwMoney());
+            Double iPrice = Double.parseDouble(record.getiPrice());
+            Double m = wMoney - iPrice;
+            if(m>=0) {
+                tWallet.setwMoney(String.format("%.2f", m));
+                i = tWalletMapper.updateByPrimaryKeySelective(tWallet);
+            }
         }
+
         return i;
     }
 
