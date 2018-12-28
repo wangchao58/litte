@@ -246,16 +246,15 @@ public class UserController extends BaseController {
      */
     @RequestMapping("/listUserByPort")
     @ResponseBody
-    public List<TUser> listUserByPort(String deptId) {
+    public List<Map<String,Object>> listUserByPort(String deptId) {
         Map<String,Object> map = new HashMap<>();
         map.put("deptId",deptId);
-
         List<String> deptList = new ArrayList<>();
         deptList.add(deptId);
         if(StringUtil.isEmpty(deptId)) {
             return null;
         }
-        List<TUser> listUser = userService.listUserByPort(deptList);
+        List<Map<String,Object>> listUser = userService.listUserByPortMap(deptList);
         return listUser;
     }
 

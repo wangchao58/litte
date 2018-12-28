@@ -51,6 +51,24 @@ public class DateUtil {
         return listDate;
     }
 
+    /**
+     * 设置5天 时间
+     * @return
+     */
+    public static List<String> getWeekOfTime() {
+        Calendar cal = Calendar.getInstance();
+        Date date = new Date();
+        List<String> listDate = new ArrayList<>();
+        for (int i = 0; i<= 4;i++) {
+            cal.setTime(date);//设置起时间
+            cal.add(Calendar.DATE, i);//增加一天 
+            SimpleDateFormat dateFm = new SimpleDateFormat("MM-dd");
+            String currSun = dateFm.format(cal.getTime());
+            listDate.add(currSun);
+        }
+        return listDate;
+    }
+
     /*public static void main(String[] args) {
         Calendar cal = Calendar.getInstance();
         Date date = new Date();

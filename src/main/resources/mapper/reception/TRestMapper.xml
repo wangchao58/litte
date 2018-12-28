@@ -72,6 +72,15 @@
      group by r.id
 
   </select>
+
+  <select id="seleDateStaffRortMap" resultMap="BaseResultMap" parameterType="java.lang.String" >
+     select
+      <include refid="Base_Column_List" />
+     from t_rest
+     where dept_id=#{deptId,jdbcType=VARCHAR} and is_date &gt;= date_format(now(), '%Y-%m-%d')
+    group by is_date
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

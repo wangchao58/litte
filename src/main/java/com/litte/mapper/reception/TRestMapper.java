@@ -18,6 +18,8 @@ public interface TRestMapper {
 
     List<TRest> seleDateStaffRort(TRest record);
 
+    List<TRest> seleDateStaffRortMap(String deptId);
+
     TRest selectByPrimaryKey(String id);
 
     int updateByPrimaryKeySelective(TRest record);

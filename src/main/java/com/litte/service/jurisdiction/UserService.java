@@ -11,6 +11,8 @@ public interface UserService {
 
     List<TUser> listUserByPort(List<String> deptId);
 
+    List<Map<String,Object>> listUserByPortMap(List<String> deptId);
+
     int insertSelective(TUser record);
 
     int updateByPrimaryKeySelective(TUser record);

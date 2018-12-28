@@ -16,6 +16,8 @@ public interface TUserMapper {
 
     List<TUser> listUserByPort(List<String> deptId);
 
+    List<TUser> listUserByPortMap(List<String> deptId);
+
     TUser selectByPrimaryKey(String userId);
 
     TUser selectByNamePas(TUser user);

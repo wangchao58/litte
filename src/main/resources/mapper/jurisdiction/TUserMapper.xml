@@ -82,6 +82,19 @@
     </where>
   </select>
 
+  <select id="listUserByPortMap" resultMap="BaseResultMap" parameterType="java.util.List" >
+    select
+    <include refid="Base_Column_List" />
+    from t_user
+    <where>
+      and dept_id in
+      <foreach collection="list" item="deptId" separator="," open="(" close=")">
+        '${deptId}'
+      </foreach>
+      and user_id !='8aa1bd629c744a2b8130aa7eef391b7d'
+    </where>
+  </select>
+
   <select id="selectByNamePhone" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
