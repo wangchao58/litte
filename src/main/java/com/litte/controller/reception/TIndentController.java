@@ -101,13 +101,15 @@ public class TIndentController extends BaseController {
         }
         if (StringUtil.isNotEmpty(indent.getId())) {
             TIndent tIndent = tIndentService.selByPrimaryKey(indent.getId());
-            long l = 0L;
+            boolean l = false;
             if(null != indent.getiTime()){
                 long newDate = new Date().getTime();//当前时间
-                long iTime = tIndent.getIsTime().getTime();//首次预约时间
-                l = (iTime - newDate) / 1000 / (60 * 60);
+                long isTime = tIndent.getIsTime().getTime();//首次预约时间
+                if(newDate>=isTime){
+                    l = true;
+                }
             }
-            if((l <= 0 && null != indent.getiTime())||tIndent.getiCondition().equals("2")){
+            if((l && null != indent.getiTime())||tIndent.getiCondition().equals("2")){
                 map.put("time_out","IS");
                 map.put("indent",new TIndent());
             }else{

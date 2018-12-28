@@ -157,7 +157,7 @@
       <if test="openid != null" >
         and openid= #{openid,jdbcType=VARCHAR}
       </if>
-      and i_condition not in ('5','6','7')
+      and i_condition not in ('0','5','6','7')
     </where>
     order by is_time desc
   </select>
