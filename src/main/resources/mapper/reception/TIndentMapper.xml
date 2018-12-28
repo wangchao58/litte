@@ -23,6 +23,7 @@
     <result column="projects_id" property="projectsId" jdbcType="VARCHAR" />
     <result column="is_sms" property="isSms" jdbcType="VARCHAR" />
     <result column="transaction_id" property="transactionId" jdbcType="VARCHAR" />
+    <result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -31,7 +32,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, i_code, openid, i_price, i_phone, i_type, i_time, is_time, hair_id, changing_time,
-    i_mode, i_refund, i_refund_model, i_refund_money, i_condition,dept_id,projects_id,is_sms,transaction_id
+    i_mode, i_refund, i_refund_model, i_refund_money, i_condition,dept_id,projects_id,is_sms,transaction_id,order_time
   </sql>
 
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.litte.entity.reception.TIndent" >
@@ -184,7 +185,7 @@
     select
     <include refid="Base_Column_List" />
     from t_indent
-    where date_format(adddate(i_time, interval 1 minute),'%y-%m-%d %h:%i:%s') &lt;= now() and i_condition='0'
+    where date_format(adddate(order_time, interval 1 minute),'%y-%m-%d %h:%i:%s') &lt;= now() and i_condition='0'
     limit 1
   </select>
 
@@ -222,13 +223,14 @@
       i_price, i_phone, i_type, 
       i_time, is_time, hair_id, 
       changing_time, i_mode, i_refund, 
-      i_refund_model, i_refund_money, i_condition
+      i_refund_model, i_refund_money, i_condition, order_time
       )
     values (#{id,jdbcType=VARCHAR}, #{iCode,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR},
       #{iPrice,jdbcType=VARCHAR}, #{iPhone,jdbcType=VARCHAR}, #{iType,jdbcType=VARCHAR}, 
       #{iTime,jdbcType=TIMESTAMP}, #{isTime,jdbcType=TIMESTAMP}, #{hairId,jdbcType=VARCHAR}, 
       #{changingTime,jdbcType=TIMESTAMP}, #{iMode,jdbcType=VARCHAR}, #{iRefund,jdbcType=VARCHAR}, 
-      #{iRefundModel,jdbcType=VARCHAR}, #{iRefundMoney,jdbcType=VARCHAR}, #{iCondition,jdbcType=VARCHAR}
+      #{iRefundModel,jdbcType=VARCHAR}, #{iRefundMoney,jdbcType=VARCHAR}, #{iCondition,jdbcType=VARCHAR},
+      #{orderTime,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.litte.entity.reception.TIndent" >
@@ -288,6 +290,9 @@
       <if test="projectsId != null" >
         projects_id,
       </if>
+      <if test="orderTime != null" >
+        order_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -343,6 +348,9 @@
       </if>
       <if test="projectsId != null" >
         #{projectsId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTime != null" >
+        #{orderTime,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>

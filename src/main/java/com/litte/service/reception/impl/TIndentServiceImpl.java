@@ -55,6 +55,7 @@ public class TIndentServiceImpl implements TIndentService {
         record.setiTime(record.getIsTime());
         record.setiCode(DateUtil.getDateTime());
         record.setiCondition("0");
+        record.setOrderTime(new Date());// 下单时间
         i = tIndentMapper.insertSelective(record);
         if(i>0) {
             record = tIndentMapper.selectByPrimaryKey(record.getId());

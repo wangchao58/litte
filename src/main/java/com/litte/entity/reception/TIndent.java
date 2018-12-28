@@ -52,6 +52,8 @@ public class TIndent extends Page {
 
     private String transactionId;
 
+    private Date orderTime;
+
     public String getId() {
         return id;
     }
@@ -234,5 +236,13 @@ public class TIndent extends Page {
 
     public void setTransactionId(String transactionId) {
         this.transactionId = transactionId;
+    }
+
+    public Date getOrderTime() {
+        return orderTime;
+    }
+
+    public void setOrderTime(Date orderTime) {
+        this.orderTime = orderTime;
     }
 }
