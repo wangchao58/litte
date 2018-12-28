@@ -68,11 +68,16 @@ public class TPriceServiceImpl implements TPriceService {
                 map.put("staffId",price.getUserId());
                 Map<String,Object> listPriceDate = tPriceMapper.listPriceDateRestByPort(map);
 
-                if(!listPriceDate.get("isRest").equals("1") && !price.getIsReserve().equals("1")) {
-                    price.setIsRest("2");//约满
+                if(listPriceDate != null) {
+                    if(!listPriceDate.get("isRest").equals("1") && !price.getIsReserve().equals("1")) {
+                        price.setIsRest("2");//约满
+                    } else {
+                        price.setIsRest(listPriceDate.get("isRest").toString());//正常
+                    }
                 } else {
-                    price.setIsRest(listPriceDate.get("isRest").toString());//正常
+                    price.setIsRest("1");//休息
                 }
+
 
 
                 /*map.put("staffId",price.getUserId());
