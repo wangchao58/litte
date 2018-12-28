@@ -263,11 +263,13 @@ public class TIndentController extends BaseController {
                 if(map.get("return_code").equals("SUCCESS")) {
                     indent.setiCondition("6");
                     indent.setOpenid("");
+                    indent.setiRefundMoney(indent.getiPrice());
                     tIndentService.updateByPrimaryKeySelective(indent);
                 }
             } else if(mode.equals("1")){
                 indent.setiCondition("5");
                 indent.setOpenid("");
+                indent.setiRefundMoney(indent.getiPrice());
                 int i  = tIndentService.updateByPrimaryKeyRefund(indent);
                 if(i>0) {
                     map.put("return_code","SUCCESS");
