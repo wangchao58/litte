@@ -14,7 +14,7 @@ jQuery(function($) {
             {label:'预定时间',name:'iTime', editable: true, formatter:formatDatebox},
             {label:'发型师',name:'userName', editable: true},
             {label:'预定人昵称',name:'realName', editable: true},
-            {label:'是否退款',name:'iRefund', editable: true, formatter:yon},
+            // {label:'是否退款',name:'iRefund', editable: true, formatter:yon},
             {label:'退款金额',name:'iRefundMoney', editable: true},
             {label:'状态',name:'iCondition', editable: true, formatter:statusdd}
         ],
