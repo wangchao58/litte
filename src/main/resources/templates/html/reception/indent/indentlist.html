@@ -134,7 +134,7 @@
         async: false,
         type: "POST",
         success: function (response) {
-            var htmlsres = "";
+            var htmlsres = "<option value=''></option>";
             $(response).each(function (index, data) {
                 htmlsres += "<option value='" + data.id + "'>" + data.deptName + "</option>";
             });
@@ -150,7 +150,7 @@
         async: false,
         type: "POST",
         success: function (response) {
-            var htmlsres = "";
+            var htmlsres = "<option value=''></option>";
             $(response).each(function (index, data) {
                 htmlsres += "<option value='" + data.userId + "'>" + data.userName + "</option>";
             });

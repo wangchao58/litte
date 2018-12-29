@@ -356,7 +356,7 @@ public class TIndentController extends BaseController {
         map.put("entTime",entTime);
         map.put("userId",userId);
         map.put("deptId",deptId);
-//        map.put("deptIds",this.getSession(request).getGroups());
+        map.put("deptIds",this.getSession(request).getGroups());
         map = tIndentService.accountByList(map);
         return map;
     }
