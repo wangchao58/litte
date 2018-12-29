@@ -192,23 +192,32 @@
   <select id="accountByList" resultType="java.lang.String" parameterType="java.util.Map" >
     select
     round(sum(i_price),2) as price
-    from t_indent
+    from t_indent i
+    left join
+    t_user u on i.hair_id=u.user_id
     <where>
       <if test="startTime != null and startTime !=''" >
-        and i_time &gt;= #{startTime,jdbcType=VARCHAR}
+        and i.i_time &gt;= #{startTime,jdbcType=VARCHAR}
       </if>
       <if test="entTime != null and entTime !=''" >
-        and i_time &lt;= #{entTime,jdbcType=VARCHAR}
+        and i.i_time &lt;= #{entTime,jdbcType=VARCHAR}
       </if>
       <if test="mode != null and mode !=''" >
-        and i_mode= #{mode,jdbcType=VARCHAR}
+        and i.i_mode= #{mode,jdbcType=VARCHAR}
       </if>
-      <if test="deptId != null">
-        and dept_id in
-        <foreach collection="deptId" item="deptId" separator="," open="(" close=")">
-          '${deptId}'
+      <if test="deptId != null and deptId !=''" >
+        and i.dept_id= #{deptId,jdbcType=VARCHAR}
+      </if>
+      <if test="userId != null and userId !=''" >
+        and u.user_id= #{userId,jdbcType=VARCHAR}
+      </if>
+      <if test="deptIds != null">
+        and i.dept_id in
+        <foreach collection="deptIds" item="deptIds" separator="," open="(" close=")">
+          '${deptIds}'
         </foreach>
       </if>
+      and i.i_condition not in ('0','5','6','7')
     </where>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.util.List" >

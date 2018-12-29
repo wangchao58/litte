@@ -263,4 +263,17 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <select id="selDeptList" resultMap="BaseResultMap" parameterType="java.util.List" >
+    select
+    <include refid="Base_Column_List" />
+    from t_dept
+    <where>
+      and id in
+      <foreach collection="list" item="deptIds" separator="," open="(" close=")">
+        '${deptIds}'
+      </foreach>
+      and id !='1'
+    </where>
+  </select>
 </mapper>

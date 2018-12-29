@@ -153,4 +153,16 @@ public class TDeptController extends BaseController {
 
     }
 
+    /**
+     * 对账查询所有店铺
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/selDeptList")
+    @ResponseBody
+    public List<TDept> selDeptList(HttpServletRequest request) {
+        List<String> deptIds = this.getSession(request).getGroups();
+        return tDeptService.selDeptList(deptIds);
+    }
+
 }

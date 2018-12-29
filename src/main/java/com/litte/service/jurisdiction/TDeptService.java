@@ -22,4 +22,6 @@ public interface TDeptService {
     String selectByTree(TDept dept);
 
     List<String> getGroupListIds(String id);
+
+    List<TDept> selDeptList(List<String> deptIds);
 }

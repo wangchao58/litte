@@ -28,4 +28,6 @@ public interface TDeptMapper {
     String getMaxGroupId(String pId);
 
     List<String> getGroupListIds(String id);
+
+    List<TDept> selDeptList(List<String> deptIds);
 }

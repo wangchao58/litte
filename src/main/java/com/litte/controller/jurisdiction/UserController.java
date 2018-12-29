@@ -4,11 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.StringUtil;
-import com.litte.entity.jurisdiction.TDept;
 import com.litte.entity.jurisdiction.TRole;
 import com.litte.entity.jurisdiction.TUser;
 import com.litte.entity.jurisdiction.TUserRole;
-import com.litte.entity.reception.TPrice;
 import com.litte.service.jurisdiction.RoleService;
 import com.litte.service.jurisdiction.TDeptService;
 import com.litte.service.jurisdiction.TUserRoleService;
@@ -258,5 +256,17 @@ public class UserController extends BaseController {
         return listUser;
     }
 
+    /**
+     * 对账查询多有理发师
+     * @param request
+     * @return
+     */
+    @RequestMapping("/selUserList")
+    @ResponseBody
+    public List<TUser> selUserList(HttpServletRequest request) {
+        List<String> deptIds = this.getSession(request).getGroups();
+        List<TUser> listUser = userService.listUserByPort(deptIds);
+        return listUser;
+    }
 
 }

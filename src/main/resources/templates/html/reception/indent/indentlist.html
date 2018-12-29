@@ -2,21 +2,27 @@
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title>欣星尚-后台管理</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <head th:replace="include/style :: acestyle" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <head th:replace="include/style :: acestyle"/>
 </head>
 <body>
-<div class="navbar navbar-default" id="navbar"  th:include="include/header :: header">
+<div class="navbar navbar-default" id="navbar" th:include="include/header :: header">
     <script type="text/javascript">
-        try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+        try {
+            ace.settings.check('navbar', 'fixed')
+        } catch (e) {
+        }
     </script>
 </div>
 
 <div class="main-container" id="main-container">
     <script type="text/javascript">
-        try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+        try {
+            ace.settings.check('main-container', 'fixed')
+        } catch (e) {
+        }
     </script>
 
     <div class="main-container-inner">
@@ -24,7 +30,7 @@
             <span class="menu-text"></span>
         </a>
 
-        <div class="sidebar" id="sidebar"  th:include="include/sidebar">
+        <div class="sidebar" id="sidebar" th:include="include/sidebar">
 
         </div>
 
@@ -50,13 +56,39 @@
 
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="alert alert-info">
-                            开始时间:<input class="span2 form_datetime" id="startTime" size="16" type="text"  >
-                            <span class="add-on"><i class="icon-th"></i></span>
-                            结束时间:<input class="span2 form_datetime" id="entTime" size="16" type="text"  >
-                            <span class="add-on"><i class="icon-th"></i></span>
-                            <i class='icon-shopping-cart'> </i> <a href='javascript:void(0)' onclick="openEditDiag();" >对账</a>
+                        <div class="alert alert-info" style="width: 100%;">
+                            <div style="float: left;">
+                                <div style="float: left; margin: 0 10px 0 0;line-height: 30px;">开始时间:</div>
+                                <input class="span2 form_datetime" id="startTime" size="16" type="text">
+                                <!--<span class="add-on"><i class="icon-th"></i></span>-->
+                            </div>
 
+                            <div style="float: left">
+                                <div style="float: left; margin: 0 10px 0 20px;line-height: 30px;">结束时间:</div>
+                                <input class="span2 form_datetime" id="entTime" size="16" type="text">
+                                <!--<span class="add-on"><i class="icon-th"></i></span>-->
+                            </div>
+
+                            <div style="float: left">
+                                <div style="float: left; margin: 0 10px 0 20px;line-height: 30px;">店铺：</div>
+                                <div class="span2" style="float: left;">
+                                    <select id="deptName" name="deptName" class="select2"
+                                            data-placeholder="Click to Choose...">
+                                    </select>
+                                </div>
+                            </div>
+                            <div style="float: left">
+                                <div style="float: left; margin: 0 10px 0 20px;line-height: 30px;">发型师：</div>
+                                <div class="span2" style="float: left;">
+                                    <select id="userName" name="userName" class="select2"
+                                            data-placeholder="Click to Choose...">
+                                    </select>
+                                </div>
+                            </div>
+                            <div style="float: left; margin-left: 20px; line-height: 30px;">
+                            <i class='icon-shopping-cart'> </i> <a href='javascript:void(0)' onclick="openEditDiag();">对账</a>
+                                </div>
+<div style="clear: both;"></div>
                         </div>
 
                         <div class="alert alert-info">
@@ -67,7 +99,7 @@
                         </div>
 
                         <table id="grid-table"></table>
-                        <div id="grid-pager" ></div>
+                        <div id="grid-pager"></div>
                     </div>
                 </div>
             </div>
@@ -79,19 +111,53 @@
 <div th:include="include/script"></div>
 
 <script type="text/javascript">
-    setTimeout(function(){
-        $("#"+$("#open").val()).addClass("active open");
-        $("#"+$("#active").val()).addClass("active");
-    },100);
+    setTimeout(function () {
+        $("#" + $("#open").val()).addClass("active open");
+        $("#" + $("#active").val()).addClass("active");
+    }, 100);
 
     $('.form_datetime').datetimepicker({
         minView: "month",//设置只显示到月份
         format: "yyyy-mm-dd",
         autoclose: true,
         todayBtn: true,
-        language:'zh-CN',
-        pickerPosition:"bottom-left"
+        language: 'zh-CN',
+        pickerPosition: "bottom-left"
     });
+
+    /**
+     * 店铺查询
+     */
+    $.ajax({
+        url: "/dept/selDeptList",
+        async: false,
+        type: "POST",
+        success: function (response) {
+            var htmlsres = "";
+            $(response).each(function (index, data) {
+                htmlsres += "<option value='" + data.id + "'>" + data.deptName + "</option>";
+            });
+            $("#deptName").html(htmlsres);
+        }
+    });
+
+    /**
+     * 发型师查询
+     */
+    $.ajax({
+        url: "/user/selUserList",
+        async: false,
+        type: "POST",
+        success: function (response) {
+            var htmlsres = "";
+            $(response).each(function (index, data) {
+                htmlsres += "<option value='" + data.userId + "'>" + data.userName + "</option>";
+            });
+            $("#userName").html(htmlsres);
+        }
+    });
+
+
 </script>
 
 <!-- page specific plugin scripts -->

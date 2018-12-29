@@ -350,11 +350,13 @@ public class TIndentController extends BaseController {
      */
     @RequestMapping(value = "/accountByList")
     @ResponseBody
-    public Map<String,Object> accountByList(String startTime,String entTime,HttpServletRequest request) {
+    public Map<String,Object> accountByList(String startTime,String entTime, String userId, String deptId, HttpServletRequest request) {
         Map<String,Object> map = new HashMap<>();
         map.put("startTime",startTime);
         map.put("entTime",entTime);
-        map.put("deptId",this.getSession(request).getGroups());
+        map.put("userId",userId);
+        map.put("deptId",deptId);
+//        map.put("deptIds",this.getSession(request).getGroups());
         map = tIndentService.accountByList(map);
         return map;
     }

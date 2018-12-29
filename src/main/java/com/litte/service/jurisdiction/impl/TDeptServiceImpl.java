@@ -3,7 +3,6 @@ package com.litte.service.jurisdiction.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.StringUtil;
 import com.litte.entity.jurisdiction.TDept;
-import com.litte.entity.jurisdiction.TMenu;
 import com.litte.mapper.jurisdiction.TDeptMapper;
 import com.litte.service.jurisdiction.TDeptService;
 import com.litte.util.UUIDUtil;
@@ -82,6 +81,16 @@ public class TDeptServiceImpl implements TDeptService {
     @Override
     public List<String> getGroupListIds(String id) {
         return tDeptMapper.getGroupListIds(id);
+    }
+
+    /**
+     * 对账查询所有店铺
+     * @param deptIds
+     * @return
+     */
+    @Override
+    public List<TDept> selDeptList(List<String> deptIds) {
+        return tDeptMapper.selDeptList(deptIds);
     }
 
     /**

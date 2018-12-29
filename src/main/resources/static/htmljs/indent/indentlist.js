@@ -146,10 +146,14 @@ function deletes() {
  */
 function openEditDiag() {
 
-
     $.ajax({
         url: '/indent/accountByList',
-        data:{"startTime":$("#startTime").val(),"entTime":$("#entTime").val()},
+        data:{
+            "startTime":$("#startTime").val(),
+            "entTime":$("#entTime").val(),
+            "userId":$("#userName").val(),
+            "deptId":$("#deptName").val()
+        },
         type: "POST",
         async: true,
         dataType: "json",
@@ -157,9 +161,13 @@ function openEditDiag() {
             if(result != null) {
                 if(result.weinxin != null) {
                     $("#weixin").html(result.weinxin);
+                }else{
+                    $("#weixin").html(0);
                 }
                 if(result.kaquan != null) {
                     $("#kaquan").html(result.kaquan);
+                }else{
+                    $("#kaquan").html(0);
                 }
 
 
