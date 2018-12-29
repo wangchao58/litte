@@ -52,11 +52,6 @@ public class UserServiceImpl implements UserService {
             for(String tiem :listDate) {
                 Map<String,Object> maptime = new HashMap<>();
                 for(TRest rest: listRest) {
-
-                    System.out.println(rest.getIsDate().substring(5,rest.getIsDate().length()));
-                    System.out.println(tiem);
-                    System.out.println(rest.getStaffId());
-                    System.out.println(user.getUserId());
                     if(rest.getStaffId().equals(user.getUserId()) && tiem.equals(rest.getIsDate().substring(5,rest.getIsDate().length())) ) {
                         maptime.put("ist","yishezhi mr20");
                     }

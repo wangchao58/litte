@@ -78,7 +78,7 @@
       <include refid="Base_Column_List" />
      from t_rest
      where dept_id=#{deptId,jdbcType=VARCHAR} and is_date &gt;= date_format(now(), '%Y-%m-%d')
-    group by is_date
+    group by is_date,staff_id
   </select>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
