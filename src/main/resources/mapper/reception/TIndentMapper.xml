@@ -97,9 +97,7 @@
     i.id,    i.i_time  as iTime,       i.i_code as iCode,    i.i_mode as iMode,   i.openid,
     p.p_name as pName,u.head_portrait as headPortrait,d.dept_name as deptName,
     u.user_name as userName ,d.site,pg.real_name as realName,pg.user_img as userImg
-    from t_indent i left join t_projects p
-    on
-    i.i_type=p.id
+    from t_indent i left join t_projects p on i.i_type=p.id
     left join t_user u on i.hair_id=u.user_id
     left join t_dept d on i.dept_id=d.id
     left join t_personage pg on pg.id=i.openid
@@ -116,9 +114,9 @@
             and i.i_condition = #{iCondition,jdbcType=VARCHAR}
           </otherwise>
         </choose>
-
-
       </if>
+
+      and i.order_time &gt;=date_sub(now(), interval 45 day);
     </where>
   </select>
 
