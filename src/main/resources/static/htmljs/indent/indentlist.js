@@ -279,6 +279,12 @@ function statusdd(value) {
         iCondition='已完成';
     }else if(value =='5') {
         iCondition='已退款';
+    }else if(value =='6') {
+        iCondition='退款中';
+    }else if(value =='7') {
+        iCondition='已取消';
+    }else if(value =='8') {
+        iCondition='已过期';
     }
     return iCondition;
 }

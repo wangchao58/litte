@@ -110,6 +110,9 @@
           <when test="iCondition==1">
             and i.i_condition in ('1','2')
           </when>
+          <when test="iCondition==4">
+            and i.i_condition in ('3','4')
+          </when>
           <otherwise>
             and i.i_condition = #{iCondition,jdbcType=VARCHAR}
           </otherwise>
